@@ -1,0 +1,11 @@
+name: testing
+channels:
+  - defaults
+dependencies:
+  - numpy >= 2.2.6
+  - requests >= 2.32.3
+  - fastapi >= 0.115.12
+  - black >= 25.1.0
+  - isort >= 6.0.1
+  - pylint >= 3.3.7
+prefix: C:\Users\Admin\miniconda3\envs\testing
