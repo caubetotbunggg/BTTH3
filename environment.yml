@@ -2,11 +2,13 @@ name: testing
 channels:
   - defaults
 dependencies:
-  - numpy >= 2.2.6
-  - requests >= 2.32.3
-  - fastapi >= 0.115.12
-  - black >= 25.1.0
-  - isort >= 6.0.1
-  - pylint >= 3.3.7
-  - pre-commit >= 4.2.0 
-  - flake8 >= 7.2.0
+  - numpy>=2.2.6
+  - requests>=2.32.3
+  - fastapi>=0.115.12
+  - black>=25.1.0
+  - isort>=6.0.1
+  - pylint>=3.3.7
+  - pre-commit>=4.2.0 
+  - flake8>=7.2.0
+  - beautifulsoup4>=4.13.4
+
