@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup
 
 def extract_text(html):
     soup = BeautifulSoup(html, "html.parser")
+    soup = soup.find("div", class_="the-document-body ndthaydoi noidungtracuu")
+    if not soup:
+        return ""
     return soup.get_text(strip=True, separator="\n")
 
 
