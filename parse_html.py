@@ -3,11 +3,6 @@ import os
 
 from bs4 import BeautifulSoup
 
-html_dir = "../BTTH3/data/raw/html"
-parsed_dir = "../BTTH3/data/raw/parsed"
-
-os.makedirs(parsed_dir, exist_ok=True)
-
 
 def extract_loai_van_ban_va_linh_vuc(soup):
     docitem = soup.find("div", class_="docitem-13")
@@ -92,34 +87,48 @@ def parse_luat_html(soup):
     return parsed
 
 
-for filename in os.listdir(html_dir):
-    if filename.endswith(".html"):
-        law_id = filename.replace(".html", "")
+def main():
+    # Đường dẫn đến thư mục chứa các file HTML và metadata
+    html_dir = "../BTTH3/data/raw/html"
+    meta_dir = "../BTTH3/data/raw/meta"
 
-        html_path = os.path.join(html_dir, f"{law_id}.html")
-        meta_path = os.path.join(html_dir, f"{law_id}_meta.json")
-        output_path = os.path.join(parsed_dir, f"{law_id}.json")
+    # Tạo thư mục parsed nếu chưa tồn tại
+    parsed_dir = "../BTTH3/data/raw/parsed"
+    os.makedirs(parsed_dir, exist_ok=True)
 
-        if not os.path.exists(meta_path):
-            print(f" Không tìm thấy metadata cho {law_id}")
-            continue
+    # Lặp qua từng file HTML trong thư mục
+    for filename in os.listdir(html_dir):
+        if filename.endswith(".html"):
+            law_id = filename.replace(".html", "")
 
-        with open(meta_path, "r", encoding="utf-8") as f:
-            metadata = json.load(f)
+            html_path = os.path.join(html_dir, f"{law_id}.html")
+            meta_path = os.path.join(meta_dir, f"{law_id}_meta.json")
+            output_path = os.path.join(parsed_dir, f"{law_id}.json")
 
-        # Trích loại văn bản, lĩnh vực và nội dung
-        with open(html_path, "r", encoding="utf-8") as f:
-            soup = BeautifulSoup(f, "html.parser")
-        loai_van_ban, linh_vuc = extract_loai_van_ban_va_linh_vuc(soup)
-        parsed_noi_dung = parse_luat_html(soup)
+            if not os.path.exists(meta_path):
+                print(f"Không tìm thấy metadata cho {law_id}")
+                continue
 
-        # Gộp metadata và nội dung đã parse
-        combined = {
-            **metadata,
-            "loai_van_ban": loai_van_ban or "None",
-            "linh_vuc": linh_vuc or "None",
-            "noi_dung": parsed_noi_dung,
-        }
+            with open(meta_path, "r", encoding="utf-8") as f:
+                metadata = json.load(f)
 
-        with open(output_path, "w", encoding="utf-8") as f:
-            json.dump(combined, f, ensure_ascii=False, indent=2)
+            # Trích loại văn bản, lĩnh vực và nội dung
+            with open(html_path, "r", encoding="utf-8") as f:
+                soup = BeautifulSoup(f, "html.parser")
+            loai_van_ban, linh_vuc = extract_loai_van_ban_va_linh_vuc(soup)
+            parsed_noi_dung = parse_luat_html(soup)
+
+            # Gộp metadata và nội dung đã parse
+            combined = {
+                **metadata,
+                "loai_van_ban": loai_van_ban or "None",
+                "linh_vuc": linh_vuc or "None",
+                "noi_dung": parsed_noi_dung,
+            }
+
+            with open(output_path, "w", encoding="utf-8") as f:
+                json.dump(combined, f, ensure_ascii=False, indent=2)
+
+
+if __name__ == "__main__":
+    main()

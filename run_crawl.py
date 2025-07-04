@@ -1,10 +1,8 @@
 import argparse
 
-"""
 import fetch_detail
 import list_crawler
 import parse_html
-"""
 
 
 def main():
@@ -14,18 +12,18 @@ def main():
     args = parser.parse_args()
 
     if args.command == "list":
-        # list_crawler()
+        list_crawler.main()
         print("List xong")
     elif args.command == "detail":
-        # fetch_detail()
+        fetch_detail.main()
         print("Fetch xong")
     elif args.command == "parse":
-        # parse_html()
+        parse_html.main()
         print("Parse xong")
     elif args.command == "all":
-        # list_crawler()
-        # fetch_detail()
-        # parse_html()
+        list_crawler.main()
+        fetch_detail.main()
+        parse_html.main()
         print("Hoàn thành")
 
 
