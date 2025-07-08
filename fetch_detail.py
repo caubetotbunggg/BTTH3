@@ -68,7 +68,7 @@ def main():
     }
 
     # Cấu hình log fail
-    logging.basicConfig(filename="failed_access_links.log", level=logging.ERROR)
+    logging.basicConfig(filename="../BTTH3/log/failed_access_links.log", level=logging.ERROR)
 
     # Đa luồng tải chi tiết
     concurrency_limit = 5  # Số thread tối đa

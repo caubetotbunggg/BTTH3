@@ -42,7 +42,7 @@ def main():
         "Cookie": "MUID=...",
     }
 
-    logging.basicConfig(filename="failed_links.log", level=logging.ERROR)
+    logging.basicConfig(filename="../BTTH3/log/failed_links.log", level=logging.ERROR)
 
     base_url = "https://luatvietnam.vn"
     search_url_template = (
