@@ -69,9 +69,12 @@ def process_all_files():
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(chunks, f, ensure_ascii=False, indent=2)
     if failed_files:
-        print("Các tệp sau không được xử lý:")
-        for filename in failed_files:
-            print(f" - {filename}")
+        # Lưu danh sách file lỗi vào JSON
+        unstructured_dir = "../BTTH3/data/unstructured"
+        os.makedirs(unstructured_dir, exist_ok=True)
+        failed_path = os.path.join(unstructured_dir, "failed_regex.json")
+        with open(failed_path, "w", encoding="utf-8") as f:
+            json.dump(failed_files, f, ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":

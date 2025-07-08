@@ -35,6 +35,6 @@ if __name__ == "__main__":
 
     if file_need_debug:
         with open(
-            "../BTTH3/data/processed/file_need_debug.json", "w", encoding="utf-8"
+            "../BTTH3/data/unstructured/file_need_debug.json", "w", encoding="utf-8"
         ) as f:
             json.dump(file_need_debug, f, ensure_ascii=False, indent=2)
