@@ -1,5 +1,6 @@
-import os
 import json
+import os
+
 from bs4 import BeautifulSoup
 
 
@@ -33,5 +34,7 @@ if __name__ == "__main__":
                     out_f.write(extracted)
 
     if file_need_debug:
-        with open("../BTTH3/data/processed/file_need_debug.json", "w", encoding="utf-8") as f:
+        with open(
+            "../BTTH3/data/processed/file_need_debug.json", "w", encoding="utf-8"
+        ) as f:
             json.dump(file_need_debug, f, ensure_ascii=False, indent=2)

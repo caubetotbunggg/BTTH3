@@ -1,11 +1,12 @@
-import sys
 import os
+import sys
 import unittest
 
 # Thêm thư mục gốc vào sys.path để import chunker
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from chunker import chunk_by_chapter_and_article
+
 
 class TestChunker(unittest.TestCase):
     def test_split_with_khoan(self):
@@ -20,12 +21,12 @@ class TestChunker(unittest.TestCase):
         )
         chunks = chunk_by_chapter_and_article(text)
         self.assertEqual(len(chunks), 2)
-        self.assertEqual(chunks[0]['tieu_de'], "Điều 1. Quy định chung")
-        self.assertEqual(len(chunks[0]['khoan']), 2)
-        self.assertEqual(chunks[0]['khoan'][0]['khoan'], "1.")
-        self.assertEqual(chunks[0]['khoan'][1]['noi_dung'], "Khoản hai của Điều 1")
-        self.assertEqual(chunks[1]['tieu_de'], "Điều 2. Quy định riêng")
-        self.assertEqual(len(chunks[1]['khoan']), 2)
+        self.assertEqual(chunks[0]["tieu_de"], "Điều 1. Quy định chung")
+        self.assertEqual(len(chunks[0]["khoan"]), 2)
+        self.assertEqual(chunks[0]["khoan"][0]["khoan"], "1.")
+        self.assertEqual(chunks[0]["khoan"][1]["noi_dung"], "Khoản hai của Điều 1")
+        self.assertEqual(chunks[1]["tieu_de"], "Điều 2. Quy định riêng")
+        self.assertEqual(len(chunks[1]["khoan"]), 2)
 
     def test_split_no_khoan(self):
         text = (
@@ -38,11 +39,12 @@ class TestChunker(unittest.TestCase):
         )
         chunks = chunk_by_chapter_and_article(text)
         self.assertEqual(len(chunks), 2)
-        self.assertEqual(chunks[0]['tieu_de'], "Điều 1. Điều không có khoản")
-        self.assertIsNone(chunks[0]['khoan'])
-        self.assertEqual(chunks[0]['noi_dung'], "Nội dung điều không có khoản")
-        self.assertEqual(len(chunks[1]['khoan']), 2)
-        self.assertEqual(chunks[1]['khoan'][0]['noi_dung'], "Khoản một")
+        self.assertEqual(chunks[0]["tieu_de"], "Điều 1. Điều không có khoản")
+        self.assertIsNone(chunks[0]["khoan"])
+        self.assertEqual(chunks[0]["noi_dung"], "Nội dung điều không có khoản")
+        self.assertEqual(len(chunks[1]["khoan"]), 2)
+        self.assertEqual(chunks[1]["khoan"][0]["noi_dung"], "Khoản một")
+
 
 if __name__ == "__main__":
     unittest.main()
