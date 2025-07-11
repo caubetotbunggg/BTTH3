@@ -1,0 +1,6 @@
+{
+    "collection_name": "legal_chunks",
+    "embedding_dimension": 384,
+    "metric": "cosine",
+    "persist_directory": "chroma_db"
+}
