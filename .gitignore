@@ -1,0 +1,3 @@
+data/processed/embeddings/
+__pycache__/
+chroma/db/
