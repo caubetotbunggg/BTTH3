@@ -59,10 +59,20 @@ for batch_idx in tqdm(
 
     for item in batch_data:
         try:
-            law_id = item["meta"]["law_id"]
-            sentence = f"mã luật: {law_id} \n tiêu đề: {item['meta']['title']} \n ngày: {item['meta']['date']} \n nội dung: {item['chunk']}"
-            sentences.append(sentence)
-            batch_items.append(item)
+            if item['chunk']['khoan'] is None:
+                sentence = f"{item['meta']['title']} {item['chunk']['chuong']} {item['chunk']['tieu_de']} {item['chunk']['noi_dung']}"
+                sentences.append(sentence)
+                batch_items.append(item)
+            else:
+                list_khoan = []
+                for khoan in item['chunk']['khoan']:
+                    noi_dung_khoan = f"khoản {khoan['khoan']} {khoan['noi_dung']} "
+                    list_khoan.append(noi_dung_khoan)
+                    all_khoan = "".join(list_khoan)
+
+                sentence = f"{item['meta']['title']} {item['chunk']['chuong']} {item['chunk']['tieu_de']} {item['chunk']['noi_dung']} {all_khoan}"
+                sentences.append(sentence)
+                batch_items.append(item)
         except Exception as e:
             error_count += 1
             with open(

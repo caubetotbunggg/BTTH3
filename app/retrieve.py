@@ -1,7 +1,16 @@
-from fastapi import APIRouter, FastAPI, Query
+from fastapi import APIRouter, FastAPI, Query, HTTPException
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 import chromadb
+import logging
+
+# Cấu hình logging
+logging.basicConfig(
+    filename="../BTTH3/log/retrieve_info.log", 
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s",
+    encoding= 'utf-8'
+    )
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -25,6 +34,8 @@ class SearchResponse(BaseModel):
 
 @router.post("/search", response_model=SearchResponse)
 def search(user_input: str = Query(..., description="Câu hỏi hoặc truy vấn người dùng")):
+    logger.info(f"Received query: question='{user_input}' top_k= 5")
+
     # Embed truy vấn
     embedding = model.encode(user_input).tolist()
 
@@ -41,15 +52,25 @@ def search(user_input: str = Query(..., description="Câu hỏi hoặc truy vấ
     metadatas = results["metadatas"][0]
 
     for i, (doc, score, meta) in enumerate(zip(documents, distances, metadatas)):
-        response_chunks.append({
-            "chunk_id": str(i),
-            "text": doc,
-            "score": round(score, 4),
-            "meta": {
-                "law_id": meta.get("law_id", "unknown"),
-                "section_title": meta.get("title", "unknown"),
-                "date": meta.get("date", "unknown")
-            }
-        })
-
-    return {"chunks": response_chunks}
+        if score < 0:  # Chỉ lấy những kết quả có độ tương đồng cao
+            logger.info(f"Skipping result {i} with low score: {score}")
+            continue
+        else:
+            response_chunks.append({
+                "chunk_id": str(i),
+                "text": doc,
+                "score": round(score, 4),
+                "meta": {
+                    "law_id": meta.get("law_id", "unknown"),
+                    "section_title": meta.get("title", "unknown"),
+                    "date": meta.get("date", "unknown")
+                }
+            }) 
+    if not response_chunks:
+        logger.warning("No results found for the query")
+        raise HTTPException(status_code=200, detail="No results found") 
+    try:
+        return {"chunks": response_chunks}
+    except Exception as e:
+        logger.exception("Vector search failed")
+        raise HTTPException(status_code=500, detail=f"Vector search failed: {str(e)}")
