@@ -1,8 +1,9 @@
 import json
 import os
-from sentence_transformers import SentenceTransformer
+
 import numpy as np
 from chromadb import PersistentClient
+from sentence_transformers import SentenceTransformer
 
 # ========== CẤU HÌNH ==========
 DB_DIR = "chroma_db"
@@ -33,8 +34,8 @@ texts = []
 for i, chunk in enumerate(chunks):
     text = f"mã luật: {chunk['meta']['law_id']} \n tiêu đề: {chunk['meta']['title']} \n ngày: {chunk['meta']['date']} \n nội dung: {chunk['chunk']}"
     texts.append(text)
-    documents.append(chunk['chunk'])
-    metadatas.append(chunk['meta'])
+    documents.append(chunk["chunk"])
+    metadatas.append(chunk["meta"])
     ids.append(f"{chunk['meta']['law_id']}_{i:04d}")
 
 print(f"[+] Generating embeddings for {len(texts)} chunks")
@@ -42,6 +43,8 @@ embeddings = model.encode(texts, show_progress_bar=True)
 
 # ========== CHÈN VÀO INDEX ==========
 print(f"[+] Adding to ChromaDB...")
-collection.upsert(documents=documents, embeddings=embeddings, metadatas=metadatas, ids=ids)
+collection.upsert(
+    documents=documents, embeddings=embeddings, metadatas=metadatas, ids=ids
+)
 
 print(f"[✓] Update completed.")

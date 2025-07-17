@@ -57,6 +57,7 @@ for file in files:
 
     if len(chunk_data) != len(vectors):
         print(f"[!] Bỏ qua {file_id}: số lượng chunk không khớp với vectors")
+        print(f"  - Vectors: {len(vectors)}, Chunks: {len(chunk_data)}")
         continue
     documents = [
         f"Tiêu đề: {item['tieu_de']} - Nội dung: {item['noi_dung']} - Khoản: {item['khoan']}"

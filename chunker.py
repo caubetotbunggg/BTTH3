@@ -20,9 +20,9 @@ def chunk_by_chapter_and_article(text):
         chapter_text = text[start_pos:end_pos].strip()
 
         # Tách theo Điều trong chương (có hoặc không có dấu chấm)
-        raw_chunks = re.split(r"(?=Điều\s+\d+\.?)", chapter_text)
+        raw_chunks = re.split(r"(?=Điều\s+\d+\.)", chapter_text)
         for chunk in raw_chunks:
-            match_dieu = re.match(r"(Điều\s+\d+\.?.*)", chunk.strip())
+            match_dieu = re.match(r"(Điều\s+\d+\..*)", chunk.strip())
             if not match_dieu:
                 continue
             tieu_de = match_dieu.group(1)
@@ -79,3 +79,9 @@ def process_all_files():
 
 if __name__ == "__main__":
     process_all_files()
+    
+# 1 số file là Điều X\n 
+# 1 số file là Chương X. 
+# 1 số file không có chương, chỉ có Điều 
+
+
