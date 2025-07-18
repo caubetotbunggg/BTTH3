@@ -38,9 +38,10 @@ class SearchResponse(BaseModel):
 
 @router.post("/search", response_model=SearchResponse)
 def search(
-    user_input: str = Query(..., description="Câu hỏi hoặc truy vấn người dùng")
+    user_input: str = Query(..., description="Câu hỏi hoặc truy vấn người dùng"),
+    k: int = Query(5, description="Số lượng kết quả cần trả về")
 ):
-    logger.info(f"Received query: question='{user_input}' top_k= 5")
+    logger.info(f"Received query: question='{user_input}' top_k= {k}")
 
     # Embed truy vấn
     embedding = model.encode(user_input).tolist()
@@ -49,7 +50,7 @@ def search(
         # Truy vấn ChromaDB (top 5)
         results = collection.query(
             query_embeddings=[embedding],
-            n_results=5,
+            n_results=k,
             include=["documents", "distances", "metadatas"],
         )
 

@@ -103,3 +103,6 @@ fastapi.exceptions.HTTPException: 200: No results found
 2025-07-18 09:19:23,096 - INFO - Use pytorch device_name: cpu
 2025-07-18 09:19:23,096 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
 2025-07-18 09:19:31,731 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-18 14:52:29,055 - INFO - Use pytorch device_name: cpu
+2025-07-18 14:52:29,056 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-18 14:52:35,476 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
