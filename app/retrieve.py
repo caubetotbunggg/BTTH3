@@ -1,7 +1,7 @@
 import logging
 
 import chromadb
-from fastapi import APIRouter, FastAPI, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 
