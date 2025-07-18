@@ -1,0 +1,105 @@
+2025-07-17 21:42:55,677 - INFO - Received query: question='bộ luật lao động' top_k= 5
+2025-07-17 21:42:55,729 - INFO - Skipping result 0 with low score: 0.36791178584098816
+2025-07-17 21:42:55,729 - INFO - Skipping result 1 with low score: 0.3954174816608429
+2025-07-17 21:42:55,729 - INFO - Skipping result 2 with low score: 0.3973989188671112
+2025-07-17 21:42:55,729 - INFO - Skipping result 3 with low score: 0.3982926607131958
+2025-07-17 21:42:55,729 - INFO - Skipping result 4 with low score: 0.41164475679397583
+2025-07-17 21:42:55,729 - WARNING - No results found for the query
+2025-07-17 21:43:41,221 - INFO - Received query: question='.' top_k= 5
+2025-07-17 21:43:41,249 - INFO - Skipping result 0 with low score: 1.6200637817382812
+2025-07-17 21:43:41,249 - INFO - Skipping result 1 with low score: 1.6210062503814697
+2025-07-17 21:43:41,249 - INFO - Skipping result 2 with low score: 1.6226153373718262
+2025-07-17 21:43:41,249 - INFO - Skipping result 3 with low score: 1.6243362426757812
+2025-07-17 21:43:41,249 - INFO - Skipping result 4 with low score: 1.6259424686431885
+2025-07-17 21:43:41,249 - WARNING - No results found for the query
+2025-07-17 21:44:29,154 - INFO - Received query: question='khoan": "1.",         "noi_dung": "Ngân hàng Nhà nước Việt Nam (sau đây gọi là Ngân hàng Nhà nước) là cơ quan của Chính phủ và là ngân hàng trung ương của nước Cộng hoà xã hội chủ nghĩa Việt Nam."' top_k= 5
+2025-07-17 21:44:29,532 - INFO - Skipping result 0 with low score: 0.35063081979751587
+2025-07-17 21:44:29,532 - INFO - Skipping result 1 with low score: 0.35566532611846924
+2025-07-17 21:44:29,532 - INFO - Skipping result 2 with low score: 0.3592705726623535
+2025-07-17 21:44:29,532 - INFO - Skipping result 3 with low score: 0.36599013209342957
+2025-07-17 21:44:29,532 - INFO - Skipping result 4 with low score: 0.3733903765678406
+2025-07-17 21:44:29,532 - WARNING - No results found for the query
+2025-07-17 21:45:02,211 - INFO - Received query: question='Ngân hàng Nhà nước Việt Nam (sau đây gọi là Ngân hàng Nhà nước) là cơ quan của Chính phủ và là ngân hàng trung ương của nước Cộng hoà xã hội chủ nghĩa Việt Nam.' top_k= 5
+2025-07-17 21:45:02,266 - INFO - Skipping result 0 with low score: 0.32214975357055664
+2025-07-17 21:45:02,266 - INFO - Skipping result 1 with low score: 0.37835103273391724
+2025-07-17 21:45:02,267 - INFO - Skipping result 2 with low score: 0.4012053608894348
+2025-07-17 21:45:02,267 - INFO - Skipping result 3 with low score: 0.40352290868759155
+2025-07-17 21:45:02,267 - INFO - Skipping result 4 with low score: 0.4113590121269226
+2025-07-17 21:45:02,267 - WARNING - No results found for the query
+2025-07-17 21:45:29,585 - INFO - Received query: question='你叫什么名字' top_k= 5
+2025-07-17 21:45:29,622 - INFO - Skipping result 0 with low score: 1.008951187133789
+2025-07-17 21:45:29,622 - INFO - Skipping result 1 with low score: 1.0142489671707153
+2025-07-17 21:45:29,622 - INFO - Skipping result 2 with low score: 1.0202841758728027
+2025-07-17 21:45:29,622 - INFO - Skipping result 3 with low score: 1.020308256149292
+2025-07-17 21:45:29,622 - INFO - Skipping result 4 with low score: 1.0234839916229248
+2025-07-17 21:45:29,622 - WARNING - No results found for the query
+2025-07-17 21:49:26,528 - INFO - Received query: question='mã luật: 107-2016-QH13 Điều 1. Phạm vi điều chỉnh nội dung:Luật này quy định về đối tượng chịu thuế, người nộp thuế, căn cứ tính thuế, thời điểm tính thuế, biểu thuế, thuế chống bán phá giá, thuế chống trợ cấp, thuế tự vệ áp dụng đối với hàng hóa xuất khẩu, nhập khẩu; miễn thuế, giảm thuế, hoàn thuế xuất khẩu, thuế nhập khẩu. ' top_k= 5
+2025-07-17 21:49:26,642 - INFO - Skipping result 0 with low score: 0.19059890508651733
+2025-07-17 21:49:26,642 - INFO - Skipping result 1 with low score: 0.2500067353248596
+2025-07-17 21:49:26,643 - INFO - Skipping result 2 with low score: 0.2550702393054962
+2025-07-17 21:49:26,643 - INFO - Skipping result 3 with low score: 0.2573569416999817
+2025-07-17 21:49:26,643 - INFO - Skipping result 4 with low score: 0.25933799147605896
+2025-07-17 21:49:26,643 - WARNING - No results found for the query
+2025-07-17 21:50:24,376 - INFO - Use pytorch device_name: cpu
+2025-07-17 21:50:24,376 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-17 21:50:30,405 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-17 21:51:05,964 - INFO - Received query: question='mã luật: 107-2016-QH13 Điều 1. Phạm vi điều chỉnh nội dung:Luật này quy định về đối tượng chịu thuế, người nộp thuế, căn cứ tính thuế, thời điểm tính thuế, biểu thuế, thuế chống bán phá giá, thuế chống trợ cấp, thuế tự vệ áp dụng đối với hàng hóa xuất khẩu, nhập khẩu; miễn thuế, giảm thuế, hoàn thuế xuất khẩu, thuế nhập khẩu. ' top_k= 5
+2025-07-17 22:00:16,238 - INFO - Use pytorch device_name: cpu
+2025-07-17 22:00:16,239 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-17 22:00:24,017 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-18 00:59:50,312 - INFO - Use pytorch device_name: cpu
+2025-07-18 00:59:50,312 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-18 00:59:58,297 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-18 01:00:37,155 - INFO - Received query: question='mã luật: 107-2016-QH13 Điều 1. Phạm vi điều chỉnh nội dung:Luật này quy định về đối tượng chịu thuế, người nộp thuế, căn cứ tính thuế, thời điểm tính thuế, biểu thuế, thuế chống bán phá giá, thuế chống trợ cấp, thuế tự vệ áp dụng đối với hàng hóa xuất khẩu, nhập khẩu; miễn thuế, giảm thuế, hoàn thuế xuất khẩu, thuế nhập khẩu. ' top_k= 5
+2025-07-18 01:01:19,473 - INFO - Received query: question='mã luật: 107-2016-QH13 Điều 1. Phạm vi điều chỉnh nội dung:Luật này quy định về đối tượng chịu thuế, người nộp thuế, căn cứ tính thuế, thời điểm tính thuế, biểu thuế, thuế chống bán phá giá, thuế chống trợ cấp, thuế tự vệ áp dụng đối với hàng hóa xuất khẩu, nhập khẩu; miễn thuế, giảm thuế, hoàn thuế xuất khẩu, thuế nhập khẩu. ' top_k= 5
+2025-07-18 08:47:50,433 - INFO - Use pytorch device_name: cpu
+2025-07-18 08:47:50,434 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-18 08:47:57,131 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-18 08:48:51,141 - INFO - Received query: question='mã luật: 107-2016-QH13 Điều 1. Phạm vi điều chỉnh nội dung:Luật này quy định về đối tượng chịu thuế, người nộp thuế, căn cứ tính thuế, thời điểm tính thuế, biểu thuế, thuế chống bán phá giá, thuế chống trợ cấp, thuế tự vệ áp dụng đối với hàng hóa xuất khẩu, nhập khẩu; miễn thuế, giảm thuế, hoàn thuế xuất khẩu, thuế nhập khẩu' top_k= 5
+2025-07-18 08:49:42,097 - INFO - Received query: question='hợp đồng lao động' top_k= 5
+2025-07-18 08:50:18,329 - INFO - Received query: question='你叫什么名字' top_k= 5
+2025-07-18 08:50:18,367 - INFO - Skipping result 0 with low score: 1.0311297178268433
+2025-07-18 08:50:18,367 - INFO - Skipping result 1 with low score: 1.0363894701004028
+2025-07-18 08:50:18,367 - INFO - Skipping result 2 with low score: 1.0461397171020508
+2025-07-18 08:50:18,367 - INFO - Skipping result 3 with low score: 1.0466620922088623
+2025-07-18 08:50:18,367 - INFO - Skipping result 4 with low score: 1.0543609857559204
+2025-07-18 08:50:18,367 - WARNING - No results found for the query
+2025-07-18 08:52:46,412 - INFO - Received query: question='bảo hiểm lao động' top_k= 5
+2025-07-18 08:56:23,965 - INFO - Received query: question='Điều 29 chương II luật hàng hải' top_k= 5
+2025-07-18 09:07:40,747 - INFO - Use pytorch device_name: cpu
+2025-07-18 09:07:40,748 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-18 09:07:50,096 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-18 09:08:11,013 - INFO - Received query: question='你叫什么名字' top_k= 5
+2025-07-18 09:08:11,196 - WARNING - No results found for the query
+2025-07-18 09:11:43,747 - INFO - Use pytorch device_name: cpu
+2025-07-18 09:11:43,747 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-18 09:11:52,752 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-18 09:12:30,752 - INFO - Use pytorch device_name: cpu
+2025-07-18 09:12:30,752 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-18 09:12:39,250 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-18 09:13:20,322 - INFO - Received query: question='try:' top_k= 5
+2025-07-18 09:13:20,533 - WARNING - No results found for the query
+2025-07-18 09:13:20,533 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 72, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-18 09:14:16,912 - INFO - Use pytorch device_name: cpu
+2025-07-18 09:14:16,913 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-18 09:14:25,025 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-18 09:14:43,138 - INFO - Received query: question='你叫什么名字' top_k= 5
+2025-07-18 09:14:44,088 - INFO - Skipping result 0 with low score: 1.0311297178268433
+2025-07-18 09:14:44,089 - INFO - Skipping result 1 with low score: 1.0363894701004028
+2025-07-18 09:14:44,089 - INFO - Skipping result 2 with low score: 1.0461397171020508
+2025-07-18 09:14:44,089 - INFO - Skipping result 3 with low score: 1.0466620922088623
+2025-07-18 09:14:44,089 - INFO - Skipping result 4 with low score: 1.0543609857559204
+2025-07-18 09:14:44,089 - WARNING - No results found for the query
+2025-07-18 09:14:44,089 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 72, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-18 09:15:02,939 - INFO - Received query: question='mã luật: 107-2016-QH13 Điều 1. Phạm vi điều chỉnh nội dung:Luật này quy định về đối tượng chịu thuế, người nộp thuế, căn cứ tính thuế, thời điểm tính thuế, biểu thuế, thuế chống bán phá giá, thuế chống trợ cấp, thuế tự vệ áp dụng đối với hàng hóa xuất khẩu, nhập khẩu; miễn thuế, giảm thuế, hoàn thuế xuất khẩu, thuế nhập khẩu' top_k= 5
+2025-07-18 09:19:23,096 - INFO - Use pytorch device_name: cpu
+2025-07-18 09:19:23,096 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-18 09:19:31,731 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
