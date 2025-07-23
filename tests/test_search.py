@@ -7,10 +7,6 @@ from datetime import datetime
 
 import chromadb
 import numpy as np
-from chromadb.config import Settings
-
-# Thêm thư mục gốc vào sys.path để import cleaner
-sys.path.append(os.path.abspath("../BTTH3"))
 
 
 def load_config():

@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # Load embedding model
-model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+model = SentenceTransformer("intfloat/e5-small-v2")
 
 # Initialize ChromaDB client and collection
 client = chromadb.PersistentClient(path="chroma_db")
@@ -44,7 +44,7 @@ def search(
     logger.info(f"Received query: question='{user_input}' top_k= {k}")
 
     # Embed truy vấn
-    embedding = model.encode(user_input).tolist()
+    embedding = model.encode(f"query: {user_input}").tolist()
 
     try:
         # Truy vấn ChromaDB (top 5)
@@ -60,7 +60,7 @@ def search(
         metadatas = results["metadatas"][0]
 
         for i, (doc, score, meta) in enumerate(zip(documents, distances, metadatas)):
-            if score > 0.5:  # Chỉ lấy những kết quả có độ tương đồng cao
+            if score > 0.6:  # Chỉ lấy những kết quả có độ tương đồng cao
                 logger.info(f"Skipping result {i} with low score: {score}")
                 continue
             else:
@@ -75,6 +75,10 @@ def search(
                             "date": meta.get("date", "unknown"),
                         },
                     }
+                )
+                logger.info(
+                    f"Result {i}: score={score}, law_id={meta.get('law_id', 'unknown')}, "
+                    f"title={meta.get('title', 'unknown')}"
                 )
         if not response_chunks:
             logger.warning("No results found for the query")

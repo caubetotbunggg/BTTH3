@@ -218,3 +218,195 @@ fastapi.exceptions.HTTPException: 200: No results found
 2025-07-23 13:35:10,011 - INFO - AFC is enabled with max remote calls: 10.
 2025-07-23 13:35:18,907 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
 2025-07-23 13:35:18,908 - INFO - AFC remote call 1 is done.
+2025-07-23 14:11:03,787 - INFO - Use pytorch device_name: cpu
+2025-07-23 14:11:03,788 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 14:11:18,568 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 14:22:22,132 - INFO - Use pytorch device_name: cpu
+2025-07-23 14:22:22,132 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 14:22:29,024 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 14:24:02,033 - INFO - Received query: question='n' top_k= 5
+2025-07-23 14:24:03,138 - INFO - Skipping result 0 with low score: 1.380678653717041
+2025-07-23 14:24:03,138 - INFO - Skipping result 1 with low score: 1.3902602195739746
+2025-07-23 14:24:03,138 - INFO - Skipping result 2 with low score: 1.391182780265808
+2025-07-23 14:24:03,138 - INFO - Skipping result 3 with low score: 1.3957765102386475
+2025-07-23 14:24:03,138 - INFO - Skipping result 4 with low score: 1.403778314590454
+2025-07-23 14:24:03,138 - WARNING - No results found for the query
+2025-07-23 14:24:03,138 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 81, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-23 14:24:34,670 - INFO - Received query: question='ngân hàng nhà nước việt nam' top_k= 5
+2025-07-23 14:24:34,731 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 14:24:42,579 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 14:24:42,600 - INFO - AFC remote call 1 is done.
+2025-07-23 14:36:28,209 - INFO - Use pytorch device_name: cpu
+2025-07-23 14:36:28,209 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 14:36:34,783 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 14:37:07,163 - INFO - Use pytorch device_name: cpu
+2025-07-23 14:37:07,163 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 14:37:15,109 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 14:38:26,850 - INFO - Use pytorch device_name: cpu
+2025-07-23 14:38:26,850 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 14:38:32,666 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 14:42:17,678 - INFO - Use pytorch device_name: cpu
+2025-07-23 14:42:17,679 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 14:42:23,860 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 14:42:55,339 - INFO - Received query: question='luật nhà đất' top_k= 5
+2025-07-23 14:42:56,407 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 14:43:01,785 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 14:43:01,812 - INFO - AFC remote call 1 is done.
+2025-07-23 14:43:01,816 - INFO - retrieve_time=1.07,prompt_time=0.00,llm_time=5.41,total=6.48
+2025-07-23 14:43:44,766 - INFO - Received query: question='luật nhà đất' top_k= 5
+2025-07-23 14:46:21,808 - INFO - Received query: question='Vị trí, chức năng của Ngân hàng Nhà nước Việt Nam là gì' top_k= 5
+2025-07-23 14:46:21,877 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 14:46:33,238 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 14:46:33,240 - INFO - AFC remote call 1 is done.
+2025-07-23 14:46:33,241 - INFO - retrieve_time=0.07,prompt_time=0.00,llm_time=11.37,total=11.43
+2025-07-23 14:47:00,884 - INFO - Received query: question='Vị trí, chức năng của Ngân hàng Nhà nước Việt Nam là gì' top_k= 5
+2025-07-23 14:47:00,934 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 14:47:11,983 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 14:47:11,984 - INFO - AFC remote call 1 is done.
+2025-07-23 14:47:11,986 - INFO - retrieve_time=0.05,prompt_time=0.00,llm_time=11.05,total=11.10
+2025-07-23 14:47:54,662 - INFO - Use pytorch device_name: cpu
+2025-07-23 14:47:54,662 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 14:48:01,316 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 14:49:23,182 - INFO - Use pytorch device_name: cpu
+2025-07-23 14:49:23,182 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 14:49:29,896 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 14:49:58,185 - INFO - Use pytorch device_name: cpu
+2025-07-23 14:49:58,186 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 14:50:04,031 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 14:50:46,086 - INFO - Received query: question='Vị trí, chức năng của Ngân hàng Nhà nước Việt Nam là gì' top_k= 5
+2025-07-23 14:50:46,767 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 14:50:59,794 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 14:50:59,813 - INFO - AFC remote call 1 is done.
+2025-07-23 14:50:59,816 - INFO - retrieve_time=0.68,prompt_time=0.00,llm_time=13.05,total=13.73
+2025-07-23 14:52:08,719 - INFO - Received query: question='quy luật về vật nuôi biến đổi gen' top_k= 5
+2025-07-23 14:52:08,777 - INFO - Skipping result 0 with low score: 0.5229382514953613
+2025-07-23 14:52:08,778 - INFO - Skipping result 1 with low score: 0.5370142459869385
+2025-07-23 14:52:08,778 - INFO - Skipping result 2 with low score: 0.563643217086792
+2025-07-23 14:52:08,778 - INFO - Skipping result 3 with low score: 0.5636432766914368
+2025-07-23 14:52:08,778 - INFO - Skipping result 4 with low score: 0.5667760372161865
+2025-07-23 14:52:08,778 - WARNING - No results found for the query
+2025-07-23 14:52:08,778 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 81, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-23 14:52:20,623 - INFO - Received query: question='quy luật về vật nuôi biến đổi gen' top_k= 5
+2025-07-23 14:52:20,661 - INFO - Skipping result 0 with low score: 0.5229382514953613
+2025-07-23 14:52:20,662 - INFO - Skipping result 1 with low score: 0.5370142459869385
+2025-07-23 14:52:20,662 - INFO - Skipping result 2 with low score: 0.563643217086792
+2025-07-23 14:52:20,662 - INFO - Skipping result 3 with low score: 0.5636432766914368
+2025-07-23 14:52:20,662 - INFO - Skipping result 4 with low score: 0.5667760372161865
+2025-07-23 14:52:20,662 - WARNING - No results found for the query
+2025-07-23 14:52:20,662 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 81, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-23 14:52:55,018 - INFO - Received query: question='Luật về vật nuôi biến đổi gen' top_k= 5
+2025-07-23 14:52:55,069 - INFO - Skipping result 0 with low score: 0.5386500954627991
+2025-07-23 14:52:55,069 - INFO - Skipping result 1 with low score: 0.5411868691444397
+2025-07-23 14:52:55,069 - INFO - Skipping result 2 with low score: 0.5521342754364014
+2025-07-23 14:52:55,069 - INFO - Skipping result 3 with low score: 0.5562541484832764
+2025-07-23 14:52:55,069 - INFO - Skipping result 4 with low score: 0.5728117227554321
+2025-07-23 14:52:55,070 - WARNING - No results found for the query
+2025-07-23 14:52:55,070 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 81, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-23 14:53:42,067 - INFO - Use pytorch device_name: cpu
+2025-07-23 14:53:42,068 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 14:53:48,407 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 14:54:35,991 - INFO - Use pytorch device_name: cpu
+2025-07-23 14:54:35,992 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 14:54:43,025 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 14:55:16,413 - INFO - Received query: question='Luật về vật nuôi biến đổi gen' top_k= 5
+2025-07-23 14:55:17,012 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 14:55:28,004 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 14:55:28,010 - INFO - AFC remote call 1 is done.
+2025-07-23 14:55:28,013 - INFO - retrieve_time=0.60,prompt_time=0.00,llm_time=11.00,total=11.60
+2025-07-23 14:55:51,671 - INFO - Received query: question='quyền và nghĩa vụ của người giao hàng' top_k= 5
+2025-07-23 14:55:51,724 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 14:56:02,991 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 14:56:02,993 - INFO - AFC remote call 1 is done.
+2025-07-23 14:56:02,996 - INFO - retrieve_time=0.05,prompt_time=0.00,llm_time=11.27,total=11.33
+2025-07-23 14:56:53,631 - INFO - Received query: question='Luật Kinh doanh bất động sản 2023' top_k= 5
+2025-07-23 14:56:53,682 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 14:56:59,714 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 14:56:59,716 - INFO - AFC remote call 1 is done.
+2025-07-23 14:56:59,718 - INFO - retrieve_time=0.05,prompt_time=0.00,llm_time=6.04,total=6.09
+2025-07-23 14:58:14,674 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-23 14:58:14,724 - INFO - Skipping result 0 with low score: 0.7293552160263062
+2025-07-23 14:58:14,725 - INFO - Skipping result 1 with low score: 0.7445236444473267
+2025-07-23 14:58:14,725 - INFO - Skipping result 2 with low score: 0.7498376965522766
+2025-07-23 14:58:14,725 - INFO - Skipping result 3 with low score: 0.7526614665985107
+2025-07-23 14:58:14,725 - INFO - Skipping result 4 with low score: 0.7662568688392639
+2025-07-23 14:58:14,725 - WARNING - No results found for the query
+2025-07-23 14:58:14,725 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 81, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-23 14:58:35,134 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-23 14:58:35,166 - INFO - Skipping result 0 with low score: 0.7293552160263062
+2025-07-23 14:58:35,166 - INFO - Skipping result 1 with low score: 0.7445236444473267
+2025-07-23 14:58:35,166 - INFO - Skipping result 2 with low score: 0.7498376965522766
+2025-07-23 14:58:35,166 - INFO - Skipping result 3 with low score: 0.7526614665985107
+2025-07-23 14:58:35,166 - INFO - Skipping result 4 with low score: 0.7662568688392639
+2025-07-23 14:58:35,166 - WARNING - No results found for the query
+2025-07-23 14:58:35,166 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 81, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-23 20:23:14,240 - INFO - Use pytorch device_name: cpu
+2025-07-23 20:23:14,241 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-23 20:23:24,715 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 20:24:28,904 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-23 20:24:57,589 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-23 20:24:57,761 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 20:25:03,926 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 20:25:03,957 - INFO - AFC remote call 1 is done.
+2025-07-23 20:25:03,961 - INFO - retrieve_time=0.15,prompt_time=0.00,llm_time=6.23,total=6.37
+2025-07-23 20:28:54,690 - INFO - Use pytorch device_name: cpu
+2025-07-23 20:28:54,690 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-23 20:29:03,607 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 20:29:20,848 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-23 20:29:30,668 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 20:29:42,178 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 20:29:42,213 - INFO - AFC remote call 1 is done.
+2025-07-23 20:29:42,217 - INFO - retrieve_time=9.82,prompt_time=0.00,llm_time=11.55,total=21.37
+2025-07-23 23:52:36,497 - INFO - Use pytorch device_name: cpu
+2025-07-23 23:52:36,497 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-23 23:52:42,867 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 23:53:57,152 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-23 23:53:58,774 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 23:54:08,419 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 23:54:08,444 - INFO - AFC remote call 1 is done.
+2025-07-23 23:54:08,447 - INFO - retrieve_time=1.62,prompt_time=0.00,llm_time=9.67,total=11.30
+2025-07-24 00:07:07,635 - INFO - Use pytorch device_name: cpu
+2025-07-24 00:07:07,635 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-24 00:07:18,528 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-24 00:07:39,574 - INFO - Use pytorch device_name: cpu
+2025-07-24 00:07:39,574 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-24 00:07:48,145 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-24 00:08:19,152 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-24 00:08:20,648 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-24 00:08:27,614 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 00:08:27,643 - INFO - AFC remote call 1 is done.
+2025-07-24 00:10:14,731 - INFO - Use pytorch device_name: cpu
+2025-07-24 00:10:14,731 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-24 00:10:22,781 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-24 00:10:37,441 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-24 00:10:38,329 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 00:10:38,329 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 00:10:38,329 - INFO - Result 2: score=0.2467479407787323, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 00:10:38,329 - INFO - Result 3: score=0.2484324872493744, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 00:10:38,329 - INFO - Result 4: score=0.24991998076438904, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 00:10:38,331 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-24 00:10:50,934 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 00:10:50,950 - INFO - AFC remote call 1 is done.

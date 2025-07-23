@@ -15,7 +15,7 @@ os.makedirs("../BTTH3/log", exist_ok=True)
 
 # Load model
 print("[+] Loading embedding model...")
-model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+model = SentenceTransformer("intfloat/e5-small-v2")
 
 # Tập tin đầu vào
 print("[+] Loading data...")
@@ -59,18 +59,18 @@ for batch_idx in tqdm(
 
     for item in batch_data:
         try:
-            if item['chunk']['khoan'] is None:
-                sentence = f"{item['meta']['title']} {item['chunk']['chuong']} {item['chunk']['tieu_de']} {item['chunk']['noi_dung']}"
+            if item["chunk"]["khoan"] is None:
+                sentence = f"passage: {item['meta']['title']} {item['chunk']['chuong']} {item['chunk']['tieu_de']} {item['chunk']['noi_dung']}"
                 sentences.append(sentence)
                 batch_items.append(item)
             else:
                 list_khoan = []
-                for khoan in item['chunk']['khoan']:
+                for khoan in item["chunk"]["khoan"]:
                     noi_dung_khoan = f"khoản {khoan['khoan']} {khoan['noi_dung']} "
                     list_khoan.append(noi_dung_khoan)
                     all_khoan = "".join(list_khoan)
 
-                sentence = f"{item['meta']['title']} {item['chunk']['chuong']} {item['chunk']['tieu_de']} {item['chunk']['noi_dung']} {all_khoan}"
+                sentence = f"passage: {item['meta']['title']} {item['chunk']['chuong']} {item['chunk']['tieu_de']} {item['chunk']['noi_dung']} {all_khoan}"
                 sentences.append(sentence)
                 batch_items.append(item)
         except Exception as e:
@@ -78,6 +78,7 @@ for batch_idx in tqdm(
             with open(
                 "../BTTH3/log/embedding_error.log", "a", encoding="utf-8"
             ) as log_f:
+                log_f.write(f"Lỗi: {e}\n")
                 log_f.write(
                     f"Lỗi khi chuẩn bị data - Index: {actual_start + len(batch_items)}\n"
                 )
@@ -100,6 +101,7 @@ for batch_idx in tqdm(
             with open(
                 "../BTTH3/log/embedding_error.log", "a", encoding="utf-8"
             ) as log_f:
+                log_f.write(f"Lỗi: {e}\n")
                 log_f.write(
                     f"Lỗi khi embedding batch - Index: {actual_start}-{actual_end}\n"
                 )
@@ -150,6 +152,7 @@ for law_id, embeds_and_meta in tqdm(grouped.items(), desc="Saving files"):
 
     except Exception as e:
         with open("../BTTH3/log/embedding_error.log", "a", encoding="utf-8") as log_f:
+            log_f.write(f"Lỗi: {e}\n")
             log_f.write(f"Lỗi khi lưu file cho law_id: {law_id}\n")
             log_f.write(traceback.format_exc())
             log_f.write("\n" + "=" * 80 + "\n")
