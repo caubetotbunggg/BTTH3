@@ -1,0 +1,38 @@
+name: Retrieve Service CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          environment-file: environment.yml
+          auto-activate-base: false
+          activate-environment: environment 
+          python-version: 3.11
+          use-mamba: true
+
+      - name: Run flake8
+        run: flake8 .
+
+      - name: Run black check
+        run: black . --check
+
+      - name: Run isort check
+        run: isort . --check-only
+
+      - name: Run tests with coverage
+        run: |
+          coverage run -m pytest
+          coverage report
