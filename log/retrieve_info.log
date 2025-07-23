@@ -106,3 +106,115 @@ fastapi.exceptions.HTTPException: 200: No results found
 2025-07-18 14:52:29,055 - INFO - Use pytorch device_name: cpu
 2025-07-18 14:52:29,056 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
 2025-07-18 14:52:35,476 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-22 17:33:04,256 - INFO - Use pytorch device_name: cpu
+2025-07-22 17:33:04,257 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-22 17:33:15,234 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-22 17:33:17,912 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-22 17:33:29,900 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-22 17:33:30,097 - INFO - AFC remote call 1 is done.
+2025-07-22 17:37:18,994 - INFO - Use pytorch device_name: cpu
+2025-07-22 17:37:18,994 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-22 17:37:27,837 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-22 17:38:02,098 - INFO - Use pytorch device_name: cpu
+2025-07-22 17:38:02,098 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-22 17:38:11,051 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-22 17:39:50,562 - INFO - Received query: question='Người điều khiển xe máy không đội mũ bảo hiểm sẽ bị xử phạt như thế nào?' top_k= 5
+2025-07-22 17:47:07,237 - INFO - Use pytorch device_name: cpu
+2025-07-22 17:47:07,238 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-22 17:47:16,448 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-22 17:47:49,202 - INFO - Received query: question='Người điều khiển xe máy không đội mũ bảo hiểm sẽ bị xử phạt như thế nào?' top_k= 5
+2025-07-22 17:50:09,315 - INFO - Received query: question='Người điều khiển xe máy không đội mũ bảo hiểm sẽ bị xử phạt như thế nào?' top_k= 5
+2025-07-22 17:53:21,724 - INFO - Use pytorch device_name: cpu
+2025-07-22 17:53:21,724 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-22 17:53:30,635 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-22 17:54:18,627 - INFO - Received query: question='Người điều khiển xe máy không đội mũ bảo hiểm sẽ bị xử phạt như thế nào?' top_k= 5
+2025-07-22 18:56:39,719 - INFO - Use pytorch device_name: cpu
+2025-07-22 18:56:39,719 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-22 18:56:46,649 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-22 18:57:05,091 - INFO - Received query: question='Người điều khiển xe máy không đội mũ bảo hiểm sẽ bị xử phạt như thế nào?' top_k= 5
+2025-07-22 18:59:04,593 - INFO - Use pytorch device_name: cpu
+2025-07-22 18:59:04,594 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-22 18:59:10,313 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-22 18:59:11,276 - INFO - Received query: question='Người điều khiển xe máy không đội mũ bảo hiểm sẽ bị xử phạt như thế nào?' top_k= 5
+2025-07-22 18:59:11,505 - INFO - Skipping result 0 with low score: 0.5361423492431641
+2025-07-22 18:59:11,506 - INFO - Skipping result 1 with low score: 0.5374685525894165
+2025-07-22 18:59:11,506 - INFO - Skipping result 2 with low score: 0.5383291244506836
+2025-07-22 18:59:11,506 - INFO - Skipping result 3 with low score: 0.5423253178596497
+2025-07-22 18:59:11,506 - INFO - Skipping result 4 with low score: 0.5437182188034058
+2025-07-22 18:59:11,506 - WARNING - No results found for the query
+2025-07-22 18:59:11,506 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 81, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-22 18:59:13,453 - INFO - Received query: question='Người điều khiển xe máy không đội mũ bảo hiểm sẽ bị xử phạt như thế nào?' top_k= 5
+2025-07-22 18:59:13,490 - INFO - Skipping result 0 with low score: 0.5361423492431641
+2025-07-22 18:59:13,490 - INFO - Skipping result 1 with low score: 0.5374685525894165
+2025-07-22 18:59:13,490 - INFO - Skipping result 2 with low score: 0.5383291244506836
+2025-07-22 18:59:13,490 - INFO - Skipping result 3 with low score: 0.5423253178596497
+2025-07-22 18:59:13,490 - INFO - Skipping result 4 with low score: 0.5437182188034058
+2025-07-22 18:59:13,490 - WARNING - No results found for the query
+2025-07-22 18:59:13,490 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 81, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-23 13:06:58,804 - INFO - Use pytorch device_name: cpu
+2025-07-23 13:06:58,805 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 13:07:05,481 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 13:08:20,363 - INFO - Received query: question='Người lao động được nghỉ thai sản bao nhiêu ngày?' top_k= 5
+2025-07-23 13:08:21,379 - INFO - Skipping result 1 with low score: 0.5075006484985352
+2025-07-23 13:08:21,379 - INFO - Skipping result 2 with low score: 0.5127623081207275
+2025-07-23 13:08:21,379 - INFO - Skipping result 3 with low score: 0.5290876626968384
+2025-07-23 13:08:21,379 - INFO - Skipping result 4 with low score: 0.5301782488822937
+2025-07-23 13:09:36,482 - INFO - Received query: question='Người lao động được nghỉ thai sản bao nhiêu ngày?' top_k= 5
+2025-07-23 13:09:36,522 - INFO - Skipping result 1 with low score: 0.5075006484985352
+2025-07-23 13:09:36,522 - INFO - Skipping result 2 with low score: 0.5127623081207275
+2025-07-23 13:09:36,522 - INFO - Skipping result 3 with low score: 0.5290876626968384
+2025-07-23 13:09:36,522 - INFO - Skipping result 4 with low score: 0.5301782488822937
+2025-07-23 13:15:11,988 - INFO - Use pytorch device_name: cpu
+2025-07-23 13:15:11,988 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 13:15:18,204 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 13:15:40,893 - INFO - Use pytorch device_name: cpu
+2025-07-23 13:15:40,894 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 13:15:46,982 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 13:16:07,416 - INFO - Received query: question='Người lao động được nghỉ thai sản bao nhiêu ngày?' top_k= 5
+2025-07-23 13:16:07,679 - INFO - Skipping result 1 with low score: 0.5075006484985352
+2025-07-23 13:16:07,679 - INFO - Skipping result 2 with low score: 0.5127623081207275
+2025-07-23 13:16:07,679 - INFO - Skipping result 3 with low score: 0.5290876626968384
+2025-07-23 13:16:07,679 - INFO - Skipping result 4 with low score: 0.5301782488822937
+2025-07-23 13:20:03,299 - INFO - Use pytorch device_name: cpu
+2025-07-23 13:20:03,299 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 13:20:09,368 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 13:21:19,847 - INFO - Received query: question='Người lao động được nghỉ thai sản bao nhiêu ngày?' top_k= 5
+2025-07-23 13:21:20,956 - INFO - Skipping result 1 with low score: 0.5075006484985352
+2025-07-23 13:21:20,957 - INFO - Skipping result 2 with low score: 0.5127623081207275
+2025-07-23 13:21:20,957 - INFO - Skipping result 3 with low score: 0.5290876626968384
+2025-07-23 13:21:20,957 - INFO - Skipping result 4 with low score: 0.5301782488822937
+2025-07-23 13:24:13,319 - INFO - Use pytorch device_name: cpu
+2025-07-23 13:24:13,319 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 13:24:21,713 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 13:25:08,758 - INFO - Received query: question='Người lao động được nghỉ thai sản bao nhiêu ngày?' top_k= 5
+2025-07-23 13:25:09,747 - INFO - Skipping result 1 with low score: 0.5075006484985352
+2025-07-23 13:25:09,747 - INFO - Skipping result 2 with low score: 0.5127623081207275
+2025-07-23 13:25:09,747 - INFO - Skipping result 3 with low score: 0.5290876626968384
+2025-07-23 13:25:09,747 - INFO - Skipping result 4 with low score: 0.5301782488822937
+2025-07-23 13:30:54,832 - INFO - Use pytorch device_name: cpu
+2025-07-23 13:30:54,832 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-23 13:31:00,989 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-23 13:31:44,125 - INFO - Received query: question='Người lao động được nghỉ thai sản bao nhiêu ngày?' top_k= 5
+2025-07-23 13:31:44,394 - INFO - Skipping result 1 with low score: 0.5075006484985352
+2025-07-23 13:31:44,395 - INFO - Skipping result 2 with low score: 0.5127623081207275
+2025-07-23 13:31:44,395 - INFO - Skipping result 3 with low score: 0.5290876626968384
+2025-07-23 13:31:44,395 - INFO - Skipping result 4 with low score: 0.5301782488822937
+2025-07-23 13:31:44,395 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 13:31:50,572 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 13:31:50,603 - INFO - AFC remote call 1 is done.
+2025-07-23 13:33:48,155 - INFO - Received query: question='Quy định về tốc độ tối đa khi lái xe trong khu dân cư là bao nhiêu' top_k= 5
+2025-07-23 13:33:48,220 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 13:33:53,777 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 13:33:53,779 - INFO - AFC remote call 1 is done.
+2025-07-23 13:35:09,971 - INFO - Received query: question='Ngân hàng nhà nước việt nam là gì' top_k= 5
+2025-07-23 13:35:10,011 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-23 13:35:18,907 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-23 13:35:18,908 - INFO - AFC remote call 1 is done.

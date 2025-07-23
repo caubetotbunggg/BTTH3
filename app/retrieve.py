@@ -39,7 +39,7 @@ class SearchResponse(BaseModel):
 @router.post("/search", response_model=SearchResponse)
 def search(
     user_input: str = Query(..., description="Câu hỏi hoặc truy vấn người dùng"),
-    k: int = Query(5, description="Số lượng kết quả cần trả về")
+    k: int = Query(5, description="Số lượng kết quả cần trả về"),
 ):
     logger.info(f"Received query: question='{user_input}' top_k= {k}")
 
@@ -60,7 +60,7 @@ def search(
         metadatas = results["metadatas"][0]
 
         for i, (doc, score, meta) in enumerate(zip(documents, distances, metadatas)):
-            if score > 0.7:  # Chỉ lấy những kết quả có độ tương đồng cao
+            if score > 0.5:  # Chỉ lấy những kết quả có độ tương đồng cao
                 logger.info(f"Skipping result {i} with low score: {score}")
                 continue
             else:
