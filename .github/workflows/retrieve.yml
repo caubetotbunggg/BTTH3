@@ -1,4 +1,4 @@
-name: Retrieve Service CI
+name: Service CI
 
 on:
   push:
@@ -32,7 +32,14 @@ jobs:
       - name: Run isort check
         run: isort . --check-only
 
-      - name: Run tests with coverage
+      - name: Run retrieve tests with coverage
         run: |
-          coverage run -m pytest
+          echo "Running tests for retrieve module"
+          coverage run -m pytest tests/test_retrieve
+          coverage report
+
+      - name: Run rag tests with coverage
+        run: |
+          echo "Running tests for rag module"
+          coverage run --append -m pytest tests/test_rag
           coverage report
