@@ -39,7 +39,7 @@ def chunk_by_article(text, chapter_title=None):
             continue
 
         tieu_de = match_dieu.group(1)
-        noi_dung = chunk.strip()[len(tieu_de):].strip()
+        noi_dung = chunk.strip()[len(tieu_de) :].strip()
 
         # Tách khoản: 1. hoặc 1- hoặc 1)
         khoan_list = []

@@ -79,9 +79,7 @@ def process_all_files():
 
 if __name__ == "__main__":
     process_all_files()
-    
-# 1 số file là Điều X\n 
-# 1 số file là Chương X. 
-# 1 số file không có chương, chỉ có Điều 
 
-
+# 1 số file là Điều X\n
+# 1 số file là Chương X.
+# 1 số file không có chương, chỉ có Điều

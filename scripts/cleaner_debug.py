@@ -3,7 +3,9 @@ import os
 
 from bs4 import BeautifulSoup
 
-with open("../BTTH3/data/unstructured/file_need_debug.json", "r", encoding="utf-8") as f:
+with open(
+    "../BTTH3/data/unstructured/file_need_debug.json", "r", encoding="utf-8"
+) as f:
     file_need_debug = json.load(f)
 for file in file_need_debug:
     with open(os.path.join("../BTTH3/data/raw/html", file), "r", encoding="utf-8") as f:
