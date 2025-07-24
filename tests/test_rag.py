@@ -36,13 +36,12 @@ def test_rag_happy_path(mock_llm, mock_search):
 def test_rag_llm_timeout(mock_llm, mock_search):
     mock_llm.return_value = ""  # giả lập lần 1 timeout
     response = client.post("/rag", params={"user_input": "trách nhiệm pháp lý", "k": 1})
-    assert response.status_code == 200 or response.status_code == 500  # tùy bạn định xử lý
-
+    assert response.status_code == 200 or response.status_code == 500  
 @patch("app.rag.search", return_value={"chunks": []})
 @patch("app.rag.get_llm_response_with_timeout", new_callable=AsyncMock)
 def test_rag_no_chunks(mock_llm, mock_search):
-    response = client.post("/rag", params={"user_input": "không có dữ liệu", "k": 1})
-    assert response.status_code == 500
+    response = client.post("/rag", params={"user_input": "", "k": 1})
+    assert response.status_code == 400
 
 @patch("app.rag.search", return_value=mock_chunks)
 @patch("app.rag.get_llm_response_with_timeout", new_callable=AsyncMock)

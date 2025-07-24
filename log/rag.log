@@ -1,2 +1,73 @@
 2025-07-24 00:08:27,648 - INFO:retrieve_time=1.50,prompt_time=0.00,llm_time=7.00,total=8.49
 2025-07-24 00:10:50,954 - INFO:retrieve_time=0.89,prompt_time=0.00,llm_time=12.62,total=13.51
+2025-07-24 19:18:34,628 - INFO:retrieve_time=2.32,prompt_time=0.00,llm_time=9.05,total=11.37
+2025-07-24 19:28:34,167 - INFO:retrieve_time=0.99,prompt_time=0.00,llm_time=2.38,total=3.37
+2025-07-24 19:33:23,022 - INFO:retrieve_time=0.62,prompt_time=0.00,llm_time=2.35,total=2.98
+2025-07-24 19:33:34,768 - INFO:Received query: question='giáo dục hòa nhập ' top_k= 5
+2025-07-24 19:33:34,931 - INFO:Result 0: score=0.26509326696395874, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14
+2025-07-24 19:33:34,931 - INFO:Result 1: score=0.27220916748046875, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:33:34,932 - INFO:Result 2: score=0.27313798666000366, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 19:33:34,932 - INFO:Result 3: score=0.27482444047927856, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:33:34,933 - INFO:Result 4: score=0.27682626247406006, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14
+2025-07-24 19:33:34,936 - INFO:AFC is enabled with max remote calls: 10.
+2025-07-24 19:33:37,697 - INFO:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:33:37,701 - INFO:AFC remote call 1 is done.
+2025-07-24 19:33:37,708 - INFO:retrieve_time=0.16,prompt_time=0.00,llm_time=2.77,total=2.94
+2025-07-24 19:33:49,052 - INFO:Received query: question='giáo dục hòa nhập ' top_k= 5
+2025-07-24 19:33:49,162 - INFO:Result 0: score=0.26509326696395874, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14
+2025-07-24 19:33:49,163 - INFO:Result 1: score=0.27220916748046875, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:33:49,163 - INFO:Result 2: score=0.27313798666000366, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 19:33:49,163 - INFO:Result 3: score=0.27482444047927856, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:33:49,163 - INFO:Result 4: score=0.27682626247406006, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14
+2025-07-24 19:33:49,167 - INFO:AFC is enabled with max remote calls: 10.
+2025-07-24 19:33:51,798 - INFO:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:33:51,800 - INFO:AFC remote call 1 is done.
+2025-07-24 19:33:51,805 - INFO:retrieve_time=0.11,prompt_time=0.00,llm_time=2.64,total=2.75
+2025-07-24 19:37:20,159 - INFO:retrieve_time=0.62,prompt_time=0.00,llm_time=22.85,total=23.48
+2025-07-24 19:37:30,554 - INFO:Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-24 19:37:30,680 - INFO:Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:37:30,680 - INFO:Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 19:37:30,680 - INFO:Result 2: score=0.2467479407787323, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:37:30,680 - INFO:Result 3: score=0.2484324872493744, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:37:30,680 - INFO:Result 4: score=0.24991998076438904, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:37:30,683 - INFO:AFC is enabled with max remote calls: 10.
+2025-07-24 19:37:54,302 - INFO:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:37:54,305 - INFO:AFC remote call 1 is done.
+2025-07-24 19:37:54,311 - INFO:retrieve_time=0.13,prompt_time=0.00,llm_time=23.63,total=23.76
+2025-07-24 19:39:33,676 - INFO:retrieve_time=0.60,prompt_time=0.00,llm_time=23.41,total=24.06
+2025-07-24 19:39:48,704 - INFO:Received query: question='giáo dục hòa nhập là gì' top_k= 2
+2025-07-24 19:39:48,785 - INFO:Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:39:48,785 - INFO:Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 19:39:48,787 - INFO:AFC is enabled with max remote calls: 10.
+2025-07-24 19:40:12,318 - INFO:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:40:12,320 - INFO:AFC remote call 1 is done.
+2025-07-24 19:40:12,324 - INFO:retrieve_time=0.08,prompt_time=0.00,llm_time=23.54,total=23.62
+2025-07-24 19:42:14,587 - INFO:retrieve_time=0.66,prompt_time=0.00,llm_time=2.81,total=3.47
+2025-07-24 19:42:57,697 - INFO:Received query: question='thông tin về giáo dục hòa nhập' top_k= 3
+2025-07-24 19:42:57,834 - INFO:Result 0: score=0.2552531659603119, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:42:57,835 - INFO:Result 1: score=0.26105639338493347, law_id=54-2014-QH13, title=Luật Hải quan 2014, số 54/2014/QH13
+2025-07-24 19:42:57,835 - INFO:Result 2: score=0.26204901933670044, law_id=86-2015-QH13, title=Luật An toàn thông tin mạng 2015, số 86/2015/QH13
+2025-07-24 19:42:57,839 - INFO:AFC is enabled with max remote calls: 10.
+2025-07-24 19:43:00,235 - INFO:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:43:00,238 - INFO:AFC remote call 1 is done.
+2025-07-24 19:43:00,244 - INFO:retrieve_time=0.14,prompt_time=0.00,llm_time=2.41,total=2.55
+2025-07-24 19:48:17,145 - INFO:retrieve_time=0.62,prompt_time=0.00,llm_time=23.16,total=23.78
+2025-07-24 19:56:34,181 - INFO:retrieve_time=0.63,prompt_time=0.00,llm_time=7.86,total=8.48
+2025-07-24 21:01:58,986 - INFO:retrieve_time=0.00,prompt_time=0.00,llm_time=0.00,total=0.00
+2025-07-24 21:01:58,989 - INFO:HTTP Request: POST http://testserver/rag?user_input=quy+%C4%91%E1%BB%8Bnh+giao+th%C3%B4ng&k=1 "HTTP/1.1 200 OK"
+2025-07-24 21:01:59,000 - INFO:HTTP Request: POST http://testserver/rag?user_input=tr%C3%A1ch+nhi%E1%BB%87m+ph%C3%A1p+l%C3%BD&k=1 "HTTP/1.1 500 Internal Server Error"
+2025-07-24 21:01:59,008 - INFO:retrieve_time=0.00,prompt_time=0.00,llm_time=0.00,total=0.00
+2025-07-24 21:01:59,421 - INFO:retrieve_time=0.00,prompt_time=0.00,llm_time=0.00,total=0.00
+2025-07-24 21:01:59,423 - INFO:HTTP Request: POST http://testserver/rag?user_input=tr%C3%ADch+d%E1%BA%ABn+lu%E1%BA%ADt&k=1 "HTTP/1.1 200 OK"
+2025-07-24 21:04:16,891 - INFO:retrieve_time=0.00,prompt_time=0.00,llm_time=0.00,total=0.00
+2025-07-24 21:04:16,893 - INFO:HTTP Request: POST http://testserver/rag?user_input=quy+%C4%91%E1%BB%8Bnh+giao+th%C3%B4ng&k=1 "HTTP/1.1 200 OK"
+2025-07-24 21:04:16,904 - INFO:HTTP Request: POST http://testserver/rag?user_input=tr%C3%A1ch+nhi%E1%BB%87m+ph%C3%A1p+l%C3%BD&k=1 "HTTP/1.1 500 Internal Server Error"
+2025-07-24 21:04:16,913 - INFO:retrieve_time=0.00,prompt_time=0.00,llm_time=0.00,total=0.00
+2025-07-24 21:04:17,271 - INFO:retrieve_time=0.00,prompt_time=0.00,llm_time=0.00,total=0.00
+2025-07-24 21:04:17,273 - INFO:HTTP Request: POST http://testserver/rag?user_input=tr%C3%ADch+d%E1%BA%ABn+lu%E1%BA%ADt&k=1 "HTTP/1.1 200 OK"
+2025-07-24 21:09:44,202 - INFO:retrieve_time=0.00,prompt_time=0.00,llm_time=0.00,total=0.00
+2025-07-24 21:09:44,206 - INFO:HTTP Request: POST http://testserver/rag?user_input=quy+%C4%91%E1%BB%8Bnh+giao+th%C3%B4ng&k=1 "HTTP/1.1 200 OK"
+2025-07-24 21:09:44,224 - INFO:HTTP Request: POST http://testserver/rag?user_input=tr%C3%A1ch+nhi%E1%BB%87m+ph%C3%A1p+l%C3%BD&k=1 "HTTP/1.1 500 Internal Server Error"
+2025-07-24 21:09:44,238 - INFO:HTTP Request: POST http://testserver/rag?user_input=&k=1 "HTTP/1.1 400 Bad Request"
+2025-07-24 21:09:44,265 - INFO:retrieve_time=0.00,prompt_time=0.00,llm_time=0.00,total=0.00
+2025-07-24 21:09:44,269 - INFO:HTTP Request: POST http://testserver/rag?user_input=tr%C3%ADch+d%E1%BA%ABn+lu%E1%BA%ADt&k=1 "HTTP/1.1 200 OK"

@@ -61,9 +61,10 @@ router = APIRouter()
 def rag_endpoint(
     user_input: str = Query(..., description="Câu hỏi hoặc truy vấn người dùng"),
     k: int = Query(5, description="Số lượng kết quả cần trả về"),
-):
+):  
+    if not user_input.strip():
+        raise HTTPException(status_code=400, detail="Câu hỏi không được để trống")
     start_total = time.perf_counter()
-
     try:
         # Tìm kiếm thông tin liên quan
         start_retrieve = time.perf_counter()

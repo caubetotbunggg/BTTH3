@@ -410,3 +410,100 @@ fastapi.exceptions.HTTPException: 200: No results found
 2025-07-24 00:10:38,331 - INFO - AFC is enabled with max remote calls: 10.
 2025-07-24 00:10:50,934 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
 2025-07-24 00:10:50,950 - INFO - AFC remote call 1 is done.
+2025-07-24 19:17:28,479 - INFO - Use pytorch device_name: cpu
+2025-07-24 19:17:28,480 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-24 19:17:38,184 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-24 19:18:23,252 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-24 19:18:25,570 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:18:25,570 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 19:18:25,571 - INFO - Result 2: score=0.2467479407787323, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:18:25,571 - INFO - Result 3: score=0.2484324872493744, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:18:25,571 - INFO - Result 4: score=0.24991998076438904, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:18:25,573 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-24 19:18:34,596 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:18:34,621 - INFO - AFC remote call 1 is done.
+2025-07-24 19:20:45,965 - INFO - Use pytorch device_name: cpu
+2025-07-24 19:20:45,966 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-24 19:20:55,456 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-24 19:22:32,106 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-24 19:22:33,385 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:22:33,385 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 19:22:33,385 - INFO - Result 2: score=0.2467479407787323, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:22:33,385 - INFO - Result 3: score=0.2484324872493744, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:22:33,385 - INFO - Result 4: score=0.24991998076438904, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:22:33,388 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-24 19:27:38,571 - INFO - Use pytorch device_name: cpu
+2025-07-24 19:27:38,572 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-24 19:27:47,271 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-24 19:28:30,795 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-24 19:28:31,783 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:28:31,783 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 19:28:31,783 - INFO - Result 2: score=0.2467479407787323, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:28:31,783 - INFO - Result 3: score=0.2484324872493744, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:28:31,784 - INFO - Result 4: score=0.24991998076438904, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:28:31,786 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-24 19:28:34,133 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:28:34,157 - INFO - AFC remote call 1 is done.
+2025-07-24 19:32:55,639 - INFO - Use pytorch device_name: cpu
+2025-07-24 19:32:55,639 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-24 19:33:03,900 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-24 19:33:20,043 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-24 19:33:20,666 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:33:20,667 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 19:33:20,667 - INFO - Result 2: score=0.2467479407787323, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:33:20,667 - INFO - Result 3: score=0.2484324872493744, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:33:20,667 - INFO - Result 4: score=0.24991998076438904, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:33:20,670 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-24 19:33:23,012 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:33:23,015 - INFO - AFC remote call 1 is done.
+2025-07-24 19:36:01,621 - INFO - Use pytorch device_name: cpu
+2025-07-24 19:36:01,622 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-24 19:36:10,930 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-24 19:36:56,679 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-24 19:36:57,302 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:36:57,302 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 19:36:57,303 - INFO - Result 2: score=0.2467479407787323, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:36:57,303 - INFO - Result 3: score=0.2484324872493744, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:36:57,303 - INFO - Result 4: score=0.24991998076438904, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:36:57,306 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-24 19:37:20,148 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:37:20,151 - INFO - AFC remote call 1 is done.
+2025-07-24 19:38:43,783 - INFO - Use pytorch device_name: cpu
+2025-07-24 19:38:43,783 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-24 19:38:51,963 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-24 19:39:09,616 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-24 19:39:10,217 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:39:10,218 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 19:39:10,218 - INFO - Result 2: score=0.2467479407787323, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:39:10,218 - INFO - Result 3: score=0.2484324872493744, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:39:10,218 - INFO - Result 4: score=0.24991998076438904, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-24 19:39:10,264 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-24 19:39:33,668 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:39:33,671 - INFO - AFC remote call 1 is done.
+2025-07-24 19:41:45,266 - INFO - Use pytorch device_name: cpu
+2025-07-24 19:41:45,267 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-24 19:41:53,236 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-24 19:42:11,114 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 2
+2025-07-24 19:42:11,775 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:42:11,776 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 19:42:11,779 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-24 19:42:14,578 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:42:14,581 - INFO - AFC remote call 1 is done.
+2025-07-24 19:46:54,304 - INFO - Use pytorch device_name: cpu
+2025-07-24 19:46:54,304 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-24 19:47:02,303 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-24 19:47:53,362 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 2
+2025-07-24 19:47:53,981 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:47:53,981 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-24 19:47:53,985 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-24 19:48:17,133 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:48:17,137 - INFO - AFC remote call 1 is done.
+2025-07-24 19:54:54,467 - INFO - Use pytorch device_name: cpu
+2025-07-24 19:54:54,467 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-24 19:55:02,331 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-24 19:56:25,695 - INFO - Received query: question='giáo dục hòa nhập' top_k= 2
+2025-07-24 19:56:26,321 - INFO - Result 0: score=0.26509326696395874, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14
+2025-07-24 19:56:26,321 - INFO - Result 1: score=0.27220916748046875, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-24 19:56:26,324 - INFO - AFC is enabled with max remote calls: 10.
+2025-07-24 19:56:34,170 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-07-24 19:56:34,175 - INFO - AFC remote call 1 is done.

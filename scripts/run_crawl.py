@@ -1,6 +1,6 @@
 import argparse
 
-import fetch_detail
+import scripts.fetch_detail as fetch_detail
 import list_crawler
 import parse_html
 

@@ -1,11 +1,24 @@
-# 📘 API Contract – `/retrieve`
+Dưới đây là phiên bản đã được **sửa lại và đồng bộ** hoàn toàn với code Python bạn đưa ra. Mình đã cập nhật lại:
 
+* Endpoint: `/search` (không còn là `/retrieve`)
+* Payload sử dụng `user_input` thay vì `question`
+* Output phù hợp với dict trả về trong code (có `chunk_id`, `text`, `score`, `meta.law_id`, `meta.section_title`, `meta.date`)
+* Format rõ ràng, nhất quán với logging và xử lý trong mã nguồn.
+
+---
+
+### ✅ **`docs/api_search.md` – API Contract cho `/search`**
+
+```md
+# 📘 API Contract – `/search`
 
 ## 📍 Endpoint
 
 ```
-POST /retrieve
-```
+
+POST /search
+
+````
 
 ---
 
@@ -13,17 +26,17 @@ POST /retrieve
 
 ```json
 {
-  "question": "Quyền sở hữu đất của con cái?",
-  "top_k": 5
+  "user_input": "Quyền sở hữu đất của con cái?",
+  "k": 5
 }
-```
+````
 
 ### 🔸 Tham số:
 
-| Trường     | Kiểu dữ liệu | Bắt buộc | Mô tả                                          |
-| ---------- | ------------ | -------- | ---------------------------------------------- |
-| `question` | string       | ✅        | Câu hỏi của người dùng cần truy vấn thông tin. |
-| `top_k`    | integer      | ❌        | Số lượng chunk kết quả trả về (mặc định: 5).   |
+| Trường       | Kiểu dữ liệu | Bắt buộc | Mô tả                                          |
+| ------------ | ------------ | -------- | ---------------------------------------------- |
+| `user_input` | string       | ✅        | Câu hỏi hoặc truy vấn của người dùng           |
+| `k`          | integer      | ❌        | Số lượng kết quả trả về (top-k). Mặc định là 5 |
 
 ---
 
@@ -33,28 +46,30 @@ POST /retrieve
 {
   "chunks": [
     {
-      "chunk_id": "chunk_001",
-      "text": "...",
-      "score": 0.xx,
+      "chunk_id": "0",
+      "text": "Nội dung luật hoặc đoạn trích...",
+      "score": 0.421,
       "meta": {
-        "law_id": "...",
-        "section_title": "..."
+        "law_id": "LD2013",
+        "section_title": "Chương XII - Giải quyết tranh chấp đất đai",
+        "date": "2013-11-29"
       }
     },
     {
-      "chunk_id": "chunk_002",
-      "text": "...",
-      "score": 0.xx,
+      "chunk_id": "1",
+      "text": "Nội dung khác...",
+      "score": 0.5032,
       "meta": {
-        "law_id": "...",
-        "section_title": "..."
+        "law_id": "GD2005",
+        "section_title": "Điều 14 - Quản lý nhà nước về giáo dục",
+        "date": "2005-06-14"
       }
     }
   ]
 }
 ```
 
-### 🔹 Trường hợp không có kết quả:
+### 🔹 Trường hợp không có kết quả phù hợp:
 
 ```json
 {
@@ -70,126 +85,118 @@ POST /retrieve
 
 ```json
 {
-  "error": "Missing required field: question"
+  "error": "Missing required field: user_input"
 }
 ```
 
-**Nguyên nhân:** Thiếu `question` trong payload hoặc kiểu dữ liệu sai.
+**Nguyên nhân:** Không cung cấp `user_input` hoặc sai kiểu dữ liệu.
 
 ---
 
-### 2. Internal Server Error (500)
+### 2. No Results (200, nhưng detail)
 
 ```json
 {
-  "error": "An unexpected error occurred. Please try again later."
+  "detail": "No results found"
 }
 ```
 
-**Nguyên nhân:** Lỗi xử lý nội bộ trên server (lỗi model, vector store, etc.).
+**Nguyên nhân:** Không có đoạn văn bản nào có độ tương đồng cao (score > 0.6).
+
+---
+
+### 3. Internal Server Error (500)
+
+```json
+{
+  "error": "Vector search failed: [Chi tiết lỗi nội bộ]"
+}
+```
+
+**Nguyên nhân:** Lỗi truy vấn ChromaDB, lỗi embedding, hoặc lỗi hệ thống.
 
 ---
 
 
-# 🧠 Retrieve Service
-## 📦 Cài đặt
-Bạn có thể setup môi trường theo 2 cách: dùng Conda (envi.yml) hoặc pip (requirements.txt).
+### 📦 Cài đặt môi trường
 
-🔹 Cách 1: Dùng Conda (Khuyên dùng)
-
+```bash
 conda env create -f envi.yml
 conda activate testing
-🔹 Cách 2: Dùng pip
+```
 
-python3 -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
 
-## 🚀 Chạy dịch vụ
+### 🚀 Chạy dịch vụ
 
+```bash
 uvicorn app.retrieve:app --reload
-Truy cập tại: http://localhost:8000/docs để xem Swagger UI.
+```
 
-Tất cả route đều nằm trong app/retrieve.py.
+* Truy cập tại: [http://localhost:8000/docs](http://localhost:8000/docs) để thử nghiệm trên Swagger UI.
+* Tất cả logic chính nằm trong `app/retrieve.py`.
 
-## 🧪 Kiểm thử
+---
 
+### 🧪 Kiểm thử
+
+```bash
 pytest --cov=app --cov-report=term-missing
-Test cases nên được đặt trong thư mục tests/ theo chuẩn pytest.
+```
 
-## 🧼 Kiểm tra định dạng & lint
+* Test nên được đặt tại `tests/`.
 
+---
+
+### 🧼 Format & Lint
+
+```bash
 black --check .
 isort --check-only .
 flake8 .
 pylint app/
-Để tự động fix định dạng:
+```
+
+* Để tự động fix:
+
+```bash
 black .
 isort .
+```
 
-## 🔁 CI Integration (GitHub Actions)
 
-File CI: .github/workflows/retrieve.yml
+## 📬 Ví dụ API mẫu
 
-Workflow bao gồm:
-Kiểm tra format với black, isort, flake8, pylint.
-Chạy test với pytest, báo coverage.
+```http
+POST /search
+```
 
-# .github/workflows/retrieve.yml
-name: Retrieve CI
+### Body:
 
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Lint and Format Check
-        run: |
-          black --check .
-          isort --check-only .
-          flake8 .
-          pylint app/
-
-      - name: Run tests
-        run: |
-          pytest --cov=app --cov-report=term-missing
-
-## 📬 API mẫu
-
-http
-POST /retrieve
 ```json
 {
-  "user_input": "Thời hiệu khởi kiện tranh chấp đất đai là bao lâu?"
+  "user_input": "Thời hiệu khởi kiện tranh chấp đất đai là bao lâu?",
+  "k": 5
 }
 ```
 
-Response:
+### Response:
+
 ```json
 {
-  "results": [
+  "chunks": [
     {
-      "score": 0.8943,
-      "metadata": {
-        "title": "Luật Đất đai 2013",
-        "chuong": "Chương XII",
-        "tieu_de": "Giải quyết tranh chấp đất đai",
-        "khoan": "1",
-        "noi_dung": "Thời hiệu khởi kiện tranh chấp đất đai là 03 năm..."
+      "chunk_id": "0",
+      "text": "Thời hiệu khởi kiện tranh chấp đất đai là 03 năm kể từ ngày phát sinh tranh chấp...",
+      "score": 0.435,
+      "meta": {
+        "law_id": "LD2013",
+        "section_title": "Giải quyết tranh chấp đất đai",
+        "date": "2013-11-29"
       }
     }
   ]
+}
 ```
+
+```
+
