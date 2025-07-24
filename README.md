@@ -62,19 +62,6 @@ curl -X POST http://localhost:8000/retrieve \
 
 ```json
 {
-  "documents": [
-    {
-      "id": "doc1",
-      "content": "...",
-      "metadata": {...}
-    },
-    ...
-  ]
-}
-```
-
-```json
-{
     "chunk_id": "str",
     "text": "str",
     "score": "score",
