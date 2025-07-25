@@ -1,6 +1,7 @@
 import numpy as np
 import pytest
 from fastapi.testclient import TestClient
+
 from app.main import app
 
 client = TestClient(app)
@@ -36,7 +37,7 @@ def test_search_happy_path(mocker, mock_embedding):
     assert data["chunks"][0]["meta"]["law_id"] == "L01"
 
 
-# ---- No result (tất cả điểm > 0.7) ----
+# ---- No result (tất cả điểm > 0.5) ----
 def test_search_no_result(mocker, mock_embedding):
     mock_results = {
         "documents": [["Chunk thấp"]],

@@ -60,7 +60,7 @@ def search(
         metadatas = results["metadatas"][0]
 
         for i, (doc, score, meta) in enumerate(zip(documents, distances, metadatas)):
-            if score > 0.6:  # Chỉ lấy những kết quả có độ tương đồng cao
+            if score > 0.5:  # Chỉ lấy những kết quả có độ tương đồng cao
                 logger.info(f"Skipping result {i} with low score: {score}")
                 continue
             else:
