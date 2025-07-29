@@ -1,9 +1,40 @@
+from sentence_transformers import SentenceTransformer
+import weaviate
+from weaviate.util import generate_uuid5
+from weaviate.classes.config import Configure, Property, DataType
+from weaviate.classes.config import Property, DataType
+from weaviate.classes.init import AdditionalConfig, Timeout
+import weaviate.classes.config as wvcc
+
+
+# CONNECT - Fixed connection method for newer Weaviate version
+import weaviate
+
+client = weaviate.connect_to_local(
+    host="localhost",
+    port=8080,
+    additional_config=AdditionalConfig(
+        timeout=Timeout(query=60, insert=60)  # Use Timeout object with query and insert timeouts
+    )
+)
+
+# CREATE COLLECTION
+try:
+    client.collections.create(
+        name="Document",
+        vector_config=wvcc.VectorConfig.self_hosted(),  # không còn là `Vectors.self_provided()`
+        properties=[
+            Property(name="text", data_type=DataType.TEXT)
+        ]
+    )
+    print("Collection 'Document' created successfully")
+except Exception as e:
+    print(f"Collection creation error (might already exist): {e}")
+
+#---------------------------------------------------------------
 import json
 import os
-
-import chromadb
 import numpy as np
-from chromadb.config import Settings
 
 # ==== Load config ====
 with open("index_config.json") as f:
@@ -11,11 +42,6 @@ with open("index_config.json") as f:
 
 # Tạo thư mục nếu chưa có
 os.makedirs(config["persist_directory"], exist_ok=True)
-
-# Khởi tạo client với cách mới
-client = chromadb.PersistentClient(path=config["persist_directory"])
-
-collection = client.get_or_create_collection(config["collection_name"])
 
 # ==== Đường dẫn dữ liệu ====
 embedding_dir = "data/processed/embeddings"
@@ -59,20 +85,50 @@ for file in files:
         print(f"[!] Bỏ qua {file_id}: số lượng chunk không khớp với vectors")
         print(f"  - Vectors: {len(vectors)}, Chunks: {len(chunk_data)}")
         continue
-    documents = [
-        f"Tiêu đề: {item['tieu_de']} - Nội dung: {item['noi_dung']} - Khoản: {item['khoan']}"
-        for item in chunk_data
-    ]
+    
+    documents = []
+
+    for item in chunk_data:
+        tieu_de = item.get("tieu_de", "")
+        noi_dung = item.get("noi_dung", "")
+        khoan_list = item.get("khoan", [])
+
+        if khoan_list:
+            # Nối tất cả các khoản thành văn bản
+            khoan_text = "\n".join([f"Khoản {k['khoan']} {k['noi_dung']}" for k in khoan_list])
+            text = f"Tiêu đề: {tieu_de}\nNội dung: {noi_dung}\n{khoan_text}"
+        else:
+            text = f"Tiêu đề: {tieu_de}\nNội dung: {noi_dung}"
+
+        documents.append(text)
+
     metadatas = [metadata] * len(
         vectors
     )  # Giả sử metadata giống nhau cho tất cả chunks
 
-    # Thêm vào Chroma
-    collection.upsert(
-        ids=chunk_ids, embeddings=vectors, documents=documents, metadatas=metadatas
-    )
+    collection = client.collections.get("Document")
+    
+    try:
+        from weaviate.classes.data import DataObject
 
-    print(f"[✓] Đã index {len(chunk_ids)} chunks từ {file_id}")
-    total_chunks += len(chunk_ids)
+        collection.data.insert_many(
+            [
+                DataObject(
+                    uuid=generate_uuid5(f"{file_id}_{i}"),
+                    properties={"text": text},
+                    vector=vector
+                )
+                for i, (text, vector) in enumerate(zip(documents, vectors))
+            ]
+        )
+
+        print(f"[✓] Đã index {len(chunk_ids)} chunks từ {file_id}")
+        total_chunks += len(chunk_ids)
+    except Exception as e:
+        print(f"[!] Lỗi khi insert {file_id}: {e}")
 
 print(f"\n Tổng cộng đã index: {total_chunks} chunks.")
+
+#---------------------------------------------------------------
+# Close connection
+client.close()
