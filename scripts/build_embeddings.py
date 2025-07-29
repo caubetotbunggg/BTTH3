@@ -7,15 +7,14 @@ from collections import defaultdict
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
+from dotenv import load_dotenv
+import os
 
-# Tạo thư mục cần thiết
-os.makedirs("../BTTH3/data/processed/embeddings", exist_ok=True)
-os.makedirs("../BTTH3/data/raw/html", exist_ok=True)
-os.makedirs("../BTTH3/log", exist_ok=True)
+load_dotenv()  # Tự động đọc file .env ở cùng thư mục
 
 # Load model
 print("[+] Loading embedding model...")
-model = SentenceTransformer("intfloat/e5-small-v2")
+model = SentenceTransformer(os.getenv("EMBEDDING_MODEL"))
 
 # Tập tin đầu vào
 print("[+] Loading data...")
