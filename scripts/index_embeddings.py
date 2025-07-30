@@ -21,7 +21,6 @@ client = weaviate.connect_to_local(
 )
 
 # =================== 2. Kiểm tra và tạo collection ====================
-client.collections.delete("Document")  # Xóa collection nếu đã tồn tại
 # CREATE COLLECTION
 try:
     client.collections.create(
