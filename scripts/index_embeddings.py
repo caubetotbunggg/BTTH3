@@ -1,11 +1,15 @@
 # CONNECT - Fixed connection method for newer Weaviate version
+import json
+import os
+
+import numpy as np
 import weaviate
 import weaviate.classes.config as wvcc
-from sentence_transformers import SentenceTransformer
-from weaviate.classes.config import Configure, DataType, Property
+from weaviate.classes.config import DataType, Property
 from weaviate.classes.init import AdditionalConfig, Timeout
 from weaviate.util import generate_uuid5
 
+# =================== 1. Kết nối tới Weaviate ====================
 client = weaviate.connect_to_local(
     host="localhost",
     port=8080,
@@ -15,12 +19,14 @@ client = weaviate.connect_to_local(
         )  # Use Timeout object with query and insert timeouts
     ),
 )
+
+# =================== 2. Kiểm tra và tạo collection ====================
 client.collections.delete("Document")  # Xóa collection nếu đã tồn tại
 # CREATE COLLECTION
 try:
     client.collections.create(
         name="Document",
-        vector_config=wvcc.VectorConfig.self_hosted(),  # không còn là `Vectors.self_provided()`
+        vector_config=wvcc.VectorConfig.self_provided(),
         properties=[
             Property(name="text", data_type=DataType.TEXT),
             Property(
@@ -31,12 +37,6 @@ try:
     print("Collection 'Document' created successfully")
 except Exception as e:
     print(f"Collection creation error (might already exist): {e}")
-
-# ---------------------------------------------------------------
-import json
-import os
-
-import numpy as np
 
 # ==== Đường dẫn dữ liệu ====
 embedding_dir = "data/processed/embeddings"
