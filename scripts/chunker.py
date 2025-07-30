@@ -37,6 +37,9 @@ def chunk_by_chapter_and_article(text):
                     khoan_chunks[j + 1].strip() if j + 1 < len(khoan_chunks) else ""
                 )
                 khoan_list.append({"khoan": khoan_so, "noi_dung": khoan_noi_dung})
+            
+            if khoan_list:
+                noi_dung = ""
 
             chunks.append(
                 {
