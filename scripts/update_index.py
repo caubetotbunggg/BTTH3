@@ -7,7 +7,8 @@ from dotenv import load_dotenv
 import numpy as np
 from sentence_transformers import SentenceTransformer
 import weaviate
-from weaviate.classes.config import AdditionalConfig, Timeout
+from weaviate.util import generate_uuid5
+from weaviate.classes.init import AdditionalConfig, Timeout
 
 # ======== Config ========
 CHUNK_DIR = "data/processed/chunks/new"
@@ -84,17 +85,32 @@ for chunk_file in tqdm(chunk_files, desc="Embedding + Inserting"):
 
         # Insert into Weaviate
         print(f"[→] Inserting to Weaviate: {law_id}")
-        with collection.batch.dynamic() as batch:
-            for embedding, text in zip(embeddings, sentences):
-                batch.add_object(
-                    properties={
-                        "text": text,
-                        "metadata": metadata
-                    },
-                    vector=embedding
-                )
+        collection = client.collections.get("Document")
+        
+        metadatas = [metadata] * len(embeddings)
+        # Tạo các trường cần thiết
+        chunk_ids = [f"{law_id}_{i}" for i in range(len(embeddings))]
 
-        print(f"[✓] Inserted {len(embeddings)} vectors for {law_id}")
+        try:
+            from weaviate.classes.data import DataObject
+
+            collection.data.insert_many(
+                [
+                    DataObject(
+                        uuid=generate_uuid5(f"{law_id}_{i}"),
+                        properties={"text": text, "metadata": metadata},
+                        vector=vector,
+                    )
+                    for i, (text, vector, metadata) in enumerate(
+                        zip(sentences, embeddings, metadatas)
+                    )
+                ]
+            )
+
+            print(f"[✓] Đã index {len(chunk_ids)} chunks từ {law_id}")
+            total_chunks += len(chunk_ids)
+        except Exception as e:
+            print(f"[!] Lỗi khi insert {law_id}: {e}")
 
     except Exception as e:
         with open(LOG_FILE, "a", encoding="utf-8") as log_f:
@@ -105,3 +121,7 @@ for chunk_file in tqdm(chunk_files, desc="Embedding + Inserting"):
         print(f"[✗] Error with {law_id}, logged.")
 
 print("\n[✓] All done.")
+
+# ---------------------------------------------------------------
+# Close connection
+client.close()
