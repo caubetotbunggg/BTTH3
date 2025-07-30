@@ -1,4 +1,3 @@
-# CONNECT - Fixed connection method for newer Weaviate version
 import json
 import os
 
