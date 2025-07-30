@@ -1,47 +1,42 @@
-from sentence_transformers import SentenceTransformer
-import weaviate
-from weaviate.util import generate_uuid5
-from weaviate.classes.config import Configure, Property, DataType
-from weaviate.classes.config import Property, DataType
-from weaviate.classes.init import AdditionalConfig, Timeout
-import weaviate.classes.config as wvcc
-
-
 # CONNECT - Fixed connection method for newer Weaviate version
 import weaviate
+import weaviate.classes.config as wvcc
+from sentence_transformers import SentenceTransformer
+from weaviate.classes.config import Configure, DataType, Property
+from weaviate.classes.init import AdditionalConfig, Timeout
+from weaviate.util import generate_uuid5
 
 client = weaviate.connect_to_local(
     host="localhost",
     port=8080,
     additional_config=AdditionalConfig(
-        timeout=Timeout(query=60, insert=60)  # Use Timeout object with query and insert timeouts
-    )
+        timeout=Timeout(
+            query=60, insert=60
+        )  # Use Timeout object with query and insert timeouts
+    ),
 )
-
+client.collections.delete("Document")  # Xóa collection nếu đã tồn tại
 # CREATE COLLECTION
 try:
     client.collections.create(
         name="Document",
         vector_config=wvcc.VectorConfig.self_hosted(),  # không còn là `Vectors.self_provided()`
         properties=[
-            Property(name="text", data_type=DataType.TEXT)
-        ]
+            Property(name="text", data_type=DataType.TEXT),
+            Property(
+                name="metadata", data_type=DataType.JSON
+            ),  # Metadata lưu dưới dạng JSON
+        ],
     )
     print("Collection 'Document' created successfully")
 except Exception as e:
     print(f"Collection creation error (might already exist): {e}")
 
-#---------------------------------------------------------------
+# ---------------------------------------------------------------
 import json
 import os
+
 import numpy as np
-
-# ==== Load config ====
-with open("index_config.json") as f:
-    config = json.load(f)
-
-# Tạo thư mục nếu chưa có
-os.makedirs(config["persist_directory"], exist_ok=True)
 
 # ==== Đường dẫn dữ liệu ====
 embedding_dir = "data/processed/embeddings"
@@ -85,7 +80,7 @@ for file in files:
         print(f"[!] Bỏ qua {file_id}: số lượng chunk không khớp với vectors")
         print(f"  - Vectors: {len(vectors)}, Chunks: {len(chunk_data)}")
         continue
-    
+
     documents = []
 
     for item in chunk_data:
@@ -95,7 +90,9 @@ for file in files:
 
         if khoan_list:
             # Nối tất cả các khoản thành văn bản
-            khoan_text = "\n".join([f"Khoản {k['khoan']} {k['noi_dung']}" for k in khoan_list])
+            khoan_text = "\n".join(
+                [f"Khoản {k['khoan']} {k['noi_dung']}" for k in khoan_list]
+            )
             text = f"Tiêu đề: {tieu_de}\nNội dung: {noi_dung}\n{khoan_text}"
         else:
             text = f"Tiêu đề: {tieu_de}\nNội dung: {noi_dung}"
@@ -107,7 +104,7 @@ for file in files:
     )  # Giả sử metadata giống nhau cho tất cả chunks
 
     collection = client.collections.get("Document")
-    
+
     try:
         from weaviate.classes.data import DataObject
 
@@ -115,10 +112,12 @@ for file in files:
             [
                 DataObject(
                     uuid=generate_uuid5(f"{file_id}_{i}"),
-                    properties={"text": text},
-                    vector=vector
+                    properties={"text": text, "metadata": metadata},
+                    vector=vector,
                 )
-                for i, (text, vector) in enumerate(zip(documents, vectors))
+                for i, (text, vector, metadata) in enumerate(
+                    zip(documents, vectors, metadatas)
+                )
             ]
         )
 
@@ -129,6 +128,6 @@ for file in files:
 
 print(f"\n Tổng cộng đã index: {total_chunks} chunks.")
 
-#---------------------------------------------------------------
+# ---------------------------------------------------------------
 # Close connection
 client.close()
