@@ -1,9 +1,16 @@
 import logging
+import os
 
-import chromadb
+import weaviate
+from dotenv import load_dotenv
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
+from weaviate.classes.init import AdditionalConfig, Timeout
+from weaviate.classes.query import MetadataQuery
+
+load_dotenv()  # Tự động đọc file .env ở cùng thư mục
+
 
 # Cấu hình logging
 logging.basicConfig(
@@ -17,11 +24,17 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # Load embedding model
-model = SentenceTransformer("intfloat/e5-small-v2")
+model = SentenceTransformer(os.getenv("EMBEDDING_MODEL"))
 
-# Initialize ChromaDB client and collection
-client = chromadb.PersistentClient(path="chroma_db")
-collection = client.get_or_create_collection("legal_chunks")
+
+# =================== 1. Kết nối tới Weaviate ====================
+client = weaviate.connect_to_local(
+    host="localhost",
+    port=8080,
+    additional_config=AdditionalConfig(timeout=Timeout(query=60)),
+)
+# =================== 2. Lấy collection đã tạo ====================
+collection = client.collections.get("Document")
 
 
 # Response schema
@@ -48,41 +61,48 @@ def search(
 
     try:
         # Truy vấn ChromaDB (top 5)
-        results = collection.query(
-            query_embeddings=[embedding],
-            n_results=k,
-            include=["documents", "distances", "metadatas"],
+        results = collection.query.hybrid(
+            query=user_input,
+            vector=embedding,
+            alpha=0.6,  # Trọng số cho BM25
+            return_metadata=MetadataQuery(score=True, explain_score=True),
+            limit=k,
         )
 
         response_chunks = []
-        documents = results["documents"][0]
-        distances = results["distances"][0]
-        metadatas = results["metadatas"][0]
 
-        for i, (doc, score, meta) in enumerate(zip(documents, distances, metadatas)):
-            if score > 0.5:  # Chỉ lấy những kết quả có độ tương đồng cao
-                logger.info(f"Skipping result {i} with low score: {score}")
+        for i, obj in enumerate(results.objects, start=1):
+            doc = obj.properties["text"]
+            score = obj.metadata.score
+            meta = obj.properties["metadata"]
+
+            if score < 0.5:
+                logger.info(
+                    f"Skipping result {i} with low score {score} - text preview: {doc[:50]}"
+                )
                 continue
             else:
                 response_chunks.append(
-                    {
-                        "chunk_id": str(i),
-                        "text": doc,
-                        "score": round(score, 4),
-                        "meta": {
+                    ChunkResponse(
+                        chunk_id=str(i),
+                        text=doc,
+                        score=round(score, 4),
+                        meta={
                             "law_id": meta.get("law_id", "unknown"),
                             "section_title": meta.get("title", "unknown"),
                             "date": meta.get("date", "unknown"),
                         },
-                    }
+                    )
                 )
                 logger.info(
                     f"Result {i}: score={score}, law_id={meta.get('law_id', 'unknown')}, "
-                    f"title={meta.get('title', 'unknown')}"
+                    f"title={meta.get('title', 'unknown')}, "
+                    f"Explain Score: {obj.metadata.explain_score}"
                 )
+
         if not response_chunks:
             logger.warning("No results found for the query")
-            raise HTTPException(status_code=200, detail="No results found")
+            raise HTTPException(status_code=204, detail="No results found")
         return {"chunks": response_chunks}
 
     except Exception as e:
