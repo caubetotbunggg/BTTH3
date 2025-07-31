@@ -1,12 +1,3 @@
-Dưới đây là phiên bản đã được **sửa lại và đồng bộ** hoàn toàn với code Python bạn đưa ra. Mình đã cập nhật lại:
-
-* Endpoint: `/search` (không còn là `/retrieve`)
-* Payload sử dụng `user_input` thay vì `question`
-* Output phù hợp với dict trả về trong code (có `chunk_id`, `text`, `score`, `meta.law_id`, `meta.section_title`, `meta.date`)
-* Format rõ ràng, nhất quán với logging và xử lý trong mã nguồn.
-
----
-
 ### ✅ **`docs/api_search.md` – API Contract cho `/search`**
 
 ```md
