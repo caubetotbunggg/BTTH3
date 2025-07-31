@@ -1,7 +1,7 @@
-### ✅ **`docs/api_search.md` – API Contract cho `/search`**
+### **`docs/api_search.md` – API Contract cho `/search`**
 
 ```md
-# 📘 API Contract – `/search`
+# API Contract – `/search`
 
 ## 📍 Endpoint
 
@@ -13,7 +13,7 @@ POST /search
 
 ---
 
-## 📩 Request Payload
+## Request Payload
 
 ```json
 {
@@ -31,7 +31,7 @@ POST /search
 
 ---
 
-## ✅ Success Response (200 OK)
+## Success Response (200 OK)
 
 ```json
 {
@@ -70,7 +70,7 @@ POST /search
 
 ---
 
-## ❌ Error Responses
+## Error Responses
 
 ### 1. Bad Request (400)
 
@@ -109,7 +109,7 @@ POST /search
 ---
 
 
-### 📦 Cài đặt môi trường
+### Cài đặt môi trường
 
 ```bash
 conda env create -f envi.yml
@@ -117,7 +117,7 @@ conda activate testing
 ```
 
 
-### 🚀 Chạy dịch vụ
+### Chạy dịch vụ
 
 ```bash
 uvicorn app.retrieve:app --reload
@@ -128,7 +128,7 @@ uvicorn app.retrieve:app --reload
 
 ---
 
-### 🧪 Kiểm thử
+### Kiểm thử
 
 ```bash
 pytest --cov=app --cov-report=term-missing
@@ -138,7 +138,7 @@ pytest --cov=app --cov-report=term-missing
 
 ---
 
-### 🧼 Format & Lint
+### Format & Lint
 
 ```bash
 black --check .
@@ -155,7 +155,7 @@ isort .
 ```
 
 
-## 📬 Ví dụ API mẫu
+## Ví dụ API mẫu
 
 ```http
 POST /search
