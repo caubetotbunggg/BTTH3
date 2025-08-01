@@ -5,10 +5,9 @@ import traceback
 from collections import defaultdict
 
 import numpy as np
+from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
-from dotenv import load_dotenv
-import os
 
 load_dotenv()  # Tự động đọc file .env ở cùng thư mục
 
@@ -129,8 +128,8 @@ for batch_idx in tqdm(
 print(f"\n[+] Embedding completed! Total groups: {len(grouped)}")
 print(f"[+] Total errors: {error_count}")
 
-# Lưu từng nhóm embeddings thành 1 file .npy và metadata tương ứng
-print("[+] Saving embeddings and metadata...")
+# Lưu từng nhóm embeddings thành 1 file .npy
+print("[+] Saving embeddings ...")
 for law_id, embeds_and_meta in tqdm(grouped.items(), desc="Saving files"):
     try:
         embeddings = [e for e, _ in embeds_and_meta]
@@ -140,12 +139,6 @@ for law_id, embeds_and_meta in tqdm(grouped.items(), desc="Saving files"):
         np.save(
             f"../BTTH3/data/processed/embeddings/{law_id}.npy", np.array(embeddings)
         )
-
-        # Lưu metadata
-        with open(
-            f"../BTTH3/data/raw/html/{law_id}_meta.json", "w", encoding="utf-8"
-        ) as f:
-            json.dump(metadata, f, ensure_ascii=False, indent=2)
 
         print(f"[+] Saved: {law_id}.npy ({len(embeddings)} chunks)")
 

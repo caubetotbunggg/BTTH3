@@ -16,7 +16,7 @@ def mock_embedding():
 def test_search_happy_path(mocker, mock_embedding):
     mock_results = {
         "documents": [["Đây là chunk văn bản 1", "Chunk 2"]],
-        "distances": np.array([[0.3, 0.6]]),
+        "distances": np.array([[0.3, 0.4]]),
         "metadatas": [
             [
                 {"law_id": "L01", "title": "Điều 1", "date": "2024-01-01"},

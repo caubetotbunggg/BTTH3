@@ -1,92 +1,92 @@
 # Kết quả tìm kiếm mẫu (Top 5)
 
-## 1. Query ID: `14-2008-QH12_855`
-- **1. Luật:** 14-2008-QH12, *Luật Thuế thu nhập doanh nghiệp 2008*, Sim: `1.0000`
-- **2. Luật:** 67-2025-QH15, *Luật Thuế thu nhập doanh nghiệp 2025, số 67/2025/QH15*, Sim: `0.9716`
-- **3. Luật:** 09-2003-QH11, *Luật Thuế Thu nhập doanh nghiệp năm 2003*, Sim: `0.9638`
-- **4. Luật:** 13-2008-QH12, *Luật Thuế giá trị gia tăng 2008, số 13/2008/QH12*, Sim: `0.9543`
-- **5. Luật:** 57-L-CTN, *Luật Thuế giá trị gia tăng năm 1997*, Sim: `0.9364`
+## 1. Query ID: `83-2007-QH11_914`
+- **1. Luật:** 83-2007-QH11, *Luật sửa đổi, bổ sung một số điều Luật Tổ chức Quốc hội năm 2007*, Sim: `1.0000`
+- **2. Luật:** 83-2007-QH11, *Luật sửa đổi, bổ sung một số điều Luật Tổ chức Quốc hội năm 2007*, Sim: `0.9707`
+- **3. Luật:** 30-2001-QH10, *Luật Tổ chức Quốc hội năm 2001*, Sim: `0.9679`
+- **4. Luật:** 83-2007-QH11, *Luật sửa đổi, bổ sung một số điều Luật Tổ chức Quốc hội năm 2007*, Sim: `0.9643`
+- **5. Luật:** 01-2002-QH11, *Luật Ngân sách Nhà nước năm 2002*, Sim: `0.9633`
 
 ---
 
-## 2. Query ID: `77-2015-QH13_337`
-- **1. Luật:** 77-2015-QH13, *Luật Tổ chức chính quyền địa phương 2015*, Sim: `1.0000`
-- **2. Luật:** 77-2015-QH13, *Luật Tổ chức chính quyền địa phương 2015*, Sim: `0.9458`
-- **3. Luật:** 77-2015-QH13, *Luật Tổ chức chính quyền địa phương 2015*, Sim: `0.9431`
-- **4. Luật:** 77-2015-QH13, *Luật Tổ chức chính quyền địa phương 2015*, Sim: `0.9361`
-- **5. Luật:** 77-2015-QH13, *Luật Tổ chức chính quyền địa phương 2015*, Sim: `0.9343`
+## 2. Query ID: `69-2025-QH15_322`
+- **1. Luật:** 69-2025-QH15, *Luật Hóa chất 2025, số 69/2025/QH15*, Sim: `1.0000`
+- **2. Luật:** 06-2007-QH12, *Luật hóa chất 2007, số 06/2007/QH12*, Sim: `0.9515`
+- **3. Luật:** 69-2025-QH15, *Luật Hóa chất 2025, số 69/2025/QH15*, Sim: `0.9419`
+- **4. Luật:** 69-2025-QH15, *Luật Hóa chất 2025, số 69/2025/QH15*, Sim: `0.9404`
+- **5. Luật:** 69-2025-QH15, *Luật Hóa chất 2025, số 69/2025/QH15*, Sim: `0.9375`
 
 ---
 
-## 3. Query ID: `36-2005-QH11_328`
-- **1. Luật:** 36-2005-QH11, *Luật Thương mại 2005, số 36/2005/QH11*, Sim: `1.0000`
-- **2. Luật:** 36-2005-QH11, *Luật Thương mại 2005, số 36/2005/QH11*, Sim: `0.9319`
-- **3. Luật:** 36-2005-QH11, *Luật Thương mại 2005, số 36/2005/QH11*, Sim: `0.9299`
-- **4. Luật:** 01-2016-QH14, *Luật Đấu giá tài sản 2016, số 01/2016/QH14*, Sim: `0.9276`
-- **5. Luật:** 36-2005-QH11, *Luật Thương mại 2005, số 36/2005/QH11*, Sim: `0.9242`
+## 3. Query ID: `58-2020-QH14_979`
+- **1. Luật:** 58-2020-QH14, *Luật Hòa giải, đối thoại tại tòa án 2020, số 58/2020/QH14*, Sim: `1.0000`
+- **2. Luật:** 58-2020-QH14, *Luật Hòa giải, đối thoại tại tòa án 2020, số 58/2020/QH14*, Sim: `0.9706`
+- **3. Luật:** 58-2020-QH14, *Luật Hòa giải, đối thoại tại tòa án 2020, số 58/2020/QH14*, Sim: `0.9705`
+- **4. Luật:** 58-2020-QH14, *Luật Hòa giải, đối thoại tại tòa án 2020, số 58/2020/QH14*, Sim: `0.9430`
+- **5. Luật:** 58-2020-QH14, *Luật Hòa giải, đối thoại tại tòa án 2020, số 58/2020/QH14*, Sim: `0.9419`
 
 ---
 
-## 4. Query ID: `33-2009-QH12_232`
-- **1. Luật:** 33-2009-QH12, *Luật Cơ quan đại diện nước Cộng hòa xã hội chủ nghĩa Việt Nam ở nước ngoài 2009*, Sim: `1.0000`
-- **2. Luật:** 33-2009-QH12, *Luật Cơ quan đại diện nước Cộng hòa xã hội chủ nghĩa Việt Nam ở nước ngoài 2009*, Sim: `0.9362`
-- **3. Luật:** 33-2009-QH12, *Luật Cơ quan đại diện nước Cộng hòa xã hội chủ nghĩa Việt Nam ở nước ngoài 2009*, Sim: `0.9348`
-- **4. Luật:** 33-2009-QH12, *Luật Cơ quan đại diện nước Cộng hòa xã hội chủ nghĩa Việt Nam ở nước ngoài 2009*, Sim: `0.9321`
-- **5. Luật:** 33-2009-QH12, *Luật Cơ quan đại diện nước Cộng hòa xã hội chủ nghĩa Việt Nam ở nước ngoài 2009*, Sim: `0.9298`
+## 4. Query ID: `17-L-CTN_701`
+- **1. Luật:** 17-L-CTN, *Luật sửa đổi, bổ sung một số điều của Luật Thuế Xuất khẩu, thuế Nhập khẩu*, Sim: `1.0000`
+- **2. Luật:** 71-2014-QH13, *Luật sửa đổi, bổ sung một số điều của các Luật về thuế năm 2014*, Sim: `0.9429`
+- **3. Luật:** 17-L-CTN, *Luật sửa đổi, bổ sung một số điều của Luật Thuế Xuất khẩu, thuế Nhập khẩu*, Sim: `0.9404`
+- **4. Luật:** 17-L-CTN, *Luật sửa đổi, bổ sung một số điều của Luật Thuế Xuất khẩu, thuế Nhập khẩu*, Sim: `0.9347`
+- **5. Luật:** 17-L-CTN, *Luật sửa đổi, bổ sung một số điều của Luật Thuế Xuất khẩu, thuế Nhập khẩu*, Sim: `0.9315`
 
 ---
 
-## 5. Query ID: `78-2015-QH13_515`
-- **1. Luật:** 78-2015-QH13, *Luật Nghĩa vụ quân sự 2015, số 78/2015/QH13*, Sim: `1.0000`
-- **2. Luật:** 6-LCT-HĐNN7, *Luật Nghĩa vụ quân sự năm 1981*, Sim: `0.9470`
-- **3. Luật:** 11-SL, *Luật Nghĩa vụ quân sự*, Sim: `0.9284`
-- **4. Luật:** 78-2015-QH13, *Luật Nghĩa vụ quân sự 2015, số 78/2015/QH13*, Sim: `0.9277`
-- **5. Luật:** 78-2015-QH13, *Luật Nghĩa vụ quân sự 2015, số 78/2015/QH13*, Sim: `0.9272`
+## 5. Query ID: `12-2003-QH11_169`
+- **1. Luật:** 12-2003-QH11, *Luật Bầu cử Đại biểu Hội đồng nhân dân năm 2003*, Sim: `1.0000`
+- **2. Luật:** 85-2015-QH13, *Luật Bầu cử đại biểu Quốc hội và đại biểu Hội đồng nhân dân 2015*, Sim: `0.9798`
+- **3. Luật:** 20-LCT-HĐNN8, *Luật Bầu cử đại biểu Hội đồng nhân dân*, Sim: `0.9536`
+- **4. Luật:** 96-2015-QH13, *Luật Trưng cầu ý dân 2015, số 96/2015/QH13*, Sim: `0.9419`
+- **5. Luật:** 12-2003-QH11, *Luật Bầu cử Đại biểu Hội đồng nhân dân năm 2003*, Sim: `0.9335`
 
 ---
 
-## 6. Query ID: `81-2025-QH15_794`
-- **1. Luật:** 81-2025-QH15, *Luật Tổ chức Tòa án nhân dân của Quốc hội sửa đổi 2025, số 81/2025/QH15*, Sim: `1.0000`
-- **2. Luật:** 25-2018-QH14, *Luật Tố cáo năm 2018, số 25/2018/QH14*, Sim: `0.9676`
-- **3. Luật:** 81-2025-QH15, *Luật Tổ chức Tòa án nhân dân của Quốc hội sửa đổi 2025, số 81/2025/QH15*, Sim: `0.9517`
-- **4. Luật:** 81-2025-QH15, *Luật Tổ chức Tòa án nhân dân của Quốc hội sửa đổi 2025, số 81/2025/QH15*, Sim: `0.9495`
-- **5. Luật:** 81-2025-QH15, *Luật Tổ chức Tòa án nhân dân của Quốc hội sửa đổi 2025, số 81/2025/QH15*, Sim: `0.9491`
+## 6. Query ID: `35-2024-QH15_330`
+- **1. Luật:** 35-2024-QH15, *Luật Đường bộ 2024, số 35/2024/QH15*, Sim: `1.0000`
+- **2. Luật:** 35-2024-QH15, *Luật Đường bộ 2024, số 35/2024/QH15*, Sim: `0.9511`
+- **3. Luật:** 35-2024-QH15, *Luật Đường bộ 2024, số 35/2024/QH15*, Sim: `0.9457`
+- **4. Luật:** 31-2024-QH15, *Luật Đất đai 2024, số 31/2024/QH15*, Sim: `0.9392`
+- **5. Luật:** 35-2024-QH15, *Luật Đường bộ 2024, số 35/2024/QH15*, Sim: `0.9385`
 
 ---
 
-## 7. Query ID: `47-L-CTN_763`
-- **1. Luật:** 47-L-CTN, *Luật Khoáng sản năm 1996*, Sim: `1.0000`
-- **2. Luật:** 46-2005-QH11, *Luật sửa đổi, bổ sung một số điều của Luật Khoáng sản năm 2005*, Sim: `0.9298`
-- **3. Luật:** 47-L-CTN, *Luật Khoáng sản năm 1996*, Sim: `0.9289`
-- **4. Luật:** 47-L-CTN, *Luật Khoáng sản năm 1996*, Sim: `0.9254`
-- **5. Luật:** 60-2010-QH12, *Luật Khoáng sản 2010, số 60/2010/QH12*, Sim: `0.9242`
+## 7. Query ID: `56-2024-QH15_72`
+- **1. Luật:** 56-2024-QH15, *Luật sửa đổi, bổ sung Luật Chứng khoán, Luật Kế toán, Luật Kiểm toán độc lập, Luật Ngân sách Nhà nước, Luậ ...*, Sim: `1.0000`
+- **2. Luật:** 56-2024-QH15, *Luật sửa đổi, bổ sung Luật Chứng khoán, Luật Kế toán, Luật Kiểm toán độc lập, Luật Ngân sách Nhà nước, Luậ ...*, Sim: `0.9255`
+- **3. Luật:** 56-2024-QH15, *Luật sửa đổi, bổ sung Luật Chứng khoán, Luật Kế toán, Luật Kiểm toán độc lập, Luật Ngân sách Nhà nước, Luậ ...*, Sim: `0.9240`
+- **4. Luật:** 56-2024-QH15, *Luật sửa đổi, bổ sung Luật Chứng khoán, Luật Kế toán, Luật Kiểm toán độc lập, Luật Ngân sách Nhà nước, Luậ ...*, Sim: `0.9217`
+- **5. Luật:** 56-2024-QH15, *Luật sửa đổi, bổ sung Luật Chứng khoán, Luật Kế toán, Luật Kiểm toán độc lập, Luật Ngân sách Nhà nước, Luậ ...*, Sim: `0.9209`
 
 ---
 
-## 8. Query ID: `19-LCT_499`
-- **1. Luật:** 19-LCT, *Luật Tổ chức Toà án nhân dân*, Sim: `1.0000`
-- **2. Luật:** 2-LCTN, *Luật Tổ chức Toà án nhân dân*, Sim: `0.9878`
-- **3. Luật:** 33-2002-QH10, *Luật Tổ chức Toà án nhân dân năm 2002*, Sim: `0.9682`
-- **4. Luật:** 62-2014-QH13, *Luật Tổ chức Tòa án nhân dân 2014, số 62/2014/QH13*, Sim: `0.9552`
-- **5. Luật:** 34-2024-QH15, *Luật Tổ chức Tòa án nhân dân 2024, số 34/2024/QH15*, Sim: `0.9535`
+## 8. Query ID: `32-2004-QH11_12`
+- **1. Luật:** 32-2004-QH11, *Luật An ninh Quốc gia 2004, số 32/2004/QH11*, Sim: `1.0000`
+- **2. Luật:** 32-2004-QH11, *Luật An ninh Quốc gia 2004, số 32/2004/QH11*, Sim: `0.9448`
+- **3. Luật:** 32-2004-QH11, *Luật An ninh Quốc gia 2004, số 32/2004/QH11*, Sim: `0.9410`
+- **4. Luật:** 32-2004-QH11, *Luật An ninh Quốc gia 2004, số 32/2004/QH11*, Sim: `0.9391`
+- **5. Luật:** 37-2018-QH14, *Luật Công an nhân dân 2018, số 37/2018/QH14*, Sim: `0.9384`
 
 ---
 
-## 9. Query ID: `03-1998-QH10_273`
-- **1. Luật:** 03-1998-QH10, *Luật Khuyến khích đầu tư trong nước sửa đổi năm 1998*, Sim: `1.0000`
-- **2. Luật:** 03-1998-QH10, *Luật Khuyến khích đầu tư trong nước sửa đổi năm 1998*, Sim: `0.9359`
-- **3. Luật:** 18-2000-QH10, *Luật Đầu tư nước ngoài tại Việt Nam sửa đổi, bổ sung năm 2000*, Sim: `0.9313`
-- **4. Luật:** 03-1998-QH10, *Luật Khuyến khích đầu tư trong nước sửa đổi năm 1998*, Sim: `0.9303`
-- **5. Luật:** 03-1998-QH10, *Luật Khuyến khích đầu tư trong nước sửa đổi năm 1998*, Sim: `0.9302`
+## 9. Query ID: `69-2014-QH13_551`
+- **1. Luật:** 69-2014-QH13, *Luật Quản lý, sử dụng vốn Nhà nước đầu tư vào sản xuất, kinh doanh tại doanh nghiệp 2014*, Sim: `1.0000`
+- **2. Luật:** 69-2014-QH13, *Luật Quản lý, sử dụng vốn Nhà nước đầu tư vào sản xuất, kinh doanh tại doanh nghiệp 2014*, Sim: `0.9597`
+- **3. Luật:** 69-2014-QH13, *Luật Quản lý, sử dụng vốn Nhà nước đầu tư vào sản xuất, kinh doanh tại doanh nghiệp 2014*, Sim: `0.9570`
+- **4. Luật:** 69-2014-QH13, *Luật Quản lý, sử dụng vốn Nhà nước đầu tư vào sản xuất, kinh doanh tại doanh nghiệp 2014*, Sim: `0.9500`
+- **5. Luật:** 69-2014-QH13, *Luật Quản lý, sử dụng vốn Nhà nước đầu tư vào sản xuất, kinh doanh tại doanh nghiệp 2014*, Sim: `0.9453`
 
 ---
 
-## 10. Query ID: `48-2024-QH15_372`
-- **1. Luật:** 48-2024-QH15, *Luật Thuế giá trị gia tăng 2024, số 48/2024/QH15*, Sim: `1.0000`
-- **2. Luật:** 13-2008-QH12, *Luật Thuế giá trị gia tăng 2008, số 13/2008/QH12*, Sim: `0.9568`
-- **3. Luật:** 31-2013-QH13, *Luật sửa đổi, bổ sung Luật Thuế giá trị gia tăng 2013*, Sim: `0.9448`
-- **4. Luật:** 67-2025-QH15, *Luật Thuế thu nhập doanh nghiệp 2025, số 67/2025/QH15*, Sim: `0.9439`
-- **5. Luật:** 57-L-CTN, *Luật Thuế giá trị gia tăng năm 1997*, Sim: `0.9425`
+## 10. Query ID: `37-2005-QH11_539`
+- **1. Luật:** 37-2005-QH11, *Luật Kiểm toán Nhà nước năm 2005*, Sim: `1.0000`
+- **2. Luật:** 81-2015-QH13, *Luật Kiểm toán Nhà nước 2015, số 81/2015/QH13*, Sim: `0.9791`
+- **3. Luật:** 37-2005-QH11, *Luật Kiểm toán Nhà nước năm 2005*, Sim: `0.9733`
+- **4. Luật:** 37-2005-QH11, *Luật Kiểm toán Nhà nước năm 2005*, Sim: `0.9685`
+- **5. Luật:** 81-2015-QH13, *Luật Kiểm toán Nhà nước 2015, số 81/2015/QH13*, Sim: `0.9543`
 
 ---
 

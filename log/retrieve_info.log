@@ -507,3 +507,205 @@ fastapi.exceptions.HTTPException: 200: No results found
 2025-07-24 19:56:26,324 - INFO - AFC is enabled with max remote calls: 10.
 2025-07-24 19:56:34,170 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
 2025-07-24 19:56:34,175 - INFO - AFC remote call 1 is done.
+2025-07-25 11:16:54,868 - INFO - Use pytorch device_name: cpu
+2025-07-25 11:16:54,868 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-25 11:17:02,456 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-25 11:17:32,189 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-25 11:17:33,971 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-25 11:17:33,971 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-25 11:17:33,971 - INFO - Result 2: score=0.2467479407787323, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-25 11:17:33,971 - INFO - Result 3: score=0.2484324872493744, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-25 11:17:33,972 - INFO - Result 4: score=0.24991998076438904, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-25 11:18:47,846 - INFO - Received query: question='giáo dục hòa nhập ' top_k= 5
+2025-07-25 11:18:47,916 - INFO - Result 0: score=0.26509326696395874, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14
+2025-07-25 11:18:47,916 - INFO - Result 1: score=0.27220916748046875, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-25 11:18:47,916 - INFO - Result 2: score=0.27313798666000366, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-25 11:18:47,916 - INFO - Result 3: score=0.27482444047927856, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-25 11:18:47,916 - INFO - Result 4: score=0.27682626247406006, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14
+2025-07-25 11:24:38,588 - INFO - Received query: question='Giáo dục hòa nhập' top_k= 5
+2025-07-25 11:24:38,644 - INFO - Result 0: score=0.26509326696395874, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14
+2025-07-25 11:24:38,644 - INFO - Result 1: score=0.27220916748046875, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-25 11:24:38,644 - INFO - Result 2: score=0.27313798666000366, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-25 11:24:38,644 - INFO - Result 3: score=0.27482444047927856, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-25 11:24:38,644 - INFO - Result 4: score=0.27682626247406006, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14
+2025-07-25 11:24:50,123 - INFO - Received query: question='Giáo dục hòa nhập là gì' top_k= 5
+2025-07-25 11:24:50,178 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-25 11:24:50,179 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-25 11:24:50,179 - INFO - Result 2: score=0.2467479407787323, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-25 11:24:50,179 - INFO - Result 3: score=0.2484324872493744, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-25 11:24:50,179 - INFO - Result 4: score=0.24991998076438904, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-25 11:40:21,865 - INFO - Use pytorch device_name: cpu
+2025-07-25 11:40:21,866 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-25 14:55:27,991 - INFO - Use pytorch device_name: cpu
+2025-07-25 14:55:27,991 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-25 14:55:36,607 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-25 14:58:16,818 - INFO - Use pytorch device_name: cpu
+2025-07-25 14:58:16,818 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-25 14:58:22,956 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-25 14:59:30,667 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-25 14:59:32,620 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-25 14:59:32,620 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-25 14:59:32,620 - INFO - Result 2: score=0.2467479705810547, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-25 14:59:32,620 - INFO - Result 3: score=0.251281201839447, law_id=15-2012-QH13, title=Luật Xử lý vi phạm hành chính 2012, số 15/2012/QH13
+2025-07-25 14:59:32,620 - INFO - Result 4: score=0.25406110286712646, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-25 15:03:38,800 - INFO - Use pytorch device_name: cpu
+2025-07-25 15:03:38,800 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-25 15:03:46,351 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-25 15:08:58,220 - INFO - Use pytorch device_name: cpu
+2025-07-25 15:08:58,220 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-25 15:09:04,163 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-25 15:10:54,943 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-25 15:10:56,321 - INFO - Result 0: score=0.22592777013778687, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-25 15:10:56,322 - INFO - Result 1: score=0.24027970433235168, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-25 15:10:56,322 - INFO - Result 2: score=0.2467479705810547, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-25 15:10:56,322 - INFO - Result 3: score=0.251281201839447, law_id=15-2012-QH13, title=Luật Xử lý vi phạm hành chính 2012, số 15/2012/QH13
+2025-07-25 15:10:56,322 - INFO - Result 4: score=0.25406110286712646, law_id=56-LCT-HĐNN8, title=Luật Phổ cập giáo dục tiểu học
+2025-07-25 15:28:43,270 - INFO - Use pytorch device_name: cpu
+2025-07-25 15:28:43,271 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-25 15:28:49,298 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-25 17:51:55,919 - INFO - Use pytorch device_name: cpu
+2025-07-25 17:51:55,919 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-25 17:52:03,998 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-25 17:52:33,051 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-25 17:52:34,290 - INFO - Skipping result 0 with low score: 1.8992362022399902
+2025-07-25 17:52:34,291 - INFO - Skipping result 1 with low score: 1.899550199508667
+2025-07-25 17:52:34,291 - INFO - Skipping result 2 with low score: 1.9100258350372314
+2025-07-25 17:52:34,291 - INFO - Skipping result 3 with low score: 1.9114091396331787
+2025-07-25 17:52:34,291 - INFO - Skipping result 4 with low score: 1.9117827415466309
+2025-07-25 17:52:34,291 - WARNING - No results found for the query
+2025-07-25 17:52:34,291 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 85, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-25 17:54:46,195 - INFO - Use pytorch device_name: cpu
+2025-07-25 17:54:46,195 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-25 17:54:52,918 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-25 17:55:18,952 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-25 17:55:19,862 - WARNING - No results found for the query
+2025-07-25 17:55:19,862 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 85, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-25 18:07:24,559 - INFO - Use pytorch device_name: cpu
+2025-07-25 18:07:24,559 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-25 18:07:30,841 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-25 18:08:16,555 - INFO - Use pytorch device_name: cpu
+2025-07-25 18:08:16,556 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-25 18:08:24,956 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-25 18:08:46,772 - INFO - Received query: question='luat gia dinh' top_k= 5
+2025-07-25 18:08:48,144 - INFO - Skipping result 0 with low score: 1.9312044382095337
+2025-07-25 18:08:48,144 - INFO - Skipping result 1 with low score: 1.9336636066436768
+2025-07-25 18:08:48,144 - INFO - Skipping result 2 with low score: 1.9353629350662231
+2025-07-25 18:08:48,144 - INFO - Skipping result 3 with low score: 1.9368298053741455
+2025-07-25 18:08:48,144 - INFO - Skipping result 4 with low score: 1.9375832080841064
+2025-07-25 18:08:48,144 - WARNING - No results found for the query
+2025-07-25 18:08:48,145 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 85, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-25 18:10:04,572 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-25 18:10:04,646 - INFO - Skipping result 0 with low score: 1.8992362022399902
+2025-07-25 18:10:04,646 - INFO - Skipping result 1 with low score: 1.899550199508667
+2025-07-25 18:10:04,646 - INFO - Skipping result 2 with low score: 1.9100258350372314
+2025-07-25 18:10:04,646 - INFO - Skipping result 3 with low score: 1.9114091396331787
+2025-07-25 18:10:04,646 - INFO - Skipping result 4 with low score: 1.9117827415466309
+2025-07-25 18:10:04,646 - WARNING - No results found for the query
+2025-07-25 18:10:04,646 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 85, in search
+    raise HTTPException(status_code=200, detail="No results found")
+fastapi.exceptions.HTTPException: 200: No results found
+2025-07-25 18:21:43,671 - INFO - Use pytorch device_name: cpu
+2025-07-25 18:21:43,671 - INFO - Load pretrained SentenceTransformer: intfloat/e5-small-v2
+2025-07-25 18:21:52,268 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-25 18:22:44,978 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-25 18:22:45,687 - INFO - Result 0: score=0.8992362022399902, law_id=68-2025-QH15, title=Luật Quản lý và đầu tư vốn Nhà nước tại doanh nghiệp 2025, số 68/2025/QH15
+2025-07-25 18:22:45,687 - INFO - Result 1: score=0.899550199508667, law_id=79-2025-QH15, title=Luật Quốc tịch Việt Nam sửa đổi 2025, số 79/2025/QH15 mới nhất
+2025-07-25 18:22:45,687 - INFO - Result 2: score=0.9100258350372314, law_id=20-2012-QH13, title=Luật Luật sư sửa đổi 2012, số 20/2012/QH13
+2025-07-25 18:22:45,687 - INFO - Result 3: score=0.9114091396331787, law_id=79-2025-QH15, title=Luật Quốc tịch Việt Nam sửa đổi 2025, số 79/2025/QH15 mới nhất
+2025-07-25 18:22:45,687 - INFO - Result 4: score=0.9117827415466309, law_id=79-2025-QH15, title=Luật Quốc tịch Việt Nam sửa đổi 2025, số 79/2025/QH15 mới nhất
+2025-07-25 18:28:05,170 - INFO - Use pytorch device_name: cpu
+2025-07-25 18:28:05,170 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2025-07-25 18:28:14,878 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-25 18:28:36,615 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-07-25 18:28:37,722 - INFO - Result 0: score=0.8114731311798096, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14
+2025-07-25 18:28:37,722 - INFO - Result 1: score=0.7596090883016586, law_id=51-2010-QH12, title=Luật Người khuyết tật 2010, số 51/2010/QH12
+2025-07-25 18:28:37,722 - INFO - Result 2: score=0.7527811229228973, law_id=51-2010-QH12, title=Luật Người khuyết tật 2010, số 51/2010/QH12
+2025-07-25 18:28:37,722 - INFO - Result 3: score=0.7455151379108429, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-25 18:28:37,722 - INFO - Result 4: score=0.7367395758628845, law_id=11-1998-QH10, title=Luật giáo dục năm 1998
+2025-07-25 18:29:03,629 - INFO - Received query: question='giáo dục hòa nhập ' top_k= 5
+2025-07-25 18:29:03,684 - INFO - Result 0: score=0.7835975885391235, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14
+2025-07-25 18:29:03,684 - INFO - Result 1: score=0.7485799789428711, law_id=51-2010-QH12, title=Luật Người khuyết tật 2010, số 51/2010/QH12
+2025-07-25 18:29:03,684 - INFO - Result 2: score=0.742708146572113, law_id=51-2010-QH12, title=Luật Người khuyết tật 2010, số 51/2010/QH12
+2025-07-25 18:29:03,684 - INFO - Result 3: score=0.7380598783493042, law_id=38-2005-QH11, title=Luật Giáo dục năm 2005
+2025-07-25 18:29:03,684 - INFO - Result 4: score=0.7364717423915863, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14
+2025-07-31 10:52:22,225 - INFO - Use pytorch device_name: cpu
+2025-07-31 10:52:22,227 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2025-07-31 10:52:32,155 - INFO - HTTP Request: GET http://localhost:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+2025-07-31 10:52:32,270 - INFO - HTTP Request: GET http://localhost:8080/v1/meta "HTTP/1.1 200 OK"
+2025-07-31 10:52:32,604 - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-07-31 10:53:14,308 - INFO - Received query: question='giáo dục hòa nhập' top_k= 5
+2025-07-31 10:53:18,029 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 72, in search
+    documents = results["documents"][0]
+                ~~~~~~~^^^^^^^^^^^^^
+TypeError: 'QueryReturn' object is not subscriptable
+2025-07-31 11:02:26,813 - INFO - Use pytorch device_name: cpu
+2025-07-31 11:02:26,813 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2025-07-31 11:02:43,832 - INFO - HTTP Request: GET http://localhost:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+2025-07-31 11:02:43,936 - INFO - HTTP Request: GET http://localhost:8080/v1/meta "HTTP/1.1 200 OK"
+2025-07-31 11:02:44,236 - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-07-31 11:03:29,711 - INFO - Received query: question='giáo dục hòa nhập' top_k= 5
+2025-07-31 11:03:43,001 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 72, in search
+    documents = results["documents"][0]
+                ~~~~~~~^^^^^^^^^^^^^
+TypeError: 'QueryReturn' object is not subscriptable
+2025-07-31 11:07:30,000 - INFO - Use pytorch device_name: cpu
+2025-07-31 11:07:30,001 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2025-07-31 11:07:49,497 - INFO - HTTP Request: GET http://localhost:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+2025-07-31 11:07:49,933 - INFO - HTTP Request: GET http://localhost:8080/v1/meta "HTTP/1.1 200 OK"
+2025-07-31 11:07:51,270 - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-07-31 11:09:25,655 - INFO - Use pytorch device_name: cpu
+2025-07-31 11:09:25,655 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2025-07-31 11:09:41,328 - INFO - HTTP Request: GET http://localhost:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+2025-07-31 11:09:41,346 - INFO - HTTP Request: GET http://localhost:8080/v1/meta "HTTP/1.1 200 OK"
+2025-07-31 11:09:41,759 - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-07-31 11:10:37,776 - INFO - Received query: question='giáo dục hòa nhập' top_k= 5
+2025-07-31 11:10:43,342 - INFO - Skipping result 1 with score 0.9391056895256042 - text preview: Tiêu đề: Điều 15. Giáo dục hòa nhập
+Nội dung: 
+Kho
+2025-07-31 11:10:43,342 - INFO - Skipping result 2 with score 0.7308092713356018 - text preview: Tiêu đề: Điều 28. Phương thức giáo dục người khuyế
+2025-07-31 11:10:43,342 - INFO - Skipping result 3 with score 0.613400936126709 - text preview: Tiêu đề: Điều 2. Giải thích từ ngữ
+Nội dung: 
+Khoả
+2025-07-31 11:10:43,342 - INFO - Skipping result 4 with score 0.5637496709823608 - text preview: Tiêu đề: Điều 172. Chuẩn bị tái hòa nhập cộng đồng
+2025-07-31 11:10:43,354 - INFO - Result 5: score=0.47439301013946533, law_id=59-2024-QH15, title=Luật Tư pháp người chưa thành niên 2024, số 59/2024/QH15, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document 8e053960-0e2f-52d5-ac28-df19f8bcf354: original score 8.876951, normalized score: 0.30014193 - 
+Hybrid (Result Set vector,hybridVector) Document 8e053960-0e2f-52d5-ac28-df19f8bcf354: original score 0.86410725, normalized score: 0.17425108
+2025-07-31 11:12:53,958 - INFO - Use pytorch device_name: cpu
+2025-07-31 11:12:53,958 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2025-07-31 11:13:10,495 - INFO - HTTP Request: GET http://localhost:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+2025-07-31 11:13:10,547 - INFO - HTTP Request: GET http://localhost:8080/v1/meta "HTTP/1.1 200 OK"
+2025-07-31 11:13:10,900 - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-07-31 11:13:53,871 - INFO - Received query: question='giáo dục hòa nhập' top_k= 5
+2025-07-31 11:13:57,937 - INFO - Result 1: score=0.9391056895256042, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document 5e3424eb-8af4-50f4-abf6-2f8cbc6fe313: original score 9.301227, normalized score: 0.33910567 - 
+Hybrid (Result Set vector,hybridVector) Document 5e3424eb-8af4-50f4-abf6-2f8cbc6fe313: original score 0.891799, normalized score: 0.6
+2025-07-31 11:13:57,937 - INFO - Result 2: score=0.7308092713356018, law_id=51-2010-QH12, title=Luật Người khuyết tật 2010, số 51/2010/QH12, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document f6e5c8be-5e52-5e26-963f-88c7cf429342: original score 9.964304, normalized score: 0.39999998 - 
+Hybrid (Result Set vector,hybridVector) Document f6e5c8be-5e52-5e26-963f-88c7cf429342: original score 0.87429017, normalized score: 0.3308093
+2025-07-31 11:13:57,937 - INFO - Result 3: score=0.613400936126709, law_id=51-2010-QH12, title=Luật Người khuyết tật 2010, số 51/2010/QH12, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document 0a1e91fe-f613-5f41-b15c-829084213a84: original score 9.177364, normalized score: 0.32773066 - 
+Hybrid (Result Set vector,hybridVector) Document 0a1e91fe-f613-5f41-b15c-829084213a84: original score 0.8713542, normalized score: 0.2856703
+2025-07-31 11:13:57,937 - INFO - Result 4: score=0.5637496709823608, law_id=59-2024-QH15, title=Luật Tư pháp người chưa thành niên 2024, số 59/2024/QH15, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document ac1c1043-1865-5658-b5a8-db0508aa3c16: original score 9.179919, normalized score: 0.3279653 - 
+Hybrid (Result Set vector,hybridVector) Document ac1c1043-1865-5658-b5a8-db0508aa3c16: original score 0.8681095, normalized score: 0.2357844
+2025-07-31 11:13:57,938 - INFO - Skipping result 5 with low score 0.47439301013946533 - text preview: Tiêu đề: Điều 20. Bảo đảm việc tái hòa nhập cộng đ
+2025-07-31 11:15:25,623 - INFO - Use pytorch device_name: cpu
+2025-07-31 11:15:25,623 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
