@@ -17,7 +17,7 @@ This project aims to build an end-to-end **Retrieval-Augmented Generation (RAG)*
 ├── tests/                          # Unit & integration tests
 ├── .github/workflows/              # CI/CD with GitHub Actions
 ├── environment.yml                 # Conda environment definition
-├── docker-compose-config.yaml     # Docker Compose config (Weaviate, etc.)
+├── docker-compose-config.yaml      # Docker Compose config (Weaviate, etc.)
 ├── README.md                       # Project overview and usage guide
 └── ...
 ```
