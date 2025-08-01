@@ -20,7 +20,7 @@ def process_url(url, headers):
         html = response.text
         soup = BeautifulSoup(html, "html.parser")
 
-        # Lấy metadata từ application/ld+json
+        # Extract metadata from application/ld+json
         metadata_raw = soup.find("script", type="application/ld+json")
         if metadata_raw is None:
             logging.error(f"Không tìm thấy metadata: {url}")
@@ -35,7 +35,7 @@ def process_url(url, headers):
             return
         law_id = law_id_raw.replace("/", "-")
 
-        # Lấy title, date
+        # Extract title, date
         title = metadata_json.get("name", "")
         date = metadata_json.get("legislationDate", "")
 
@@ -56,10 +56,10 @@ def main():
     with open("../BTTH3/data/raw/law_links.json", "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    # Lọc bỏ dự thảo
+    # Filter out "dự thảo"
     filtered_data = [url for url in data if "du-thao" not in url]
 
-    # Cấu hình headers
+    # Configure headers
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
         "Referer": "https://luatvietnam.vn/",
@@ -67,19 +67,19 @@ def main():
         "Cookie": "MUID=...",
     }
 
-    # Cấu hình log fail
+    # Configure logging for failed accesses
     logging.basicConfig(
         filename="../BTTH3/log/failed_access_links.log", level=logging.ERROR
     )
 
-    # Đa luồng tải chi tiết
-    concurrency_limit = 5  # Số thread tối đa
+    # Fetch details in parallel
+    concurrency_limit = 5  # Max threads
     global rate_limit_delay
-    rate_limit_delay = 1.5  # Thời gian delay giữa các request
+    rate_limit_delay = 1.5  # Delay 1.5 seconds between requests
     with ThreadPoolExecutor(max_workers=concurrency_limit) as executor:
         futures = [executor.submit(process_url, url, headers) for url in filtered_data]
         for future in as_completed(futures):
-            future.result()  # Để bắt exception nếu có
+            future.result()  # To catch exceptions if any
 
 
 if __name__ == "__main__":

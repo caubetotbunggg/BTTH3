@@ -88,7 +88,7 @@ for chunk_file in tqdm(chunk_files, desc="Embedding + Inserting"):
         collection = client.collections.get("Document")
         
         metadatas = [metadata] * len(embeddings)
-        # Tạo các trường cần thiết
+        # Create necessary fields
         chunk_ids = [f"{law_id}_{i}" for i in range(len(embeddings))]
 
         try:
@@ -122,6 +122,5 @@ for chunk_file in tqdm(chunk_files, desc="Embedding + Inserting"):
 
 print("\n[✓] All done.")
 
-# ---------------------------------------------------------------
 # Close connection
 client.close()
