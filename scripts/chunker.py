@@ -5,7 +5,9 @@ from email.mime import text
 
 
 def chunk_by_chapter_and_article(text):
-    # Tìm tất cả chương (cả số và số La Mã, có hoặc không có dấu chấm)
+    # Find all "chương" both in uppercase and lowercase
+    # Match "Chương X" or "chương X" or "Chương X."
+    # where X can be a Roman numeral or Arabic numeral
     chapter_matches = list(re.finditer(r"(?im)^\s*chương\s+[\divxlcdm]+\.?", text))
     chunks = []
 
@@ -19,7 +21,7 @@ def chunk_by_chapter_and_article(text):
         )
         chapter_text = text[start_pos:end_pos].strip()
 
-        # Tách theo Điều trong chương (có hoặc không có dấu chấm)
+        # Split by "Điều" in the chapter (with or without a period)
         raw_chunks = re.split(r"(?=Điều\s+\d+\.)", chapter_text)
         for chunk in raw_chunks:
             match_dieu = re.match(r"(Điều\s+\d+\..*)", chunk.strip())
@@ -28,7 +30,7 @@ def chunk_by_chapter_and_article(text):
             tieu_de = match_dieu.group(1)
             noi_dung = chunk.strip()[len(tieu_de) :].strip()
 
-            # Tách khoản: 1. hoặc 1- hoặc 1)
+            # Split by "khoản": 1. or 1- or 1)
             khoan_list = []
             khoan_chunks = re.split(r"(?m)^\s*(\d+[\.\-\)])", noi_dung)
             for j in range(1, len(khoan_chunks), 2):
@@ -37,7 +39,7 @@ def chunk_by_chapter_and_article(text):
                     khoan_chunks[j + 1].strip() if j + 1 < len(khoan_chunks) else ""
                 )
                 khoan_list.append({"khoan": khoan_so, "noi_dung": khoan_noi_dung})
-            
+
             if khoan_list:
                 noi_dung = ""
 
@@ -72,7 +74,7 @@ def process_all_files():
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(chunks, f, ensure_ascii=False, indent=2)
     if failed_files:
-        # Lưu danh sách file lỗi vào JSON
+        # Save list of failed files to JSON
         unstructured_dir = "../BTTH3/data/unstructured"
         os.makedirs(unstructured_dir, exist_ok=True)
         failed_path = os.path.join(unstructured_dir, "failed_regex.json")
@@ -82,7 +84,3 @@ def process_all_files():
 
 if __name__ == "__main__":
     process_all_files()
-
-# 1 số file là Điều X\n
-# 1 số file là Chương X.
-# 1 số file không có chương, chỉ có Điều

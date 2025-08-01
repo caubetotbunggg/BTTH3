@@ -52,18 +52,18 @@ def main():
 
     num_of_page = 38
     batch_size = 15
-    concurrency_limit = 10  # tối đa 10 thread/batch
-    rate_limit_delay = 1.5  # delay mỗi request
+    concurrency_limit = 10  # max 10 thread/batch
+    rate_limit_delay = 1.5  # delay 1.5 seconds between requests
 
     all_urls = set()
 
-    # Chia batch
+    # Split into batches
     batches = []
     for i in range(1, num_of_page + 1, batch_size):
         batch = list(range(i, min(i + batch_size, num_of_page + 1)))
         batches.append(batch)
 
-    # Đa luồng
+    # Fetch pages in batches
     for batch_index, batch_pages in enumerate(batches, 1):
         print(f"Batch {batch_index}: pages {batch_pages}")
         with ThreadPoolExecutor(max_workers=concurrency_limit) as executor:
@@ -72,7 +72,7 @@ def main():
                 result = future.result()
                 all_urls.update(result)
 
-    # Ghi file JSON
+    # Save to JSON file
     all_urls_list = list(all_urls)
     os.makedirs("../BTTH3/data/raw", exist_ok=True)
     with open("../BTTH3/data/raw/law_links.json", "w", encoding="utf-8") as f:

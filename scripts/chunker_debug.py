@@ -4,12 +4,14 @@ import re
 
 
 def chunk_text(text):
-    # Tìm chương (chấp nhận số thường/số La Mã, có hoặc không có dấu chấm)
+    # Find all "chương" both in uppercase and lowercase
+    # Match "Chương X" or "chương X" or "Chương X."
+    # where X can be a Roman numeral or Arabic numeral
     chapter_matches = list(re.finditer(r"(?im)^\s*chương\s+[\divxlcdm]+\.?", text))
     chunks = []
 
     if chapter_matches:
-        # Có chương: tách theo Chương -> Điều -> Khoản
+        # If "chương": split from "Chương" -> "Điều" -> "Khoản"
         for idx, match in enumerate(chapter_matches):
             chapter_title = match.group(0).strip()
             start_pos = match.end()
@@ -20,10 +22,10 @@ def chunk_text(text):
             )
             chapter_text = text[start_pos:end_pos].strip()
 
-            # Tách theo Điều
+            # Split by "Điều"
             chunks.extend(chunk_by_article(chapter_text, chapter_title))
     else:
-        # Không có chương: chỉ tách theo Điều
+        # Does not have "chương": only split by Article
         chunks.extend(chunk_by_article(text, chapter_title=None))
 
     return chunks
@@ -41,7 +43,6 @@ def chunk_by_article(text, chapter_title=None):
         tieu_de = match_dieu.group(1)
         noi_dung = chunk.strip()[len(tieu_de) :].strip()
 
-        # Tách khoản: 1. hoặc 1- hoặc 1)
         khoan_list = []
         khoan_chunks = re.split(r"(?m)^\s*(\d+[\.\-\)])", noi_dung)
         for j in range(1, len(khoan_chunks), 2):

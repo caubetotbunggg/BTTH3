@@ -1,130 +1,133 @@
-# Legal Assistant - RAG System for Legal Document Retrieval
+# 📚 Legal Assistant - RAG System for Legal Document Retrieval
 
 ## 🧠 Project Overview
 
-This project aims to build an end-to-end Retrieval-Augmented Generation (RAG) system tailored to legal documents in Vietnam. It provides users (students, lawyers, citizens) with accurate and explainable answers by retrieving relevant legal text chunks and prompting an LLM.
+This project aims to build an end-to-end **Retrieval-Augmented Generation (RAG)** system tailored for **Vietnamese legal documents**. It provides users (students, lawyers, citizens) with **accurate** and **explainable** answers by retrieving relevant legal text chunks and prompting a language model (LLM).
+
+---
 
 ## 📁 Repository Structure
 
-```
+```bash
 .
-├── app/                      # FastAPI app code
-├── data/                     # Raw, parsed, processed legal data
-├── docs/                     # Documentation (API, prompts, metrics...)
-├── scripts/                  # Crawler, parser, cleaner, chunker, etc.
-├── tests/                    # Unit & integration tests
-├── .github/workflows/       # GitHub Actions CI/CD
-├── environment.yml          # Conda environment definition
-├── README.md                # Project overview and usage
+├── app/                            # FastAPI app (main API, routers, services)
+├── data/                           # Legal documents: raw, parsed, chunked, embeddings
+├── docs/                           # Documentation (API specs, prompts, evaluations)
+├── scripts/                        # Scripts for crawling, parsing, cleaning, chunking
+├── tests/                          # Unit & integration tests
+├── .github/workflows/              # CI/CD with GitHub Actions
+├── environment.yml                 # Conda environment definition
+├── docker-compose-config.yaml     # Docker Compose config (Weaviate, etc.)
+├── README.md                       # Project overview and usage guide
 └── ...
 ```
 
+---
 
 ## 🚀 Quick Start
 
+### 1. Set up Environment
+
 ```bash
-# Setup environment
+# Create and activate environment
 conda env create -f environment.yml
 conda activate environment
+```
 
-# Run service
+### 2. Run Docker Services (Weaviate, etc.)
+
+```bash
+docker compose -f docker-compose-config.yaml up -d
+```
+
+> Ensure Docker is installed and running before executing this.
+
+### 3. Run FastAPI Service
+
+```bash
 uvicorn app.main:app --reload
+```
 
-# Run tests
+Access API docs at: [http://localhost:8000/docs](http://localhost:8000/docs)
+
+### 4. Run Tests
+
+```bash
 pytest --cov=app tests/
 ```
 
-## 🔍 Example API Call
+---
 
-```bash
-curl -X POST http://localhost:8000/retrieve \
-  -H "Content-Type: application/json" \
-  -d '{"question": "Quy định về hợp đồng lao động", "top_k": 3}'
+## 📦 Data & Indexing
+
+### 📌 Embedding Model
+
+We use the multilingual embedding model:
+
+```
+intfloat/multilingual-e5-small
 ```
 
-## RAG Module
+### 🧠 Indexing with Weaviate
 
-### Endpoints
-
-#### `POST /rag/retrieve`
-
-* **Description:** Retrieve relevant documents from vector store.
-* **Payload:**
-
-```json
-{
-  "query": "giáo dục hòa nhập là gì?",
-  "top_k": 5
-}
-```
-
-* **Response:**
-
-```json
-{
-    "chunk_id": "str",
-    "text": "str",
-    "score": "score",
-    "meta": {
-        "law_id": "str",
-        "section_title": "str",
-        "date": "date",
-    },
-}
-```
-
-#### `POST /rag/query`
-
-* **Description:** Retrieve relevant documents and generate answer using LLM.
-* **Payload:**
-
-```json
-{
-  "query": "giáo dục hòa nhập là gì?",
-  "top_k": 5
-}
-```
-
-* **Response:**
-
-```json
-{
-  "text": "Dựa vào ...",
-}
+```python
+collection.data.insert_many(
+    [
+        DataObject(
+            uuid=generate_uuid5(f"{file_id}_{i}"),
+            properties={"text": text, "metadata": metadata},
+            vector=vector,
+        )
+        for i, (text, vector, metadata) in enumerate(
+            zip(documents, vectors, metadatas)
+        )
+    ]
+)
 ```
 
 ---
 
-### Examples
+## 🔎 Retrieval Flow
 
-```bash
-curl -X POST http://localhost:8000/rag \
-  -H "Content-Type: application/json" \
-  -d '{"query": "giáo dục hòa nhập là gì", "top_k": 3}'
+### 1. Connect to Weaviate
 
----
+```python
+from weaviate import connect_to_local
+from weaviate.classes.init import AdditionalConfig, Timeout
 
-### Limits
-
-* **Timeout:**
-  * LLM Completion: 15 seconds
-
-Requests that exceed timeout or rate limits will receive:
-
-```json
-{
-  "detail": "Hệ thống bận vui lòng thử lại sau."
-}
+client = connect_to_local(
+    host="localhost",
+    port=8080,
+    additional_config=AdditionalConfig(timeout=Timeout(query=60))
+)
+collection = client.collections.get("Document")
 ```
 
+### 2. Hybrid Search Query
 
-## 📌 Notes
-
-* Follow Conventional Commits (`feat:`, `fix:`, `test:`...)
-* Use pre-commit to ensure formatting
-* Update `manifest.csv` after crawling or parsing
-
+```python
+results = collection.query.hybrid(
+    query=user_input,
+    vector=embedding,
+    alpha=0.6,  # BM25 (text) vs vector balance
+    return_metadata=MetadataQuery(score=True, explain_score=True),
+    limit=k,
+)
+```
 
 ---
+
+## 📌 Conventions & Workflow Notes
+
+* Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (e.g., `feat:`, `fix:`, `refactor:`)
+* Run `pre-commit install` to enforce code formatting and checks before commit
+* Always update `manifest.csv` after crawling or processing new files
+* Ensure Docker containers are up when testing the full retrieval pipeline
+
+---
+
+## 📜 License
 
 © 2025 Legal Assistant RAG Project Team
+This project is for research and educational purposes only.
+

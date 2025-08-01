@@ -9,20 +9,20 @@ from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
-load_dotenv()  # Tự động đọc file .env ở cùng thư mục
+load_dotenv()
 
 # Load model
 print("[+] Loading embedding model...")
 model = SentenceTransformer(os.getenv("EMBEDDING_MODEL"))
 
-# Tập tin đầu vào
+# Input file
 print("[+] Loading data...")
 with open("../BTTH3/data/processed/all_chunks.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
 print(f"[+] Total chunks to process: {len(data):,}")
 
-# Checkpoint file để resume
+# Checkpoint file for resume
 checkpoint_file = "../BTTH3/log/embedding_checkpoint.json"
 start_idx = 0
 if os.path.exists(checkpoint_file):
@@ -30,12 +30,12 @@ if os.path.exists(checkpoint_file):
         start_idx = json.load(f).get("last_processed", 0)
     print(f"[+] Resuming from index: {start_idx:,}")
 
-# Gom embedding theo law_id
+# Group embeddings by law_id
 grouped = defaultdict(list)  # law_id → list of (embedding, metadata)
 error_count = 0
 
-# Xử lý với batch và progress bar
-batch_size = 100  # Xử lý 100 items mỗi lần
+# Process in batches with progress bar
+batch_size = 100  # Process 100 items at a time
 total_batches = (len(data) - start_idx + batch_size - 1) // batch_size
 
 print("[+] Starting embedding process...")
@@ -51,7 +51,7 @@ for batch_idx in tqdm(
     actual_end = min(actual_start + batch_size, len(data))
     batch_data = data[actual_start:actual_end]
 
-    # Chuẩn bị sentences cho batch
+    # Prepare sentences for the batch
     sentences = []
     batch_items = []
 
@@ -84,12 +84,11 @@ for batch_idx in tqdm(
                 log_f.write(traceback.format_exc())
                 log_f.write("\n" + "=" * 80 + "\n")
 
-    # Embed cả batch cùng lúc
+    # Embed whole batch if there are sentences
     if sentences:
         try:
             embeddings = model.encode(sentences, batch_size=32, show_progress_bar=False)
 
-            # Gom vào grouped
             for embedding, item in zip(embeddings, batch_items):
                 law_id = item["meta"]["law_id"]
                 grouped[law_id].append((embedding, item["meta"]))
@@ -106,12 +105,11 @@ for batch_idx in tqdm(
                 log_f.write(traceback.format_exc())
                 log_f.write("\n" + "=" * 80 + "\n")
 
-    # Save checkpoint mỗi 10 batches
+    # Save checkpoint for 10 batches
     if batch_idx % (10 * batch_size) == 0:
         with open(checkpoint_file, "w") as f:
             json.dump({"last_processed": actual_end}, f)
 
-        # In thống kê tiến trình
         elapsed_time = time.time() - start_time
         processed = actual_end - start_idx
         if processed > 0:
@@ -128,14 +126,14 @@ for batch_idx in tqdm(
 print(f"\n[+] Embedding completed! Total groups: {len(grouped)}")
 print(f"[+] Total errors: {error_count}")
 
-# Lưu từng nhóm embeddings thành 1 file .npy
+# Save each group of embeddings to a .npy file
 print("[+] Saving embeddings ...")
 for law_id, embeds_and_meta in tqdm(grouped.items(), desc="Saving files"):
     try:
         embeddings = [e for e, _ in embeds_and_meta]
-        metadata = embeds_and_meta[0][1]  # dùng chung metadata (VD: title, date,...)
+        metadata = embeds_and_meta[0][1]  # Use shared metadata (VD: title, date,...)
 
-        # Lưu embeddings
+        # Save embeddings
         np.save(
             f"../BTTH3/data/processed/embeddings/{law_id}.npy", np.array(embeddings)
         )
@@ -149,7 +147,7 @@ for law_id, embeds_and_meta in tqdm(grouped.items(), desc="Saving files"):
             log_f.write(traceback.format_exc())
             log_f.write("\n" + "=" * 80 + "\n")
 
-# Xóa checkpoint file sau khi hoàn thành
+# Delete checkpoint file after completion
 if os.path.exists(checkpoint_file):
     os.remove(checkpoint_file)
     print("[+] Checkpoint file cleaned up")

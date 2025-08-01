@@ -9,10 +9,10 @@ from sentence_transformers import SentenceTransformer
 from weaviate.classes.init import AdditionalConfig, Timeout
 from weaviate.classes.query import MetadataQuery
 
-load_dotenv()  # Tự động đọc file .env ở cùng thư mục
+load_dotenv()
 
 
-# Cấu hình logging
+# Configure logging
 logging.basicConfig(
     filename="../BTTH3/log/retrieve_info.log",
     level=logging.INFO,
@@ -27,13 +27,13 @@ router = APIRouter()
 model = SentenceTransformer(os.getenv("EMBEDDING_MODEL"))
 
 
-# =================== 1. Kết nối tới Weaviate ====================
+# Connect to Weaviate
 client = weaviate.connect_to_local(
     host="localhost",
     port=8080,
     additional_config=AdditionalConfig(timeout=Timeout(query=60)),
 )
-# =================== 2. Lấy collection đã tạo ====================
+# Get the created collection
 collection = client.collections.get("Document")
 
 
@@ -56,15 +56,14 @@ def search(
 ):
     logger.info(f"Received query: question='{user_input}' top_k= {k}")
 
-    # Embed truy vấn
     embedding = model.encode(f"query: {user_input}").tolist()
 
     try:
-        # Truy vấn ChromaDB (top 5)
+        # Query ChromaDB (top 5)
         results = collection.query.hybrid(
             query=user_input,
             vector=embedding,
-            alpha=0.6,  # Trọng số cho BM25
+            alpha=0.6,  # Weight for BM25
             return_metadata=MetadataQuery(score=True, explain_score=True),
             limit=k,
         )

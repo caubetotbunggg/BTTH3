@@ -5,10 +5,11 @@ import numpy as np
 import weaviate
 import weaviate.classes.config as wvcc
 from weaviate.classes.config import DataType, Property
+from weaviate.classes.data import DataObject
 from weaviate.classes.init import AdditionalConfig, Timeout
 from weaviate.util import generate_uuid5
 
-# =================== 1. Kết nối tới Weaviate ====================
+# Connect to Weaviate
 client = weaviate.connect_to_local(
     host="localhost",
     port=8080,
@@ -19,7 +20,6 @@ client = weaviate.connect_to_local(
     ),
 )
 
-# =================== 2. Kiểm tra và tạo collection ====================
 # CREATE COLLECTION
 try:
     client.collections.create(
@@ -29,14 +29,14 @@ try:
             Property(name="text", data_type=DataType.TEXT),
             Property(
                 name="metadata", data_type=DataType.JSON
-            ),  # Metadata lưu dưới dạng JSON
+            ),  # Metadata field in JSON format
         ],
     )
     print("Collection 'Document' created successfully")
 except Exception as e:
     print(f"Collection creation error (might already exist): {e}")
 
-# ==== Đường dẫn dữ liệu ====
+# ==== Data paths ====
 embedding_dir = "data/processed/embeddings"
 meta_dir = "data/raw/html"
 chunk_data_dir = "data/processed/chunks"
@@ -50,12 +50,12 @@ for file in files:
     meta_path = os.path.join(meta_dir, f"{file_id}_meta.json")
     chunk_path = os.path.join(chunk_data_dir, f"{file_id}_chunks.json")
 
-    # Kiểm tra metadata có tồn tại không
+    # Check if metadata exists
     if not os.path.exists(meta_path):
-        print(f"[!] Bỏ qua {file_id}: thiếu metadata")
+        print(f"[!] Skipping {file_id}: missing metadata")
         continue
 
-    # Load vectors và metadata
+    # Load vectors and metadata
     vectors_np = np.load(embedding_path)
     if len(vectors_np.shape) == 1:
         vectors = [vectors_np.tolist()]
@@ -65,17 +65,17 @@ for file in files:
     with open(meta_path, "r", encoding="utf-8") as f:
         metadata = json.load(f)
 
-    # Tạo các trường cần thiết
+    # Create necessary fields
     chunk_ids = [f"{file_id}_{i}" for i in range(len(vectors))]
     if not os.path.exists(chunk_path):
-        print(f"[!] Bỏ qua {file_id}: thiếu chunk data")
+        print(f"[!] Skipping {file_id}: missing chunk data")
         continue
     else:
         with open(chunk_path, "r", encoding="utf-8") as f:
             chunk_data = json.load(f)
 
     if len(chunk_data) != len(vectors):
-        print(f"[!] Bỏ qua {file_id}: số lượng chunk không khớp với vectors")
+        print(f"[!] Skipping {file_id}: number of chunks does not match vectors")
         print(f"  - Vectors: {len(vectors)}, Chunks: {len(chunk_data)}")
         continue
 
@@ -87,7 +87,7 @@ for file in files:
         khoan_list = item.get("khoan", [])
 
         if khoan_list:
-            # Nối tất cả các khoản thành văn bản
+            # Join khoan text
             khoan_text = "\n".join(
                 [f"Khoản {k['khoan']} {k['noi_dung']}" for k in khoan_list]
             )
@@ -97,15 +97,13 @@ for file in files:
 
         documents.append(text)
 
-    metadatas = [metadata] * len(
-        vectors
-    )  # Giả sử metadata giống nhau cho tất cả chunks
+    metadatas = [metadata] * len(vectors)  # Assuming same metadata for all vectors
 
     collection = client.collections.get("Document")
 
     try:
-        from weaviate.classes.data import DataObject
 
+        # Insert data into Weaviate
         collection.data.insert_many(
             [
                 DataObject(
@@ -119,13 +117,12 @@ for file in files:
             ]
         )
 
-        print(f"[✓] Đã index {len(chunk_ids)} chunks từ {file_id}")
+        print(f"[✓] Indexed {len(chunk_ids)} chunks from {file_id}")
         total_chunks += len(chunk_ids)
     except Exception as e:
-        print(f"[!] Lỗi khi insert {file_id}: {e}")
+        print(f"[!] Error inserting {file_id}: {e}")
 
-print(f"\n Tổng cộng đã index: {total_chunks} chunks.")
+print(f"\nTotal indexed: {total_chunks} chunks.")
 
-# ---------------------------------------------------------------
 # Close connection
 client.close()

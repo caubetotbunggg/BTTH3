@@ -58,11 +58,12 @@ def parse_luat_html(soup):
 
             current_dieu = tag.get_text(strip=True).split("\n")[0].strip()
 
-            # Kiểm tra nếu tag này có <br> -> nội dung nằm ngay trong điều
             if tag.find("br"):
                 parts = [s.strip() for s in tag.stripped_strings]
                 if len(parts) > 1:
-                    current_content = parts[1:]  # Bỏ tiêu đề điều
+                    current_content = parts[
+                        1:
+                    ]  # Skip the first part which is the title
                     waiting_for_docitem11 = False
                 else:
                     current_content = []
@@ -74,7 +75,7 @@ def parse_luat_html(soup):
         elif "docitem-11" in tag["class"] and waiting_for_docitem11:
             current_content.append(tag.get_text(strip=True))
 
-    # Flush điều cuối cùng nếu còn
+    # Flush any remaining content
     if current_dieu:
         parsed.append(
             {
@@ -88,15 +89,15 @@ def parse_luat_html(soup):
 
 
 def main():
-    # Đường dẫn đến thư mục chứa các file HTML và metadata
+    # Data paths
     html_dir = "../BTTH3/data/raw/html"
     meta_dir = "../BTTH3/data/raw/meta"
 
-    # Tạo thư mục parsed nếu chưa tồn tại
+    # Create parsed directory if not exists
     parsed_dir = "../BTTH3/data/raw/parsed"
     os.makedirs(parsed_dir, exist_ok=True)
 
-    # Lặp qua từng file HTML trong thư mục
+    # Loop through each HTML file in the directory
     for filename in os.listdir(html_dir):
         if filename.endswith(".html"):
             law_id = filename.replace(".html", "")
@@ -112,13 +113,13 @@ def main():
             with open(meta_path, "r", encoding="utf-8") as f:
                 metadata = json.load(f)
 
-            # Trích loại văn bản, lĩnh vực và nội dung
+            # Extract document type, field and content
             with open(html_path, "r", encoding="utf-8") as f:
                 soup = BeautifulSoup(f, "html.parser")
             loai_van_ban, linh_vuc = extract_loai_van_ban_va_linh_vuc(soup)
             parsed_noi_dung = parse_luat_html(soup)
 
-            # Gộp metadata và nội dung đã parse
+            # Combine metadata and parsed content
             combined = {
                 **metadata,
                 "loai_van_ban": loai_van_ban or "None",
