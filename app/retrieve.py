@@ -9,6 +9,8 @@ from sentence_transformers import SentenceTransformer
 from weaviate.classes.init import AdditionalConfig, Timeout
 from weaviate.classes.query import MetadataQuery
 
+from FlagEmbedding import FlagReranker
+
 load_dotenv()
 
 
@@ -23,9 +25,9 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
-# Load embedding model
+# Load embedding and reranking model
 model = SentenceTransformer(os.getenv("EMBEDDING_MODEL"))
-
+reranker = FlagReranker(os.getenv("RERANKING_MODEL"), use_fp16=False)
 
 # Connect to Weaviate
 client = weaviate.connect_to_local(
@@ -65,39 +67,56 @@ def search(
             vector=embedding,
             alpha=0.6,  # Weight for BM25
             return_metadata=MetadataQuery(score=True, explain_score=True),
-            limit=k,
+            limit=10,
         )
 
-        response_chunks = []
+        from operator import itemgetter
+
+        batch_pairs = []
+        metas = []
+        texts = []
 
         for i, obj in enumerate(results.objects, start=1):
             doc = obj.properties["text"]
-            score = obj.metadata.score
             meta = obj.properties["metadata"]
 
-            if score < 0.5:
-                logger.info(
-                    f"Skipping result {i} with low score {score} - text preview: {doc[:50]}"
+            batch_pairs.append([user_input, doc])
+            texts.append(doc)
+            metas.append(meta)
+
+        # Use reranker to compute scores
+        scores = reranker.compute_score(batch_pairs, normalize=True)
+
+        # Select results with score >= 0.7
+        scored_results = [
+            (i, score, texts[i], metas[i], results.objects[i].metadata.explain_score)
+            for i, score in enumerate(scores)
+            if score >= 0.7
+        ]
+
+        # Sort results by score and limit to top k
+        top_results = sorted(scored_results, key=itemgetter(1), reverse=True)[:k]
+
+        # Prepare response
+        response_chunks = []
+        for i, score, doc, meta, explain_score in top_results:
+            response_chunks.append(
+                ChunkResponse(
+                    chunk_id=str(i),
+                    text=doc,
+                    score=round(score, 4),
+                    meta={
+                        "law_id": meta.get("law_id", "unknown"),
+                        "section_title": meta.get("title", "unknown"),
+                        "date": meta.get("date", "unknown"),
+                    },
                 )
-                continue
-            else:
-                response_chunks.append(
-                    ChunkResponse(
-                        chunk_id=str(i),
-                        text=doc,
-                        score=round(score, 4),
-                        meta={
-                            "law_id": meta.get("law_id", "unknown"),
-                            "section_title": meta.get("title", "unknown"),
-                            "date": meta.get("date", "unknown"),
-                        },
-                    )
-                )
-                logger.info(
-                    f"Result {i}: score={score}, law_id={meta.get('law_id', 'unknown')}, "
-                    f"title={meta.get('title', 'unknown')}, "
-                    f"Explain Score: {obj.metadata.explain_score}"
-                )
+            )
+            logger.info(
+                f"Result {i}: score={score}, law_id={meta.get('law_id', 'unknown')}, "
+                f"title={meta.get('title', 'unknown')}, "
+                f"Explain Score: {explain_score}"
+            )
 
         if not response_chunks:
             logger.warning("No results found for the query")
