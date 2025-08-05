@@ -1,13 +1,11 @@
-### **`docs/api_search.md` – API Contract cho `/search`**
-
 ```md
-# API Contract – `/search`
+# API Contract – `/retrieve`
 
 ## 📍 Endpoint
 
 ```
 
-POST /search
+POST /retrieve
 
 ````
 
@@ -89,7 +87,7 @@ POST /search
 
 ---
 
-### 2. No Results (200, nhưng detail)
+### 2. No Results (204, nhưng detail)
 
 ```json
 {
@@ -109,7 +107,7 @@ POST /search
 }
 ```
 
-**Nguyên nhân:** Lỗi truy vấn ChromaDB, lỗi embedding, hoặc lỗi hệ thống.
+**Nguyên nhân:** Lỗi truy vấn database, lỗi embedding, hoặc lỗi hệ thống.
 
 ---
 
@@ -128,7 +126,7 @@ conda activate testing
 uvicorn app.retrieve:app --reload
 ```
 
-* Truy cập tại: [http://localhost:8000/docs](http://localhost:8000/docs) để thử nghiệm trên Swagger UI.
+* Truy cập Swagger UI tại: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 * Tất cả logic chính nằm trong `app/retrieve.py`.
 
 ---
@@ -146,7 +144,7 @@ pytest --cov=app --cov-report=term-missing
 
 
 ```http
-POST /search
+POST /retrieve
 ```
 
 ### Body:
