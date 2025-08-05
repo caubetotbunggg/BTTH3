@@ -29,9 +29,13 @@ POST /search
 | `user_input` | string       | ✅        | Câu hỏi hoặc truy vấn của người dùng           |
 | `k`          | integer      | ❌        | Số lượng kết quả trả về (top-k). Mặc định là 5 |
 
+> ⚠️ Lưu ý: Các kết quả trong mảng `chunks` được lọc theo ngưỡng độ tương đồng tối thiểu là **0.7**.
+> Nếu không có đủ `k` kết quả thỏa mãn điều kiện này, số lượng chunk trả về sẽ ít hơn.
+
 ---
 
 ## Success Response (200 OK)
+
 
 ```json
 {
@@ -39,7 +43,7 @@ POST /search
     {
       "chunk_id": "0",
       "text": "Nội dung luật hoặc đoạn trích...",
-      "score": 0.421,
+      "score": 0.921,
       "meta": {
         "law_id": "LD2013",
         "section_title": "Chương XII - Giải quyết tranh chấp đất đai",
@@ -49,7 +53,7 @@ POST /search
     {
       "chunk_id": "1",
       "text": "Nội dung khác...",
-      "score": 0.5032,
+      "score": 0.8032,
       "meta": {
         "law_id": "GD2005",
         "section_title": "Điều 14 - Quản lý nhà nước về giáo dục",
@@ -71,6 +75,7 @@ POST /search
 ---
 
 ## Error Responses
+
 
 ### 1. Bad Request (400)
 
@@ -134,28 +139,11 @@ uvicorn app.retrieve:app --reload
 pytest --cov=app --cov-report=term-missing
 ```
 
-* Test nên được đặt tại `tests/`.
-
 ---
-
-### Format & Lint
-
-```bash
-black --check .
-isort --check-only .
-flake8 .
-pylint app/
-```
-
-* Để tự động fix:
-
-```bash
-black .
-isort .
-```
 
 
 ## Ví dụ API mẫu
+
 
 ```http
 POST /search
@@ -178,7 +166,7 @@ POST /search
     {
       "chunk_id": "0",
       "text": "Thời hiệu khởi kiện tranh chấp đất đai là 03 năm kể từ ngày phát sinh tranh chấp...",
-      "score": 0.435,
+      "score": 0.835,
       "meta": {
         "law_id": "LD2013",
         "section_title": "Giải quyết tranh chấp đất đai",
