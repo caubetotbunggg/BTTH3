@@ -709,3 +709,61 @@ Hybrid (Result Set vector,hybridVector) Document ac1c1043-1865-5658-b5a8-db0508a
 2025-07-31 11:13:57,938 - INFO - Skipping result 5 with low score 0.47439301013946533 - text preview: Tiêu đề: Điều 20. Bảo đảm việc tái hòa nhập cộng đ
 2025-07-31 11:15:25,623 - INFO - Use pytorch device_name: cpu
 2025-07-31 11:15:25,623 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2025-08-04 23:08:00,738 - INFO - Use pytorch device_name: cpu
+2025-08-04 23:08:00,739 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2025-08-04 23:10:53,674 - INFO - Use pytorch device_name: cpu
+2025-08-04 23:10:53,674 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2025-08-04 23:11:04,849 - INFO - HTTP Request: GET http://localhost:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+2025-08-04 23:11:04,941 - INFO - HTTP Request: GET http://localhost:8080/v1/meta "HTTP/1.1 200 OK"
+2025-08-04 23:11:05,271 - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-08-04 23:12:05,028 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-08-04 23:13:56,802 - ERROR - Vector search failed
+Traceback (most recent call last):
+  File "C:\Users\Admin\BTTH3\app\retrieve.py", line 93, in search
+    scores = [score[0] for score in scores]  # Flatten nếu output là list of list
+              ~~~~~^^^
+TypeError: 'float' object is not subscriptable
+2025-08-04 23:34:09,481 - INFO - Use pytorch device_name: cpu
+2025-08-04 23:34:09,482 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2025-08-04 23:34:23,774 - INFO - HTTP Request: GET http://localhost:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+2025-08-04 23:34:23,897 - INFO - HTTP Request: GET http://localhost:8080/v1/meta "HTTP/1.1 200 OK"
+2025-08-04 23:34:24,352 - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-08-04 23:35:20,620 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-08-04 23:38:20,429 - INFO - Result 0: score=0.9982892269724571, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document 5e3424eb-8af4-50f4-abf6-2f8cbc6fe313: original score 10.347417, normalized score: 0.3770351 - 
+Hybrid (Result Set vector,hybridVector) Document 5e3424eb-8af4-50f4-abf6-2f8cbc6fe313: original score 0.90573645, normalized score: 0.6
+2025-08-04 23:38:20,430 - INFO - Result 2: score=0.9744885122606493, law_id=51-2010-QH12, title=Luật Người khuyết tật 2010, số 51/2010/QH12, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document 0a1e91fe-f613-5f41-b15c-829084213a84: original score 10.311536, normalized score: 0.37394235 - 
+Hybrid (Result Set vector,hybridVector) Document 0a1e91fe-f613-5f41-b15c-829084213a84: original score 0.87639034, normalized score: 0.2815009
+2025-08-04 23:38:20,430 - INFO - Result 1: score=0.970075444214323, law_id=51-2010-QH12, title=Luật Người khuyết tật 2010, số 51/2010/QH12, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document f6e5c8be-5e52-5e26-963f-88c7cf429342: original score 10.613846, normalized score: 0.39999998 - 
+Hybrid (Result Set vector,hybridVector) Document f6e5c8be-5e52-5e26-963f-88c7cf429342: original score 0.8798044, normalized score: 0.3185541
+2025-08-04 23:38:20,430 - INFO - Result 3: score=0.9579096959482144, law_id=51-2010-QH12, title=Luật Người khuyết tật 2010, số 51/2010/QH12, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document ccface17-265f-5f71-8aa9-4d06012b5c50: original score 9.947239, normalized score: 0.34254178 - 
+Hybrid (Result Set vector,hybridVector) Document ccface17-265f-5f71-8aa9-4d06012b5c50: original score 0.8584466, normalized score: 0.08675395
+2025-08-04 23:38:20,430 - INFO - Result 6: score=0.644177536304424, law_id=102-2016-QH13, title=Luật Trẻ em 2016, số 102/2016/QH13, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document 6c631e11-62f0-5dc2-98e6-0d813ee5a819: original score 8.261877, normalized score: 0.19727193 - 
+Hybrid (Result Set vector,hybridVector) Document 6c631e11-62f0-5dc2-98e6-0d813ee5a819: original score 0.8644899, normalized score: 0.15234324
+2025-08-05 10:12:04,980 - INFO - Use pytorch device_name: cpu
+2025-08-05 10:12:04,981 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2025-08-05 10:12:19,536 - INFO - HTTP Request: GET http://localhost:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+2025-08-05 10:12:19,676 - INFO - HTTP Request: GET http://localhost:8080/v1/meta "HTTP/1.1 200 OK"
+2025-08-05 10:12:20,166 - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-08-05 10:22:59,668 - INFO - Use pytorch device_name: cpu
+2025-08-05 10:22:59,669 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-small
+2025-08-05 10:23:12,716 - INFO - HTTP Request: GET http://localhost:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+2025-08-05 10:23:12,847 - INFO - HTTP Request: GET http://localhost:8080/v1/meta "HTTP/1.1 200 OK"
+2025-08-05 10:23:13,202 - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-08-05 10:23:37,780 - INFO - Received query: question='giáo dục hòa nhập là gì' top_k= 5
+2025-08-05 10:25:45,088 - INFO - Result 0: score=0.9982892269724571, law_id=43-2019-QH14, title=Luật Giáo dục 2019, số 43/2019/QH14, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document 5e3424eb-8af4-50f4-abf6-2f8cbc6fe313: original score 10.347417, normalized score: 0.3770351 - 
+Hybrid (Result Set vector,hybridVector) Document 5e3424eb-8af4-50f4-abf6-2f8cbc6fe313: original score 0.90573645, normalized score: 0.6
+2025-08-05 10:25:45,110 - INFO - Result 2: score=0.9744885122606493, law_id=51-2010-QH12, title=Luật Người khuyết tật 2010, số 51/2010/QH12, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document 0a1e91fe-f613-5f41-b15c-829084213a84: original score 10.311536, normalized score: 0.37394235 - 
+Hybrid (Result Set vector,hybridVector) Document 0a1e91fe-f613-5f41-b15c-829084213a84: original score 0.87639034, normalized score: 0.2815009
+2025-08-05 10:25:45,112 - INFO - Result 1: score=0.970075444214323, law_id=51-2010-QH12, title=Luật Người khuyết tật 2010, số 51/2010/QH12, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document f6e5c8be-5e52-5e26-963f-88c7cf429342: original score 10.613846, normalized score: 0.39999998 - 
+Hybrid (Result Set vector,hybridVector) Document f6e5c8be-5e52-5e26-963f-88c7cf429342: original score 0.8798044, normalized score: 0.3185541
+2025-08-05 10:25:45,112 - INFO - Result 3: score=0.9579096959482144, law_id=51-2010-QH12, title=Luật Người khuyết tật 2010, số 51/2010/QH12, Explain Score: 
+Hybrid (Result Set keyword,bm25) Document ccface17-265f-5f71-8aa9-4d06012b5c50: original score 9.947239, normalized score: 0.34254178 - 
+Hybrid (Result Set vector,hybridVector) Document ccface17-265f-5f71-8aa9-4d06012b5c50: original score 0.8584466, normalized score: 0.08675395
