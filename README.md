@@ -53,7 +53,7 @@ Access API docs at: [http://localhost:8000/docs](http://localhost:8000/docs)
 ### 4. Run Tests
 
 ```bash
-pytest --cov=app tests/
+pytest tests/
 ```
 
 ---
