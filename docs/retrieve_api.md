@@ -95,7 +95,7 @@ POST /retrieve
 }
 ```
 
-**Nguyên nhân:** Không có đoạn văn bản nào có độ tương đồng cao (score > 0.6).
+**Nguyên nhân:** Không có đoạn văn bản nào có độ tương đồng cao (score > 0.7).
 
 ---
 
@@ -134,7 +134,7 @@ uvicorn app.retrieve:app --reload
 ### Kiểm thử
 
 ```bash
-pytest --cov=app --cov-report=term-missing
+pytest tests/test_retrieve.py
 ```
 
 ---
