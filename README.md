@@ -117,6 +117,43 @@ results = collection.query.hybrid(
 
 ---
 
+## 🔧 Retrieve Service
+
+### ✅ Testing & Coverage
+
+```bash
+pytest --cov=app --cov-report=term-missing
+```
+
+This will print test coverage line-by-line in your terminal.
+
+
+### 🧹 Code Quality with Pre-commit
+
+This project uses [`pre-commit`](https://pre-commit.com/) to enforce code quality and formatting using:
+
+* [`black`](https://github.com/psf/black) – Code formatter
+* [`isort`](https://github.com/PyCQA/isort) – Import sorter
+* [`flake8`](https://github.com/PyCQA/flake8) – Linter
+
+#### ⚙️ Install and enable hooks:
+
+```bash
+# Install pre-commit
+pip install pre-commit
+
+# Set up the hooks locally
+pre-commit install
+
+# (Optional) Run checks on all files
+pre-commit run --all-files
+```
+
+> These checks will run automatically before every commit.
+
+
+---
+
 ## 📌 Conventions & Workflow Notes
 
 * Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (e.g., `feat:`, `fix:`, `refactor:`)
