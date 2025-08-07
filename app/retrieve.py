@@ -8,6 +8,8 @@ from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 from weaviate.classes.init import AdditionalConfig, Timeout
 from weaviate.classes.query import MetadataQuery
+from fastapi.responses import Response
+from operator import itemgetter
 
 from FlagEmbedding import FlagReranker
 
@@ -47,12 +49,12 @@ class ChunkResponse(BaseModel):
     meta: dict
 
 
-class SearchResponse(BaseModel):
+class RetrieveResponse(BaseModel):
     chunks: list[ChunkResponse]
 
 
-@router.post("/search", response_model=SearchResponse)
-def search(
+@router.post("/retrieve", response_model=RetrieveResponse)
+def retrieve(
     user_input: str = Query(..., description="Câu hỏi hoặc truy vấn người dùng"),
     k: int = Query(5, description="Số lượng kết quả cần trả về"),
 ):
@@ -61,7 +63,7 @@ def search(
     embedding = model.encode(f"query: {user_input}").tolist()
 
     try:
-        # Query ChromaDB (top 5)
+        # Hybrid search in Weaviate (top 5)
         results = collection.query.hybrid(
             query=user_input,
             vector=embedding,
@@ -69,8 +71,6 @@ def search(
             return_metadata=MetadataQuery(score=True, explain_score=True),
             limit=10,
         )
-
-        from operator import itemgetter
 
         batch_pairs = []
         metas = []
@@ -120,7 +120,7 @@ def search(
 
         if not response_chunks:
             logger.warning("No results found for the query")
-            raise HTTPException(status_code=204, detail="No results found")
+            return Response(status_code=204, content="No results found")
         return {"chunks": response_chunks}
 
     except Exception as e:
