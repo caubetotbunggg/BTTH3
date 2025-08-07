@@ -1,69 +1,75 @@
-import numpy as np
 import pytest
+import numpy as np
 from fastapi.testclient import TestClient
-
-from app.main import app
+from unittest.mock import MagicMock
+from app.main import app  
 
 client = TestClient(app)
 
+@pytest.fixture
+def mock_weaviate_query(mocker):
+    mock_results = MagicMock()
+    mock_obj = MagicMock()
+    mock_obj.properties = {
+        "text": "Nội dung về hợp đồng lao động.",
+        "metadata": {
+            "law_id": "L01",
+            "title": "Điều 5 - Bộ luật Lao động",
+            "date": "2019-11-20"
+        }
+    }
+    mock_obj.metadata.explain_score = "Score explained here"
+    mock_results.objects = [mock_obj]
+    mocker.patch("app.retrieve.collection.query.hybrid", return_value=mock_results)
+    return mock_results
 
 @pytest.fixture
-def mock_embedding():
-    return np.array([0.1] * 384)
+def mock_models(mocker):
+    mocker.patch("app.retrieve.model.encode", return_value=np.array(np.array([0.1] * 384)))
+    mocker.patch("app.retrieve.reranker.compute_score", return_value=[0.9])
 
-
-# ---- Happy path ----
-def test_search_happy_path(mocker, mock_embedding):
-    mock_results = {
-        "documents": [["Đây là chunk văn bản 1", "Chunk 2"]],
-        "distances": np.array([[0.3, 0.4]]),
-        "metadatas": [
-            [
-                {"law_id": "L01", "title": "Điều 1", "date": "2024-01-01"},
-                {"law_id": "L02", "title": "Điều 2", "date": "2024-01-02"},
-            ]
-        ],
-    }
-
-    mocker.patch("app.retrieve.collection.query", return_value=mock_results)
-    mocker.patch("app.retrieve.model.encode", return_value=mock_embedding)
-
-    response = client.post("/search", params={"user_input": "hợp đồng"})
-    data = response.json()
-
+def test_retrieve_happy_path(mock_weaviate_query, mock_models):
+    response = client.post("/retrieve", params={"user_input": "hợp đồng"})
     assert response.status_code == 200
+    data = response.json()
     assert "chunks" in data
-    assert len(data["chunks"]) == 2
+    assert len(data["chunks"]) >= 1
     assert data["chunks"][0]["meta"]["law_id"] == "L01"
 
-
-# ---- No result (tất cả điểm > 0.5) ----
-def test_search_no_result(mocker, mock_embedding):
-    mock_results = {
-        "documents": [["Chunk thấp"]],
-        "distances": np.array([[0.9]]),
-        "metadatas": [[{"law_id": "L03", "title": "Điều 3", "date": "2024-01-03"}]],
-    }
-
-    mocker.patch("app.retrieve.collection.query", return_value=mock_results)
-    mocker.patch("app.retrieve.model.encode", return_value=mock_embedding)
-
-    response = client.post("/search", params={"user_input": "abc"})
-    assert response.status_code == 500
-    assert response.json()["detail"] == "Vector search failed: 200: No results found"
-
-
-# ---- Invalid input ----
-def test_search_missing_query_param():
-    response = client.post("/search")
+def test_retrieve_invalid_input():
+    response = client.post("/retrieve", params={})
     assert response.status_code == 422
 
-
-# ---- Internal error (query fail) ----
-def test_search_query_exception(mocker, mock_embedding):
-    mocker.patch("app.retrieve.model.encode", return_value=mock_embedding)
-    mocker.patch("app.retrieve.collection.query", side_effect=Exception("Boom"))
-
-    response = client.post("/search", params={"user_input": "test"})
+def test_retrieve_no_results(mocker):
+    mocker.patch("app.retrieve.model.encode", return_value=np.array([0.1] * 384))
+    mock_results = MagicMock()
+    mock_results.objects = []
+    mocker.patch("app.retrieve.collection.query.hybrid", return_value=mock_results)
+    response = client.post("/retrieve", params={"user_input": "xyzabc"})
     assert response.status_code == 500
-    assert "Vector search failed" in response.json()["detail"]
+
+def test_retrieve_score_below_threshold(mocker):
+    mocker.patch("app.retrieve.model.encode", return_value=np.array([0.1] * 384))
+    mock_obj = MagicMock()
+    mock_obj.properties = {
+        "text": "irrelevant",
+        "metadata": {
+            "law_id": "X01",
+            "title": "irrelevant",
+            "date": "2000-01-01"
+        }
+    }
+    mock_obj.metadata.explain_score = "Not important"
+    mock_results = MagicMock()
+    mock_results.objects = [mock_obj]
+    mocker.patch("app.retrieve.collection.query.hybrid", return_value=mock_results)
+    mocker.patch("app.retrieve.reranker.compute_score", return_value=[0.5])
+    response = client.post("/retrieve", params={"user_input": "something"})
+    assert response.status_code == 204
+
+def test_retrieve_exception_handling(mocker):
+    mocker.patch("app.retrieve.model.encode", return_value=np.array([0.1] * 384))
+    mocker.patch("app.retrieve.collection.query.hybrid", side_effect=Exception("DB failure"))
+    response = client.post("/retrieve", params={"user_input": "hợp đồng"})
+    assert response.status_code == 500
+    assert "Vector search failed" in response.text
