@@ -19,8 +19,8 @@ jobs:
         with:
           environment-file: environment.yml
           auto-activate-base: false
-          activate-environment: environment 
-          python-version: 3.11
+          activate-environment: btth3 
+          python-version: 3.10
           use-mamba: true
 
       - name: Run pre-commit checks

@@ -31,7 +31,7 @@ This project aims to build an end-to-end **Retrieval-Augmented Generation (RAG)*
 ```bash
 # Create and activate environment
 conda env create -f environment.yml
-conda activate environment
+conda activate btth3
 ```
 
 ### 2. Run Docker Services (Weaviate, etc.)
