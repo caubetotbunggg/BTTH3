@@ -8,7 +8,7 @@ from sentence_transformers import SentenceTransformer
 from weaviate.classes.init import AdditionalConfig, Timeout
 from weaviate.classes.query import MetadataQuery
 
-# =================== 0. Cấu hình ====================
+# =================== 0. Configuration ====================
 load_dotenv()
 
 EMBED_DIR = "../BTTH3/data/processed/embeddings"
@@ -17,7 +17,7 @@ TOP_K = 5
 NUM_SAMPLES = 10
 MODEL_NAME = os.getenv("EMBEDDING_MODEL")
 
-# =================== 1. Kết nối tới Weaviate ====================
+# =================== 1. Connect to Weaviate ====================
 client = weaviate.connect_to_local(
     host="localhost",
     port=8080,
@@ -30,7 +30,7 @@ collection = client.collections.get("Document")
 model = SentenceTransformer(MODEL_NAME)
 
 
-# =================== 3. Hàm chọn sample vector ====================
+# =================== 3. Load sample vector ====================
 def load_random_embeddings(n=NUM_SAMPLES):
     files = [f for f in os.listdir(EMBED_DIR) if f.endswith(".npy")]
     samples = []
@@ -43,11 +43,11 @@ def load_random_embeddings(n=NUM_SAMPLES):
     return samples
 
 
-# =================== 4. Hàm truy vấn và ghi kết quả ====================
+# =================== 4. Query and report results ====================
 def query_and_report(collection, samples, k=TOP_K):
     os.makedirs(os.path.dirname(OUTPUT_MD), exist_ok=True)
     with open(OUTPUT_MD, "w", encoding="utf-8") as f:
-        f.write(f"# Kết quả tìm kiếm mẫu (Top {k})\n\n")
+        f.write(f"# Search Results (Top {k})\n\n")
 
         for i, (chunk_id, vec) in enumerate(samples, 1):
             f.write(f"## {i}. Query ID: `{chunk_id}`\n")
@@ -67,10 +67,10 @@ def query_and_report(collection, samples, k=TOP_K):
                 f.write(f"- **{rank}. Luật:** {law}, *{title}*, Sim: `{sim:.4f}`\n")
             f.write("\n---\n\n")
 
-    print(f"✅ Đã lưu kết quả tại: {OUTPUT_MD}")
+    print(f"✅ Search results saved to: {OUTPUT_MD}")
 
 
-# =================== 5. Chạy chương trình ====================
+# =================== 5. Run the program ====================
 def main():
     samples = load_random_embeddings()
     query_and_report(collection, samples)
