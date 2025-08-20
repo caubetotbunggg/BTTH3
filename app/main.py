@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-
-from app.retrieve import router as retrieve_router
+from app.controllers import user_controller
 
 app = FastAPI()
-app.include_router(retrieve_router)
+
+app.include_router(user_controller.router)
