@@ -4,5 +4,5 @@ chroma_db/
 .env
 __init__.py
 .coverage
-.log
+log/
 FlagEmbedding/
