@@ -4,7 +4,7 @@ import weaviate
 from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from weaviate.classes.init import AdditionalConfig, Timeout
-
+from google import genai
 from FlagEmbedding import FlagReranker
 
 load_dotenv()
@@ -25,4 +25,10 @@ SEARCH_CONFIG = {
     "ALPHA": 0.6,
     "LIMIT": 10,
     "THRESHOLD": 0.7,
+}
+
+GEMINI_CLIENT = genai.Client()
+
+RAG_CONFIG = {
+    "MODEL_NAME": "gemini-2.5-flash"
 }
