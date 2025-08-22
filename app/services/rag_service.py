@@ -2,9 +2,17 @@ import asyncio
 import logging
 import time
 
-from app.config.settings import GEMINI_CLIENT, RAG_CONFIG
+from app.config.settings import (
+    GEMINI_CLIENT, 
+    LOGGING_CONFIG, 
+    RAG_CONFIG
+)
 from app.services.retrieve_service import RetrieveService
 
+logging.basicConfig(
+    **LOGGING_CONFIG, 
+    filename="../BTTH3/log/rag_info.log"
+)
 logger = logging.getLogger(__name__)
 
 
