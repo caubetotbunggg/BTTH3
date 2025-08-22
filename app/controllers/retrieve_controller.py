@@ -2,11 +2,16 @@ import logging
 
 from fastapi import APIRouter, HTTPException, Query
 
+from app.config.settings import LOGGING_CONFIG
 from app.constants.http import HTTP_STATUS
 from app.models.retrieve_model import RetrieveResponse
 from app.services.retrieve_service import RetrieveService
 
+logging.basicConfig(
+    **LOGGING_CONFIG, filename="../BTTH3/log/retrieve_info.log"
+)
 logger = logging.getLogger(__name__)
+
 router = APIRouter()
 
 
