@@ -8,7 +8,8 @@ from app.models.retrieve_model import RetrieveResponse
 from app.services.retrieve_service import RetrieveService
 
 logging.basicConfig(
-    **LOGGING_CONFIG, filename="../BTTH3/log/retrieve_info.log"
+    **LOGGING_CONFIG, 
+    filename="../BTTH3/log/retrieve_info.log"
 )
 logger = logging.getLogger(__name__)
 

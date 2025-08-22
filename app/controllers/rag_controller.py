@@ -31,5 +31,6 @@ def rag_endpoint(
     except Exception as e:
         logger.exception("RAG pipeline failed")
         raise HTTPException(
-            status_code=HTTP_STATUS["INTERNAL_ERROR"], detail=str(e)
+            status_code=HTTP_STATUS["INTERNAL_ERROR"], 
+            detail=str(e)
         )
