@@ -9,9 +9,11 @@ from FlagEmbedding import FlagReranker
 
 load_dotenv()
 
+# Model configs
 EMBEDDING_MODEL = SentenceTransformer(os.getenv("EMBEDDING_MODEL"))
 RERANKING_MODEL = FlagReranker(os.getenv("RERANKING_MODEL"), use_fp16=False)
 
+# Database configs
 WEAVIATE_CLIENT = weaviate.connect_to_local(
     host="localhost",
     port=8080,
@@ -31,4 +33,11 @@ GEMINI_CLIENT = genai.Client()
 
 RAG_CONFIG = {
     "MODEL_NAME": "gemini-2.5-flash"
+}
+
+# Logging config
+LOGGING_CONFIG = {
+    "LEVEL": "INFO",
+    "FORMAT": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "ENCODING": "utf-8"
 }
