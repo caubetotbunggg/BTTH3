@@ -109,7 +109,7 @@ collection = client.collections.get("Document")
 results = collection.query.hybrid(
     query=user_input,
     vector=embedding,
-    alpha=0.6,  # BM25 (text) vs vector balance
+    alpha=0.7,  # BM25 (text) vs vector balance
     return_metadata=MetadataQuery(score=True, explain_score=True),
     limit=k,
 )

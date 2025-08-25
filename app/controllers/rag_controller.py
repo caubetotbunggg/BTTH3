@@ -2,16 +2,13 @@ import logging
 
 from fastapi import APIRouter, HTTPException, Query
 
-from app.config.settings import LOGGING_CONFIG
+from app.config.settings import setup_logger
 from app.constants.http import HTTP_STATUS
 from app.models.rag_model import RAGResponse
 from app.services.rag_service import RAGService
 
-logging.basicConfig(
-    **LOGGING_CONFIG, 
-    filename="../BTTH3/log/rag_info.log"
-)
-logger = logging.getLogger(__name__)
+logger = setup_logger("rag_controller", "../BTTH3/log/rag_info.log")
+
 
 router = APIRouter()
 
@@ -25,7 +22,7 @@ def rag_endpoint(
 ):
     if not user_input.strip():
         raise HTTPException(
-            status_code=HTTP_STATUS["BAD_REQUEST"], 
+            status_code=HTTP_STATUS.BAD_REQUEST, 
             detail="Câu hỏi không được để trống"
         )
 
@@ -34,6 +31,6 @@ def rag_endpoint(
     except Exception as e:
         logger.exception("RAG pipeline failed")
         raise HTTPException(
-            status_code=HTTP_STATUS["INTERNAL_ERROR"], 
+            status_code=HTTP_STATUS.INTERNAL_SERVER_ERROR, 
             detail=str(e)
         )

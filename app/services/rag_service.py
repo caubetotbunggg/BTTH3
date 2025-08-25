@@ -4,16 +4,12 @@ import time
 
 from app.config.settings import (
     GEMINI_CLIENT, 
-    LOGGING_CONFIG, 
+    setup_logger, 
     RAG_CONFIG
 )
 from app.services.retrieve_service import RetrieveService
 
-logging.basicConfig(
-    **LOGGING_CONFIG, 
-    filename="../BTTH3/log/rag_info.log"
-)
-logger = logging.getLogger(__name__)
+logger = setup_logger("rag", "../BTTH3/log/rag_info.log")
 
 
 def create_prompt(chunks, question: str) -> str:
@@ -29,7 +25,7 @@ Câu hỏi: {question}
 Trả lời kèm theo trích dẫn, ví dụ: [Luật X – Điều Y]."""
 
 
-async def _get_llm_response_with_timeout(prompt: str, timeout: int = 15) -> str:
+async def _get_llm_response_with_timeout(prompt: str, timeout: int = 25) -> str:
     loop = asyncio.get_event_loop()
     try:
         response = await asyncio.wait_for(
@@ -59,7 +55,10 @@ class RAGService:
 
         # --- Step 2: prompt ---
         start_prompt = time.perf_counter()
-        prompt = create_prompt(results["chunks"], user_input)
+        if not results:
+            prompt = "Không có điều luật phù hợp với câu hỏi."
+        else:
+            prompt = create_prompt(results["chunks"], user_input)
         prompt_time = time.perf_counter() - start_prompt
 
         # --- Step 3: call LLM ---
