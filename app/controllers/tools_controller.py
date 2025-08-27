@@ -1,6 +1,8 @@
 from fastapi import APIRouter
 from contextlib import contextmanager
-from app.services.tools import Retrieve_tool, Generate_answer_tool, Format_citation
+from app.services.tools_service import Retrieve_tool, Generate_answer_tool, Format_citation
+from app.models.retrieve_model import RetrieveRequest, RetrieveResponse
+from app.models.tools_model import RAG_Request_tool, RAG_Response_tool
 import concurrent.futures
 
 router = APIRouter()
@@ -19,11 +21,30 @@ def timeout(seconds: int):
 def agent_endpoint(user_input: str, k: int, max_steps: int = 3, timeout_sec: int = 10):
 
     steps = [
-        lambda prev: {"laws": Retrieve_tool.retrieve_laws(user_input, k)},
-        lambda prev: {"answer": Generate_answer_tool.generate_answer(user_input, prev["laws"]), 
-                      "laws": prev["laws"]},
-        lambda prev: {"formatted": Format_citation.format_citation(prev["answer"], prev["laws"]), 
-                      "laws": prev["laws"], "answer": prev["answer"]}
+        lambda prev: {
+            "laws": Retrieve_tool.retrieve_laws(
+                RetrieveRequest(user_input=user_input, k=k)
+            )
+        },
+        lambda prev: {
+            "answer": Generate_answer_tool.generate_answer(
+                RAG_Request_tool(
+                    user_input=user_input,
+                    chunks=prev["laws"]  # This should now work correctly
+                )
+            ),
+            "laws": prev["laws"],
+        },
+        lambda prev: {
+            "formatted": Format_citation.format_citation(
+                RAG_Response_tool(
+                    answer=prev["answer"].answer,
+                    chunks=prev["laws"]  # This should now work correctly
+                )
+            ),
+            "laws": prev["laws"],
+            "answer": prev["answer"],
+        },
     ]
 
     result = {}
@@ -33,7 +54,6 @@ def agent_endpoint(user_input: str, k: int, max_steps: int = 3, timeout_sec: int
         with timeout(timeout_sec) as run_with_timeout:
             for idx, step in enumerate(steps[:max_steps]):
                 try:
-                    # chạy step với timeout
                     result = run_with_timeout(step, result)
                     executed_steps.append({"step": idx + 1, "result": list(result.keys())})
                 except concurrent.futures.TimeoutError:

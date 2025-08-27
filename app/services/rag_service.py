@@ -1,5 +1,4 @@
 import asyncio
-import logging
 import time
 
 from app.config.settings import (
@@ -8,6 +7,7 @@ from app.config.settings import (
     RAG_CONFIG
 )
 from app.services.retrieve_service import RetrieveService
+from app.models.rag_model import RAGResponse, RAGRequest
 
 logger = setup_logger("rag", "../BTTH3/log/rag_info.log")
 
@@ -45,20 +45,20 @@ async def _get_llm_response_with_timeout(prompt: str, timeout: int = 25) -> str:
 
 class RAGService:
     @staticmethod
-    def rag_pipeline(user_input: str, k: int):
+    def rag_pipeline(RAGRequest: RAGRequest):
         start_total = time.perf_counter()
 
         # --- Step 1: retrieve ---
         start_retrieve = time.perf_counter()
-        results = RetrieveService.retrieve(user_input, k)
+        results = RetrieveService.retrieve(RAGRequest.user_input, RAGRequest.k)
         retrieve_time = time.perf_counter() - start_retrieve
 
         # --- Step 2: prompt ---
         start_prompt = time.perf_counter()
         if not results:
-            prompt = f"Không có điều luật phù hợp với câu hỏi {user_input}"
+            prompt = f"Không có điều luật phù hợp với câu hỏi {RAGRequest.user_input}"
         else:
-            prompt = create_prompt(results["chunks"], user_input)
+            prompt = create_prompt(results["chunks"], RAGRequest.user_input)
         prompt_time = time.perf_counter() - start_prompt
 
         # --- Step 3: call LLM ---
@@ -73,7 +73,7 @@ class RAGService:
             f"llm_time={llm_time:.2f}, total={total_time:.2f}"
         )
 
-        return {
-            "answer": response,
-            "used_chunks": [chunk.dict() for chunk in results["chunks"]],
-        }
+        return RAGResponse(
+            answer=response,
+            used_chunks=[chunk.dict() for chunk in results["chunks"]],
+        )
