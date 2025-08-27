@@ -56,7 +56,7 @@ class RAGService:
         # --- Step 2: prompt ---
         start_prompt = time.perf_counter()
         if not results:
-            prompt = "Không có điều luật phù hợp với câu hỏi."
+            prompt = f"Không có điều luật phù hợp với câu hỏi {user_input}"
         else:
             prompt = create_prompt(results["chunks"], user_input)
         prompt_time = time.perf_counter() - start_prompt
