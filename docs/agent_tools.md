@@ -1,112 +1,143 @@
-# 🧰 Agent Tools & API Contract
+````markdown
+# Agent Tools Contract
 
-## 🎯 Mục đích
+File này định nghĩa **contract** cho các công cụ (tools) nội bộ mà Agent sẽ gọi tuần tự để thực hiện pipeline:
+1. **Retrieve laws** – tìm luật liên quan
+2. **Generate answer** – sinh câu trả lời
+3. **Format citation** – định dạng và trích dẫn
 
-Tài liệu này định nghĩa rõ ràng 3 công cụ (tools) mà Agent sử dụng để thực hiện chuỗi xử lý (pipeline). Mỗi công cụ sẽ có mô tả chức năng, input/output schema và định nghĩa bằng Pydantic model để dễ dàng tích hợp vào hệ thống hoặc sử dụng với OpenAI Function / Gemini Tool Call.
-
----
-
-## 📌 Tổng quan các Tools
-
-| Tool Name         | Input                | Output       | Mục đích chính                                          |
-| ----------------- | -------------------- | ------------ | ------------------------------------------------------- |
-| `retrieve_laws`   | `question`, `top_k`  | List\[Chunk] | Truy vấn thông tin liên quan từ bộ luật                 |
-| `generate_answer` | `question`, `chunks` | str          | Sinh câu trả lời dựa trên câu hỏi và các đoạn liên quan |
-| `format_citation` | `answer`, `chunks`   | str          | Trích dẫn rõ nguồn của từng phần trong câu trả lời      |
+Các tools được định nghĩa như API nội bộ với input/output schemas (Pydantic models) nhằm đảm bảo dữ liệu trao đổi thống nhất.
 
 ---
 
-## 🔍 1. Tool: `retrieve_laws`
+## 1. Retrieve Laws
 
-### Mô tả:
+### Mô tả
+Tìm và lấy ra các điều luật phù hợp nhất với câu hỏi của người dùng.
 
-Tìm các đoạn văn bản luật (chunks) phù hợp với câu hỏi.
+### Hàm
+```python
+retrieve_laws(question: str, top_k: int) -> List[Chunk]
+````
 
-### Input Schema:
+### Input Schema
 
 ```python
-from pydantic import BaseModel
-
-class RetrieveLawsInput(BaseModel):
-    question: str
-    top_k: int = 5  # Số lượng chunk muốn lấy ra
+class Retrieve_tool_request(BaseModel):
+    user_input: str  # Câu hỏi từ người dùng
+    k: int = 5       # Số chunks luật cần lấy (top_k)
 ```
 
-### Output Schema:
+### Output Schema
 
 ```python
-class ChunkMetadata(BaseModel):
-    doc_id: str
-    section_title: str
-    article_number: str
-    url: str
-
 class Chunk(BaseModel):
     text: str
-    meta: ChunkMetadata
-```
+    meta: Dict[str, Any]  # Ví dụ: { "section_title": "Điều 34", "date": "2019-06-14" }
 
-### Output type:
-
-```python
-List[Chunk]
+class Retrieve_tool_response(BaseModel):
+    chunks: List[Chunk]
 ```
 
 ---
 
-## ✍️ 2. Tool: `generate_answer`
+## 2. Generate Answer
 
-### Mô tả:
+### Mô tả
 
-Sinh câu trả lời phù hợp dựa trên câu hỏi và các đoạn luật liên quan.
+Sinh câu trả lời tự nhiên dựa trên câu hỏi và các chunks luật đã retrieve.
 
-### Input Schema:
+### Hàm
 
 ```python
-class GenerateAnswerInput(BaseModel):
-    question: str
-    chunks: List[Chunk]
+generate_answer(question: str, chunks: List[Chunk]) -> str
 ```
 
-### Output Schema:
+### Input Schema
 
 ```python
-class GenerateAnswerOutput(BaseModel):
+class Generate_answer_tool_request(BaseModel):
+    user_input: str
+    chunks: Retrieve_tool_response
+```
+
+### Output Schema
+
+```python
+class Generate_answer_tool_response(BaseModel):
     answer: str
 ```
 
 ---
 
-## 📚 3. Tool: `format_citation`
+## 3. Format Citation
 
-### Mô tả:
+### Mô tả
 
-Tạo trích dẫn rõ ràng trong câu trả lời, để người dùng biết thông tin đến từ đâu.
+Định dạng câu trả lời kèm theo các trích dẫn luật (citation).
 
-### Input Schema:
+### Hàm
 
 ```python
-class FormatCitationInput(BaseModel):
+format_citation(answer: str, chunks: List[Chunk]) -> str
+```
+
+### Input Schema
+
+```python
+class Format_citation_tool_request(BaseModel):
     answer: str
-    chunks: List[Chunk]
+    chunks: Retrieve_tool_response
 ```
 
-### Output Schema:
+### Output Schema
 
 ```python
-class FormatCitationOutput(BaseModel):
-    cited_answer: str  # Ví dụ: "Theo [Điều 5, Luật Giao thông 2008], ..."
+class Format_citation_tool_response(BaseModel):
+    formatted_answer: str  # câu trả lời kèm citation
 ```
 
 ---
 
-## ✅ Tổng kết
+## Data Flow
 
-Tài liệu này định nghĩa cách Agent giao tiếp với các công cụ nội bộ một cách rõ ràng, nhằm phục vụ các use-case như:
+Agent sẽ orchestrate theo pipeline:
 
-* Tích hợp LLM function call
-* Thay thế tool độc lập khi cần
-* Debug, log hoặc trace dễ dàng qua schema
+1. **Step 1**: `Retrieve_tool.retrieve_laws(req)`
+   → Output: `Retrieve_tool_response(chunks=[...])`
+
+2. **Step 2**: `Generate_answer_tool.generate_answer(req)`
+   (dùng input = câu hỏi + chunks từ Step 1)
+   → Output: `Generate_answer_tool_response(answer=...)`
+
+3. **Step 3**: `Format_citation.format_citation(req)`
+   (dùng input = answer từ Step 2 + chunks từ Step 1)
+   → Output: `Format_citation_tool_response(formatted_answer=...)`
 
 ---
 
+## Ví dụ
+
+### Input
+
+```json
+{
+  "user_input": "Người lao động có quyền nghỉ thai sản bao lâu?",
+  "k": 3
+}
+```
+
+### Output cuối cùng (formatted)
+
+```json
+{
+  "formatted_answer": "Người lao động nữ được nghỉ thai sản 6 tháng. 
+
+Các luật được trích dẫn:
+- Điều 34 - 2019-06-14 
+Trong trường hợp sinh đôi trở lên, ngoài thời gian nghỉ thai sản quy định tại khoản 1 Điều này, từ con thứ hai trở đi, người mẹ được nghỉ thêm 01 tháng cho mỗi con."
+}
+```
+
+```
+```
