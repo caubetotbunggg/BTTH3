@@ -4,7 +4,7 @@ from functools import wraps
 
 from app.config.settings import setup_logger
 from app.models.retrieve_model import RetrieveResponse
-from app.models.tool_model import (
+from app.models.tools_model import (
     Format_citation_tool_request,
     Format_citation_tool_response,
     Generate_answer_tool_request,

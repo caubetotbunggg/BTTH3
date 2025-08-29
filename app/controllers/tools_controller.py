@@ -3,12 +3,16 @@ from contextlib import contextmanager
 
 from fastapi import APIRouter
 
-from app.models.tool_model import (
+from app.models.tools_model import (
     Format_citation_tool_request,
     Generate_answer_tool_request,
     Retrieve_tool_request,
 )
-from app.services.tools import Format_citation, Generate_answer_tool, Retrieve_tool
+from app.services.tools_service import (
+    Format_citation,
+    Generate_answer_tool,
+    Retrieve_tool,
+)
 
 router = APIRouter()
 
