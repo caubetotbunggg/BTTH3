@@ -63,7 +63,6 @@ def agent_endpoint(user_input: str, k: int, max_steps: int = 3, timeout_sec: int
         with timeout(timeout_sec) as run_with_timeout:
             for idx, step in enumerate(steps[:max_steps]):
                 try:
-                    # chạy step với timeout
                     result = run_with_timeout(step, result)
                     executed_steps.append(
                         {"step": idx + 1, "result": list(result.keys())}
