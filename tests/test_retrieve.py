@@ -44,7 +44,6 @@ def test_retrieve_happy_path(mock_weaviate_query, mock_models):
 
 
 def test_retrieve_invalid_input():
-    # thiếu param user_input
     response = client.post("/retrieve", params={})
     assert response.status_code == 422
 
@@ -52,11 +51,11 @@ def test_retrieve_invalid_input():
 def test_retrieve_no_results(mocker):
     mocker.patch("app.services.retrieve_service.EMBEDDING_MODEL.encode", return_value=np.array([0.1] * 384))
     mock_results = MagicMock()
-    mock_results.objects = []   # không có kết quả nào
+    mock_results.objects = []
     mocker.patch("app.services.retrieve_service.DOCUMENT_COLLECTION.query.hybrid", return_value=mock_results)
 
     response = client.post("/retrieve", params={"user_input": "xyzabc"})
-    assert response.status_code == 204   # vì không có results → 204 No Content
+    assert response.status_code == 204
 
 
 def test_retrieve_score_below_threshold(mocker):
@@ -70,7 +69,7 @@ def test_retrieve_score_below_threshold(mocker):
             "date": "2000-01-01"
         }
     }
-    mock_obj.metadata.score = 0.1  # dưới threshold
+    mock_obj.metadata.score = 0.1
     mock_obj.metadata.explain_score = "Not important"
 
     mock_results = MagicMock()
@@ -78,7 +77,7 @@ def test_retrieve_score_below_threshold(mocker):
     mocker.patch("app.services.retrieve_service.DOCUMENT_COLLECTION.query.hybrid", return_value=mock_results)
 
     response = client.post("/retrieve", params={"user_input": "something"})
-    assert response.status_code == 204   # vì tất cả score < threshold
+    assert response.status_code == 204
 
 
 def test_retrieve_exception_handling(mocker):

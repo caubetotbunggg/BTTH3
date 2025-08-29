@@ -34,7 +34,6 @@ def test_rag_pipeline_success(mocker):
 
 
 def test_rag_pipeline_timeout(mocker):
-    # Mock retrieve trả về chunk hợp lệ
     fake_chunk = MagicMock()
     fake_chunk.text = "Điều 2: Nội dung..."
     fake_chunk.meta = {"section_title": "Điều 2"}

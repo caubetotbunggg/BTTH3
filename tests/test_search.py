@@ -52,7 +52,6 @@ def query_and_report(collection, samples, k=TOP_K):
         for i, (chunk_id, vec) in enumerate(samples, 1):
             f.write(f"## {i}. Query ID: `{chunk_id}`\n")
 
-            # Truy vấn near_vector
             res = collection.query.near_vector(
                 near_vector=vec, limit=k, 
                 return_metadata=MetadataQuery(distance=True)
