@@ -108,10 +108,9 @@ def test_format_citation_tool_happy_path():
 
 
 def test_format_citation_tool_exception():
-    bad_resp = RetrieveResponse(chunks=[])  # không có chunks
+    bad_resp = RetrieveResponse(chunks=[])
 
     req = Format_citation_tool_request(answer="Test", chunks=bad_resp)
     resp = tools_service.Format_citation.format_citation(req)
 
-    # tùy implement bạn có thể expect resp = None hoặc trả về answer thô
     assert resp is None or resp.formatted_answer.startswith("Test")
