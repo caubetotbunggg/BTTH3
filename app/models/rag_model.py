@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from typing import List, Dict
+
+from app.models.retrieve_model import RetrieveResponse
 
 class RAGRequest(BaseModel):
     user_input: str
@@ -7,4 +8,4 @@ class RAGRequest(BaseModel):
 
 class RAGResponse(BaseModel):
     answer: str
-    used_chunks: List[Dict]
+    chunks: RetrieveResponse
