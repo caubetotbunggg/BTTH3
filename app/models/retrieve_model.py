@@ -9,4 +9,4 @@ class ChunkResponse(BaseModel):
 
 
 class RetrieveResponse(BaseModel):
-    chunks: list[ChunkResponse]
+    chunks: list[ChunkResponse] | None
