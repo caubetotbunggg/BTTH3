@@ -17,7 +17,7 @@ và xử lý tốt các tình huống lỗi (timeout, input không hợp lệ, l
 - **Input:**  
   ```json
   { "user_input": "hợp đồng lao động", "k": 3 }
-````
+    ````
 
 * **Expected Output:**
 
