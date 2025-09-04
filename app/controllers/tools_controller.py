@@ -1,8 +1,9 @@
 import concurrent.futures
 from contextlib import contextmanager
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
+from app.constants.http import HTTP_STATUS
 from app.models.tools_model import (
     Format_citation_tool_request,
     Generate_answer_tool_request,
@@ -30,7 +31,10 @@ def timeout(seconds: int):
 
 @router.post("/agent")
 def agent_endpoint(user_input: str, k: int, max_steps: int = 3, timeout_sec: int = 10):
-
+    if not user_input.strip():
+        raise HTTPException(
+            status_code=HTTP_STATUS.BAD_REQUEST, detail="Query cannot be empty"
+        )
     steps = [
         lambda prev: {
             "laws": Retrieve_tool.retrieve_laws(
@@ -68,12 +72,22 @@ def agent_endpoint(user_input: str, k: int, max_steps: int = 3, timeout_sec: int
                         {"step": idx + 1, "result": list(result.keys())}
                     )
                 except concurrent.futures.TimeoutError:
-                    return {"error": f"Step {idx+1} timed out after {timeout_sec}s"}
+                    raise HTTPException(
+                        status_code=HTTP_STATUS.GATEWAY_TIMEOUT,
+                        detail=f"Step {idx+1} timed out after {timeout_sec}s",
+                    )
+
                 except Exception as e:
-                    return {"error": f"Step {idx+1} failed: {e}"}
+                    raise HTTPException(
+                        status_code=HTTP_STATUS.INTERNAL_SERVER_ERROR,
+                        detail=f"Step {idx+1} failed: {e}",
+                    )
 
     except Exception as e:
-        return {"error": str(e)}
+        raise HTTPException(
+            status_code=HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            detail=f"Unexpected error: {e}",
+        )
 
     return {
         "status": "ok",
