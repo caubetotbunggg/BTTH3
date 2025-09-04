@@ -33,3 +33,16 @@ jobs:
           coverage run -m pytest tests/test_retrieve
           coverage report
 
+      - name: Install Newman
+        run: |
+          npm install -g newman newman-reporter-html
+
+      - name: Run Postman Integration Tests
+        run: |
+          ./run_newman.sh
+
+      - name: Upload Newman HTML report
+        uses: actions/upload-artifact@v3
+        with:
+          name: newman-report
+          path: newman_reports/report.html
