@@ -91,7 +91,7 @@ def parse_luat_html(soup):
 def main():
     # Data paths
     html_dir = "../BTTH3/data/raw/html"
-    meta_dir = "../BTTH3/data/raw/meta"
+    meta_dir = html_dir  # Metadata files are in the same directory
 
     # Create parsed directory if not exists
     parsed_dir = "../BTTH3/data/raw/parsed"

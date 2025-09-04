@@ -13,7 +13,7 @@ load_dotenv()
 
 # Load model
 print("[+] Loading embedding model...")
-model = SentenceTransformer(os.getenv("EMBEDDING_MODEL"))
+model = SentenceTransformer(os.getenv("EMBEDDING_MODEL"), trust_remote_code=True)
 
 # Input file
 print("[+] Loading data...")
@@ -87,7 +87,7 @@ for batch_idx in tqdm(
     # Embed whole batch if there are sentences
     if sentences:
         try:
-            embeddings = model.encode(sentences, batch_size=32, show_progress_bar=False)
+            embeddings = model.encode(sentences, batch_size=256, show_progress_bar=False)
 
             for embedding, item in zip(embeddings, batch_items):
                 law_id = item["meta"]["law_id"]
@@ -150,7 +150,7 @@ for law_id, embeds_and_meta in tqdm(grouped.items(), desc="Saving files"):
 # Delete checkpoint file after completion
 if os.path.exists(checkpoint_file):
     os.remove(checkpoint_file)
-    print("[+] Checkpoint file cleaned up")
+    print("[+] Checkpoint file cleaned up") 
 
 total_time = time.time() - start_time
 print(f"\n[✓] All done! Total time: {total_time/60:.1f} minutes")

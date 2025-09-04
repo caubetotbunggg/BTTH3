@@ -34,6 +34,7 @@ if __name__ == "__main__":
                     out_f.write(extracted)
 
     if file_need_debug:
+        os.makedirs("../BTTH3/data/unstructured", exist_ok=True)
         with open(
             "../BTTH3/data/unstructured/file_need_debug.json", "w", encoding="utf-8"
         ) as f:
