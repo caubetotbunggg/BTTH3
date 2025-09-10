@@ -9,7 +9,7 @@ from app.config.settings import (
 from app.models.rag_model import RAGResponse, RAGRequest
 from app.services.retrieve_service import RetrieveService
 
-logger = setup_logger("rag", "../BTTH3/log/rag_info.log")
+logger = setup_logger("rag", "../log/rag_info.log")
 
 
 def create_prompt(chunks, question: str) -> str:

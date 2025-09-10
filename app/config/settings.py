@@ -6,18 +6,19 @@ from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from weaviate.classes.init import AdditionalConfig, Timeout
 from google import genai
-from FlagEmbedding import FlagReranker
 
 load_dotenv()
 
 # Model configs
 EMBEDDING_MODEL = SentenceTransformer(os.getenv("EMBEDDING_MODEL"))
-RERANKING_MODEL = FlagReranker(os.getenv("RERANKING_MODEL"), use_fp16=False)
 
 # Database configs
+WEAVIATE_HOST = os.getenv("WEAVIATE_HOST", "weaviate")
+WEAVIATE_PORT = int(os.getenv("WEAVIATE_PORT", 8080))
+
 WEAVIATE_CLIENT = weaviate.connect_to_local(
-    host="localhost",
-    port=8080,
+    host=WEAVIATE_HOST,
+    port=WEAVIATE_PORT,
     additional_config=AdditionalConfig(timeout=Timeout(query=60)),
 )
 
@@ -43,6 +44,7 @@ LOGGING_CONFIG = {
 }
 
 def setup_logger(name: str, log_file: str) -> logging.Logger:
+    os.makedirs(os.path.dirname(log_file), exist_ok=True)
     logger = logging.getLogger(name)
     logger.setLevel(LOGGING_CONFIG["level"])
     logger.propagate = False

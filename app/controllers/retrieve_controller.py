@@ -7,7 +7,7 @@ from app.constants.http import HTTP_STATUS
 from app.models.retrieve_model import RetrieveResponse
 from app.services.retrieve_service import RetrieveService
 
-logger = setup_logger("retrieve_controller", "../BTTH3/log/retrieve_info.log")
+logger = setup_logger("retrieve_controller", "../log/retrieve_info.log")
 
 router = APIRouter()
 

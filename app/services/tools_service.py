@@ -15,7 +15,7 @@ from app.models.tools_model import (
 from app.services.rag_service import _get_llm_response_with_timeout, create_prompt
 from app.services.retrieve_service import RetrieveService
 
-logger = setup_logger("tools", "../BTTH3/log/tools_info.log")
+logger = setup_logger("tools", "../log/tools_info.log")
 
 
 def measure_time(step_name: str):

@@ -7,7 +7,7 @@ from app.constants.http import HTTP_STATUS
 from app.models.rag_model import RAGRequest, RAGResponse
 from app.services.rag_service import RAGService
 
-logger = setup_logger("rag_controller", "../BTTH3/log/rag_info.log")
+logger = setup_logger("rag_controller", "../log/rag_info.log")
 
 
 router = APIRouter()

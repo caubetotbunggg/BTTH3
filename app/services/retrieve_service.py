@@ -6,7 +6,6 @@ from weaviate.classes.query import MetadataQuery
 from app.config.settings import (
     DOCUMENT_COLLECTION,
     EMBEDDING_MODEL,
-    RERANKING_MODEL,
     SEARCH_CONFIG,
     setup_logger,
 )
@@ -32,7 +31,7 @@ class RetrieveService:
             vector=embedding,
             alpha=SEARCH_CONFIG["ALPHA"],
             return_metadata=MetadataQuery(score=True, explain_score=True),
-            limit=k,  # SEARCH_CONFIG["LIMIT"],
+            limit=k,
         )
         query_time = time.perf_counter() - start_hybrid_query
 
@@ -45,7 +44,6 @@ class RetrieveService:
             metas.append(meta)
 
         start_rerank = time.perf_counter()
-        # scores = RERANKING_MODEL.compute_score(batch_pairs, normalize=True)
         scores = [obj.metadata.score for obj in results.objects]
         rerank_time = time.perf_counter() - start_rerank
 
