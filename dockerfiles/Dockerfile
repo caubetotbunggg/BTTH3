@@ -9,7 +9,7 @@ COPY app/requirements.txt .
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy toàn bộ source code (đặt nguyên thư mục app/ vào /app/app)
+# Copy source code
 COPY app/ /app/app
 
 # Expose port
