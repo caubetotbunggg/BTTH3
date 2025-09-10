@@ -9,7 +9,7 @@ requests==2.32.3
 weaviate-client==4.16.4
 
 # --- Embedding & Models ---
-torch==2.3.0
+torch>=2.5.0
 sentence-transformers==5.0.0
 transformers==4.44.2
 numpy==1.26.4
