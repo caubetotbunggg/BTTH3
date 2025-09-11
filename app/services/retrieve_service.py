@@ -1,3 +1,4 @@
+from gradio_client import Client
 import time
 from operator import itemgetter
 
@@ -5,7 +6,6 @@ from weaviate.classes.query import MetadataQuery
 
 from app.config.settings import (
     DOCUMENT_COLLECTION,
-    EMBEDDING_MODEL,
     SEARCH_CONFIG,
     setup_logger,
 )
@@ -22,7 +22,12 @@ class RetrieveService:
         start_retrieve = time.perf_counter()
 
         start_embedding = time.perf_counter()
-        embedding = EMBEDDING_MODEL.encode(f"query: {user_input}").tolist()
+
+        client = Client("caubetotbunggg/api")
+        embedding = client.predict(
+                text=f"query: {user_input}",
+                api_name="/embed_text"
+        )
         embedding_time = time.perf_counter() - start_embedding
 
         start_hybrid_query = time.perf_counter()
@@ -33,6 +38,7 @@ class RetrieveService:
             return_metadata=MetadataQuery(score=True, explain_score=True),
             limit=k,
         )
+
         query_time = time.perf_counter() - start_hybrid_query
 
         batch_pairs, texts, metas = [], [], []

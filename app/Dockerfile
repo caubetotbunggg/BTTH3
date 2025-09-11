@@ -4,14 +4,14 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copy requirements trước để tận dụng cache
-COPY app/requirements.txt .
+COPY requirements.txt .
 
 # Install dependencies
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy source code
-COPY app/ /app/app
+COPY . .
 
 # Expose port
 EXPOSE 8000

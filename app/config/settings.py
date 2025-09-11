@@ -3,23 +3,25 @@ import os
 
 import weaviate
 from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer
 from weaviate.classes.init import AdditionalConfig, Timeout
 from google import genai
 
 load_dotenv()
 
-# Model configs
-EMBEDDING_MODEL = SentenceTransformer(os.getenv("EMBEDDING_MODEL"))
 
 # Database configs
-WEAVIATE_HOST = os.getenv("WEAVIATE_HOST", "weaviate")
-WEAVIATE_PORT = int(os.getenv("WEAVIATE_PORT", 8080))
+from weaviate.classes.init import Auth
+from weaviate.classes.init import AdditionalConfig, Timeout
+import weaviate
+import os
 
-WEAVIATE_CLIENT = weaviate.connect_to_local(
-    host=WEAVIATE_HOST,
-    port=WEAVIATE_PORT,
-    additional_config=AdditionalConfig(timeout=Timeout(query=60)),
+WEAVIATE_URL = os.getenv("WEAVIATE_URL")
+WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")
+
+WEAVIATE_CLIENT = weaviate.connect_to_weaviate_cloud(
+    cluster_url=WEAVIATE_URL,
+    auth_credentials=Auth.api_key(WEAVIATE_API_KEY),
+    additional_config=AdditionalConfig(timeout=Timeout(query=60))
 )
 
 DOCUMENT_COLLECTION = WEAVIATE_CLIENT.collections.get("Document")
