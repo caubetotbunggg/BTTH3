@@ -1,19 +1,14 @@
 import httpx
-from app.config.settings import GEMINI_CLIENT, RAG_CONFIG
-import weaviate
+from app.config.settings import GEMINI_CLIENT, RAG_CONFIG, WEAVIATE_CLIENT
 
 
 class HealthService:
     @staticmethod
-    
     def check_database() -> bool:
         try:
-            client = weaviate.connect_to_local()
-            client.is_ready()
-            return True
+            return WEAVIATE_CLIENT.is_ready()
         except Exception as e:
             return False
-
 
     @staticmethod
     def check_llm() -> bool:

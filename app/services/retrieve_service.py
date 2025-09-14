@@ -61,10 +61,13 @@ class RetrieveService:
 
         top_results = sorted(scored_results, key=itemgetter(1), reverse=True)[:k]
         retrieve_time = time.perf_counter() - start_retrieve
-
-        logger.info(
+        print(
             f"retrieve_time={retrieve_time:.2f}, embedding_time={embedding_time:.2f}, "
             f"query_time={query_time:.2f}, rerank_time={rerank_time:.2f}"
+        )
+        logger.info(
+                f"retrieve_time={retrieve_time:.2f}, embedding_time={embedding_time:.2f}, "
+                f"query_time={query_time:.2f}, rerank_time={rerank_time:.2f}"
         )
 
         response_chunks = []
@@ -81,6 +84,7 @@ class RetrieveService:
                     },
                 )
             )
+            print(f"Result {i}: score={score}, law_id={meta.get('law_id')}.")
             logger.info(f"Result {i}: score={score}, " f"law_id={meta.get('law_id')}.")
         if not response_chunks:
             return RetrieveResponse(chunks=[])

@@ -42,6 +42,10 @@ def measure_time(step_name: str):
                 raise e
             finally:
                 duration = time.perf_counter() - start
+                print(
+                    f"[agent] step={step_num(step_name)} "
+                    f"name={step_name} duration={duration:.2f}s status={status}"
+                )
                 logger.info(
                     f"[agent] step={step_num(step_name)} "
                     f"name={step_name} duration={duration:.2f}s status={status}"
