@@ -37,9 +37,9 @@ jobs:
         run: |
           npm install -g newman newman-reporter-html
 
-      - name: Run Postman Integration Tests
+      - name: Run smoke tests
         run: |
-          ./run_newman.sh
+          ./smoke_test.sh
 
       - name: Upload Newman HTML report
         uses: actions/upload-artifact@v3

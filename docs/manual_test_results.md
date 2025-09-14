@@ -6,8 +6,8 @@
 * **Kết quả**: Hệ thống trả về các `chunks` liên quan, có nội dung đúng theo luật (Luật Giáo dục 2019, Luật Người khuyết tật 2010).
 * **Nhận xét**: API hoạt động đúng, trả về thông tin chính xác, có điểm `score` và metadata kèm theo.
 
-![Retrieve query](image.png)
-![Retrieve response](image-1.png)
+![Retrieve query](/docs/manual_test_images/image.png)
+![Retrieve response](/docs/manual_test_images/image-1.png)
 
 ---
 
@@ -17,8 +17,8 @@
 * **Kết quả**: Trả về một câu trả lời tự nhiên (natural language answer), kèm theo các `chunks` nguồn.
 * **Nhận xét**: Đáp án được tóm gọn dễ hiểu, có trích dẫn luật, ví dụ minh họa. Đúng mong đợi.
 
-![RAG query](image-2.png)
-![RAG response](image-3.png)
+![RAG query](/docs/manual_test_images/image-2.png)
+![RAG response](/docs/manual_test_images/image-3.png)
 
 ---
 
@@ -29,8 +29,8 @@
 * **Nhận xét**: Agent orchestration hoạt động tốt, các bước tuần tự rõ ràng, kết quả cuối cùng đầy đủ và dễ đọc.
 
 ![Agent query](image-4.png)
-![Agent response 1](image-5.png)
-![Agent response 2](image-6.png)
+![Agent response 1](/docs/manual_test_images/image-5.png)
+![Agent response 2](/docs/manual_test_images/image-6.png)
 
 ---
 
