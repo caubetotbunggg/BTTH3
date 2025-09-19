@@ -8,6 +8,9 @@ requests==2.32.3
 # --- Monitoring ---
 prometheus-fastapi-instrumentator==7.1.0
 
+# --- Cache ---
+redis==6.4.0
+
 # --- Vector DB ---
 weaviate-client==4.16.4
 
