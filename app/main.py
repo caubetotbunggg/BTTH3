@@ -11,7 +11,7 @@ app.include_router(rag_controller.router)
 app.include_router(tools_controller.router)
 app.include_router(health_controller.router)
 
-Instrumentator().instrument(app).expose(app)
+Instrumentator(should_ignore_untemplated=False).instrument(app).expose(app)
 
 @app.get("/")
 def read_root():
