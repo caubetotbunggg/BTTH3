@@ -5,7 +5,15 @@ from app.controllers import health_controller, rag_controller, retrieve_controll
 
 app = FastAPI()
 
-Instrumentator().instrument(app).expose(app)
+instrumentator = Instrumentator(
+    should_group_status_codes=True,
+    should_ignore_untemplated=False,
+    should_respect_env_var=True,
+    should_instrument_requests_inprogress=True,
+    excluded_handlers=["/metrics"],
+)
+
+instrumentator.instrument(app).expose(app)
 
 app.include_router(retrieve_controller.router)
 app.include_router(rag_controller.router)
