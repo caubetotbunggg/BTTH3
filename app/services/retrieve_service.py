@@ -29,8 +29,6 @@ class RetrieveService:
             logger.info(f"Cache retrieval time={cache_time:.2f} seconds")
             return RetrieveResponse(**cached_response)
         
-        
-
         start_embedding = time.perf_counter()
 
         client = Client("caubetotbunggg/api")
@@ -46,7 +44,7 @@ class RetrieveService:
             vector=embedding,
             alpha=SEARCH_CONFIG["ALPHA"],
             return_metadata=MetadataQuery(score=True, explain_score=True),
-            limit=k,
+            limit=k+5,  # Retrieve extra to allow for reranking and thresholding
         )
 
         query_time = time.perf_counter() - start_hybrid_query
@@ -60,8 +58,15 @@ class RetrieveService:
             metas.append(meta)
 
         start_rerank = time.perf_counter()
-        scores = [obj.metadata.score for obj in results.objects]
-        rerank_time = time.perf_counter() - start_rerank
+        client = Client("caubetotbunggg/reranker")
+        scores_response = client.predict(
+                batch_pairs=batch_pairs,
+                api_name="/rerank",
+        )
+        if not scores_response:
+            logger.warning("Reranker returned no scores.")
+            return RetrieveResponse(chunks=[])
+        scores = sorted([float(s) for s in scores_response], reverse=True)[:k]
 
         scored_results = [
             (i, score, texts[i], metas[i], results.objects[i].metadata.explain_score)
@@ -70,6 +75,8 @@ class RetrieveService:
         ]
 
         top_results = sorted(scored_results, key=itemgetter(1), reverse=True)[:k]
+        rerank_time = time.perf_counter() - start_rerank
+
         retrieve_time = time.perf_counter() - start_retrieve
         print(
             f"retrieve_time={retrieve_time:.2f}, embedding_time={embedding_time:.2f}, "
