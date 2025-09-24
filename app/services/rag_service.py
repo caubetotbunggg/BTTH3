@@ -18,11 +18,17 @@ def create_prompt(chunks, question: str) -> str:
         section = chunk.meta.get("section_title", "Không rõ")
         chunk_text += f"- [{section}] {chunk.text}\n"
 
-    return f"""Bạn là một trợ lý pháp lý. Hãy tham khảo các điều luật sau:
+    return f"""Bạn là một trợ lý pháp lý chuyên nghiệp.  
+Chỉ dựa trên các điều luật sau để trả lời:  
 {chunk_text}
 
+Yêu cầu:  
+- Trả lời chính xác, súc tích, sử dụng ngôn ngữ pháp lý chuẩn mực.  
+- Mỗi kết luận phải kèm trích dẫn đầy đủ (Luật, Điều, Khoản, Điểm nếu có), ví dụ: [BLDS 2015 – Điều 117, Khoản 1].  
+- Nếu có nhiều điều luật liên quan, hãy liệt kê đầy đủ.  
+
 Câu hỏi: {question}
-Trả lời kèm theo trích dẫn, ví dụ: [Luật X – Điều Y]."""
+"""
 
 
 async def _get_llm_response_with_timeout(prompt: str, timeout: int = 25) -> str:
