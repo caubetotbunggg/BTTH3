@@ -11,6 +11,27 @@ from app.services.retrieve_service import RetrieveService
 
 logger = setup_logger("rag", "../log/rag_info.log")
 
+def paraphrase(question: str) -> str:
+    response = GEMINI_CLIENT.models.generate_content(
+        model=RAG_CONFIG["MODEL_NAME"],
+        contents=f"""
+Bạn là một trợ lý pháp luật.
+Nhiệm vụ của bạn là viết lại câu hỏi pháp lý của người dùng sao cho rõ ràng, cụ thể, và sát nghĩa với ngôn ngữ văn bản pháp luật.  
+
+Nguyên tắc:
+- Giữ nguyên ý nghĩa gốc, không thêm thông tin mới.
+- Biến câu hỏi mơ hồ thành câu hỏi rõ ràng, dễ truy vấn trong luật.
+- Sử dụng từ vựng pháp lý chính xác (ví dụ: "đăng ký nghĩa vụ quân sự", "tuổi", "thời điểm", "trách nhiệm").
+
+Ví dụ:
+Người dùng: "nam giới phải đi nghĩa vụ khi nào"
+Kết quả: "Nam giới bao nhiêu tuổi thì phải đăng ký nghĩa vụ quân sự theo quy định pháp luật?"
+
+Người dùng: {question}
+Kết quả:""",
+    )
+    return response.text
+
 
 def create_prompt(chunks, question: str) -> str:
     chunk_text = ""
@@ -56,7 +77,7 @@ class RAGService:
         # --- Step 2: prompt ---
         start_prompt = time.perf_counter()
         if not results.chunks:
-            prompt = f"Không có điều luật phù hợp với câu hỏi {RAGRequest.user_input}"
+            prompt = f"Không có điều luật phù hợp với câu hỏi {paraphrase(RAGRequest.user_input)}"
         else:
             prompt = create_prompt(results.chunks, RAGRequest.user_input)
         prompt_time = time.perf_counter() - start_prompt

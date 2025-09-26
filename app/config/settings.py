@@ -28,7 +28,7 @@ DOCUMENT_COLLECTION = WEAVIATE_CLIENT.collections.get("Document")
 
 # Search configs
 SEARCH_CONFIG = {
-    "ALPHA": 0.6,
+    "ALPHA": 0.7,
     "LIMIT": 5,
     "THRESHOLD": 0.7,
 }
