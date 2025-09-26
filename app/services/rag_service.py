@@ -71,13 +71,13 @@ class RAGService:
 
         # --- Step 1: retrieve ---
         start_retrieve = time.perf_counter()
-        results = RetrieveService.retrieve(RAGRequest.user_input, k=RAGRequest.k)
+        results = RetrieveService.retrieve(paraphrase(RAGRequest.user_input), k=RAGRequest.k)
         retrieve_time = time.perf_counter() - start_retrieve
 
         # --- Step 2: prompt ---
         start_prompt = time.perf_counter()
         if not results.chunks:
-            prompt = f"Không có điều luật phù hợp với câu hỏi {paraphrase(RAGRequest.user_input)}"
+            prompt = f"Không có điều luật phù hợp với câu hỏi {RAGRequest.user_input}"
         else:
             prompt = create_prompt(results.chunks, RAGRequest.user_input)
         prompt_time = time.perf_counter() - start_prompt
