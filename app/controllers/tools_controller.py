@@ -30,7 +30,7 @@ def timeout(seconds: int):
 
 
 @router.post("/agent")
-def agent_endpoint(user_input: str, k: int, max_steps: int = 3, timeout_sec: int = 10):
+def agent_endpoint(user_input: str, k: int = 4, max_steps: int = 3, timeout_sec: int = 100):
     if not user_input.strip():
         raise HTTPException(
             status_code=HTTP_STATUS.BAD_REQUEST, detail="Query cannot be empty"

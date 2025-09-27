@@ -100,8 +100,7 @@ class Format_citation:
                 citation += f"{text} \n"
                 citations.append(citation)
             formatted = (
-                req.answer
-                + "\n\n"
+                "\n\n"
                 + "Các luật được trích dẫn: "
                 + "\n"
                 + "\n".join(citations)
