@@ -30,7 +30,7 @@ DOCUMENT_COLLECTION = WEAVIATE_CLIENT.collections.get("Document")
 SEARCH_CONFIG = {
     "ALPHA": 0.7,
     "LIMIT": 5,
-    "THRESHOLD": 0.7,
+    "THRESHOLD": 0.8,
 }
 
 GEMINI_CLIENT = genai.Client()
