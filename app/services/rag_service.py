@@ -77,15 +77,21 @@ class RAGService:
 
         # --- Step 1: retrieve ---
         start_retrieve = time.perf_counter()
-        results = RetrieveService.retrieve(paraphrase(RAGRequest.user_input), k=RAGRequest.k)
+        paraphrased_question = paraphrase(RAGRequest.user_input)
+        
+        print(f"Paraphrased question: {paraphrased_question}")
+        logger.info(f"Paraphrased question: {paraphrased_question}")
+        
+        results = RetrieveService.retrieve(paraphrased_question, k=RAGRequest.k)
         retrieve_time = time.perf_counter() - start_retrieve
 
         # --- Step 2: prompt ---
         start_prompt = time.perf_counter()
         if not results.chunks:
             prompt = f"Không có điều luật phù hợp với câu hỏi {RAGRequest.user_input}"
+            return RAGResponse(answer=prompt, chunks=results)
         else:
-            prompt = create_prompt(results.chunks, RAGRequest.user_input)
+            prompt = create_prompt(results.chunks, paraphrased_question)
         prompt_time = time.perf_counter() - start_prompt
 
         # --- Step 3: call LLM ---
@@ -95,6 +101,10 @@ class RAGService:
 
         total_time = time.perf_counter() - start_total
 
+        print(
+            f"retrieve_time={retrieve_time:.2f}, prompt_time={prompt_time:.2f}, "
+            f"llm_time={llm_time:.2f}, total={total_time:.2f}"
+        )
         logger.info(
             f"retrieve_time={retrieve_time:.2f}, prompt_time={prompt_time:.2f}, "
             f"llm_time={llm_time:.2f}, total={total_time:.2f}"
