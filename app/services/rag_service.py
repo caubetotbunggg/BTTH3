@@ -1,20 +1,25 @@
 import asyncio
+import os
+from dotenv import load_dotenv
 import time
 
+from groq import Groq
+
 from app.config.settings import (
-    GEMINI_CLIENT, 
     setup_logger, 
-    RAG_CONFIG
 )
 from app.models.rag_model import RAGResponse, RAGRequest
 from app.services.retrieve_service import RetrieveService
 
+load_dotenv()
+
 logger = setup_logger("rag", "../log/rag_info.log")
 
+client = Groq(
+    api_key=os.getenv("GROQ_API_KEY")
+)
 def paraphrase(question: str) -> str:
-    response = GEMINI_CLIENT.models.generate_content(
-        model=RAG_CONFIG["MODEL_NAME"],
-        contents=f"""
+    contents=f"""
 Bạn là một trợ lý pháp luật.
 Nhiệm vụ của bạn là viết lại câu hỏi pháp lý của người dùng sao cho rõ ràng, cụ thể, và sát nghĩa với ngôn ngữ văn bản pháp luật.  
 
@@ -28,14 +33,20 @@ Người dùng: "nam giới phải đi nghĩa vụ khi nào"
 Kết quả: "Nam giới bao nhiêu tuổi thì phải đăng ký nghĩa vụ quân sự theo quy định pháp luật?"
 
 Người dùng: {question}
-Kết quả:""",
+Kết quả:"""
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "assistant",
+                "content": contents,
+            }
+        ],
+        model="openai/gpt-oss-20b",
     )
-    return response.text
+    return chat_completion.choices[0].message.content
 
 def keyword_extraction(question: str) -> str:
-    response = GEMINI_CLIENT.models.generate_content(
-        model=RAG_CONFIG["MODEL_NAME"],
-        contents=f"""
+    contents=f"""
 Bạn là một trợ lý pháp luật. 
 Nhiệm vụ của bạn là đọc câu hỏi đời thường của người dùng và xác định khái niệm pháp lý trung tâm mà câu hỏi đó liên quan đến. 
 
@@ -57,9 +68,17 @@ Người dùng: "Ký hợp đồng thử việc 2 tháng thì công ty có phả
 
 Người dùng: {question}
 → Kết quả:
-""",
+"""
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "assistant",
+                "content": contents,
+            }
+        ],
+        model="openai/gpt-oss-20b",
     )
-    return response.text
+    return chat_completion.choices[0].message.content
 
 def chunk_to_text(chunks: list) -> str:
     all_chunks = {}
@@ -101,14 +120,19 @@ async def _get_llm_response_with_timeout(prompt: str, timeout: int = 60) -> str:
         response = await asyncio.wait_for(
             loop.run_in_executor(
                 None,
-                lambda: GEMINI_CLIENT.models.generate_content(
-                    model=RAG_CONFIG["MODEL_NAME"],
-                    contents=prompt,
+                lambda: client.chat.completions.create(
+                        messages=[
+                    {
+                        "role": "assistant",
+                        "content": prompt,
+                    }
+                ],
+                model="openai/gpt-oss-20b",
                 ),
             ),
             timeout=timeout,
         )
-        return response.text
+        return response.choices[0].message.content
     except asyncio.TimeoutError:
         return "Hệ thống đang bận, vui lòng thử lại sau."
 
