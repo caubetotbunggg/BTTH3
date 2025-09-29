@@ -6,18 +6,14 @@ import time
 from groq import Groq
 
 from app.config.settings import (
-    setup_logger, 
+    setup_logger, GROQ_CLIENT
 )
 from app.models.rag_model import RAGResponse, RAGRequest
 from app.services.retrieve_service import RetrieveService
 
-load_dotenv()
 
 logger = setup_logger("rag", "../log/rag_info.log")
 
-client = Groq(
-    api_key=os.getenv("GROQ_API_KEY")
-)
 def paraphrase(question: str) -> str:
     contents=f"""
 Bạn là một trợ lý pháp luật.
@@ -34,7 +30,7 @@ Kết quả: "Nam giới bao nhiêu tuổi thì phải đăng ký nghĩa vụ qu
 
 Người dùng: {question}
 Kết quả:"""
-    chat_completion = client.chat.completions.create(
+    chat_completion = GROQ_CLIENT.chat.completions.create(
         messages=[
             {
                 "role": "assistant",
@@ -69,7 +65,7 @@ Người dùng: "Ký hợp đồng thử việc 2 tháng thì công ty có phả
 Người dùng: {question}
 → Kết quả:
 """
-    chat_completion = client.chat.completions.create(
+    chat_completion = GROQ_CLIENT.chat.completions.create(
         messages=[
             {
                 "role": "assistant",
@@ -120,14 +116,14 @@ async def _get_llm_response_with_timeout(prompt: str, timeout: int = 60) -> str:
         response = await asyncio.wait_for(
             loop.run_in_executor(
                 None,
-                lambda: client.chat.completions.create(
-                        messages=[
-                    {
-                        "role": "assistant",
-                        "content": prompt,
-                    }
-                ],
-                model="openai/gpt-oss-20b",
+                lambda: GROQ_CLIENT.chat.completions.create(
+                    messages=[
+                        {
+                            "role": "assistant",
+                            "content": prompt,
+                        }
+                    ],
+                    model="openai/gpt-oss-20b",
                 ),
             ),
             timeout=timeout,
@@ -135,6 +131,7 @@ async def _get_llm_response_with_timeout(prompt: str, timeout: int = 60) -> str:
         return response.choices[0].message.content
     except asyncio.TimeoutError:
         return "Hệ thống đang bận, vui lòng thử lại sau."
+
 
 async def run_parallel_llm(user_input: str):
     paraphrase_task = asyncio.to_thread(paraphrase, user_input)

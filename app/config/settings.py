@@ -1,11 +1,10 @@
 import logging
 import os
 
+from groq import Groq
 import weaviate
 from dotenv import load_dotenv
 from weaviate.classes.init import AdditionalConfig, Timeout
-from google import genai
-
 load_dotenv()
 
 
@@ -33,11 +32,10 @@ SEARCH_CONFIG = {
     "THRESHOLD": 0.8,
 }
 
-GEMINI_CLIENT = genai.Client()
-
-RAG_CONFIG = {
-    "MODEL_NAME": "gemini-2.5-flash"
-}
+# Groq configs
+GROQ_CLIENT = Groq(
+    api_key=os.getenv("GROQ_API_KEY")
+)
 
 # Logging config
 LOGGING_CONFIG = {

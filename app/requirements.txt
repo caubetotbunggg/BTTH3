@@ -23,5 +23,5 @@ typing-extensions==4.12.2
 
 # --- AI api ---
 google-auth==2.40.3
-google-genai==1.26.0
 gradio-client==1.13.0
+groq
