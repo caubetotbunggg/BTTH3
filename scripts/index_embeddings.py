@@ -115,7 +115,7 @@ for file in files:
             [
                 DataObject(
                     uuid=generate_uuid5(f"{file_id}_{i}"),
-                    properties={"text": text, "metadata": metadata},
+                    properties={"text": text, "metadata": metadata["title"]},
                     vector=vector,
                 )
                 for i, (text, vector, metadata) in enumerate(

@@ -14,7 +14,6 @@ def extract_text(html):
 
 if __name__ == "__main__":
     os.makedirs("../BTTH3/data/processed/text", exist_ok=True)
-    os.makedirs("../BTTH3/data/processed/text", exist_ok=True)
 
     html_dir = "../BTTH3/data/raw/html"
     file_need_debug = []
