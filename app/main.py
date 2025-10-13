@@ -30,11 +30,9 @@ def format_citation(data: dict) -> str:
     citations = []
     for chunk in data.get("chunks", []):
         meta = chunk.get("meta", {})
-        section = meta.get("section_title", "Không rõ")
-        date = meta.get("date", "Không rõ")
         text = chunk.get("text", "")
 
-        citation = f"- {section} - {date}\n{text}\n"
+        citation = f"- {meta.get('metadata', '')}\n{text}\n"
         citations.append(citation)
 
     if not citations:

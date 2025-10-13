@@ -27,14 +27,18 @@ DOCUMENT_COLLECTION = WEAVIATE_CLIENT.collections.get("Document")
 
 # Search configs
 SEARCH_CONFIG = {
-    "ALPHA": 0.7,
+    "ALPHA": 0.6,
     "LIMIT": 5,
-    "THRESHOLD": 0.8,
+    "THRESHOLD": 0.6,
 }
 
 # Groq configs
 GROQ_CLIENT = Groq(
     api_key=os.getenv("GROQ_API_KEY")
+)
+
+GROQ_CLIENT_B = Groq(
+    api_key=os.getenv("GROQ_API_KEY_B")
 )
 
 # Logging config

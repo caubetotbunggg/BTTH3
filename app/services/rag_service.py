@@ -2,85 +2,22 @@ import asyncio
 import os
 from dotenv import load_dotenv
 import time
-
-from groq import Groq
+from elysia import configure
 
 from app.config.settings import (
-    setup_logger, GROQ_CLIENT
+    setup_logger, GROQ_CLIENT, GROQ_CLIENT_B
 )
 from app.models.rag_model import RAGResponse, RAGRequest
-from app.services.retrieve_service import RetrieveService
 
+load_dotenv()
 
 logger = setup_logger("rag", "../log/rag_info.log")
-
-def paraphrase(question: str) -> str:
-    contents=f"""
-Bạn là một trợ lý pháp luật.
-Nhiệm vụ của bạn là viết lại câu hỏi pháp lý của người dùng sao cho rõ ràng, cụ thể, và sát nghĩa với ngôn ngữ văn bản pháp luật.  
-
-Nguyên tắc:
-- Giữ nguyên ý nghĩa gốc, không thêm thông tin mới.
-- Biến câu hỏi mơ hồ thành câu hỏi rõ ràng, dễ truy vấn trong luật.
-- Sử dụng từ vựng pháp lý chính xác (ví dụ: "đăng ký nghĩa vụ quân sự", "tuổi", "thời điểm", "trách nhiệm").
-
-Ví dụ:
-Người dùng: "nam giới phải đi nghĩa vụ khi nào"
-Kết quả: "Nam giới bao nhiêu tuổi thì phải đăng ký nghĩa vụ quân sự theo quy định pháp luật?"
-
-Người dùng: {question}
-Kết quả:"""
-    chat_completion = GROQ_CLIENT.chat.completions.create(
-        messages=[
-            {
-                "role": "assistant",
-                "content": contents,
-            }
-        ],
-        model="openai/gpt-oss-20b",
-    )
-    return chat_completion.choices[0].message.content
-
-def keyword_extraction(question: str) -> str:
-    contents=f"""
-Bạn là một trợ lý pháp luật. 
-Nhiệm vụ của bạn là đọc câu hỏi đời thường của người dùng và xác định khái niệm pháp lý trung tâm mà câu hỏi đó liên quan đến. 
-
-Nguyên tắc:
-- Chỉ trả lời bằng 1 hoặc vài khái niệm pháp lý ngắn gọn.  
-- Không viết lại câu hỏi.  
-- Không thêm ví dụ, số liệu, tình tiết cụ thể.  
-- Luôn dùng thuật ngữ pháp lý chuẩn xác trong luật (ví dụ: "hình thức giao dịch dân sự", "hợp đồng vay tài sản", "nghĩa vụ quân sự", "hợp đồng lao động", "nghĩa vụ đóng bảo hiểm xã hội", "điều kiện có hiệu lực của giao dịch dân sự"...).
-
-Ví dụ:
-Người dùng: "Tôi vay bạn 200 triệu, có viết giấy vay tay. Giờ không trả, bạn tôi có thể kiện tôi ra tòa không?"
-→ Kết quả: "hình thức giao dịch dân sự; hợp đồng vay tài sản; quyền khởi kiện"
-
-Người dùng: "Nam giới phải đi nghĩa vụ khi nào?"
-→ Kết quả: "nghĩa vụ quân sự; độ tuổi đăng ký"
-
-Người dùng: "Ký hợp đồng thử việc 2 tháng thì công ty có phải đóng bảo hiểm xã hội không?"
-→ Kết quả: "hợp đồng lao động; nghĩa vụ đóng bảo hiểm xã hội"
-
-Người dùng: {question}
-→ Kết quả:
-"""
-    chat_completion = GROQ_CLIENT.chat.completions.create(
-        messages=[
-            {
-                "role": "assistant",
-                "content": contents,
-            }
-        ],
-        model="openai/gpt-oss-20b",
-    )
-    return chat_completion.choices[0].message.content
 
 def chunk_to_text(chunks: list) -> str:
     all_chunks = {}
     for chunk in chunks:
         # tạo key unique để loại trùng (dựa trên law_id + text)
-        law_id = chunk.meta.get("law_id", "") if chunk.meta else ""
+        law_id = chunk.meta if chunk.meta else ""
         key = f"{law_id}_{chunk.text}"
         all_chunks[key] = chunk   # dict override nếu gặp key trùng
 
@@ -90,25 +27,32 @@ def chunk_to_text(chunks: list) -> str:
     # build prompt text
     chunk_text = ""
     for chunk in unique_chunks:
-        section = chunk.meta.get("section_title", "Không rõ") if chunk.meta else "Không rõ"
+        section = chunk.meta if chunk.meta else "Không rõ"
         chunk_text += f"- [{section}] {chunk.text}\n"
 
     return chunk_text
 
-def create_prompt(chunk_text: str, question: str) -> str:
-    return f"""Bạn là một trợ lý pháp lý chuyên nghiệp.  
-Trước hết, hãy trả lời dựa trên các điều luật sau:  
-{chunk_text}
+def create_prompt(reasoning_response: str, question: str) -> str:
+    return f"""Bạn là một trợ lý pháp lý chuyên nghiệp.
 
-Yêu cầu:  
-- Trả lời chính xác, súc tích, sử dụng ngôn ngữ pháp lý chuẩn mực.  
-- Mỗi kết luận phải kèm trích dẫn đầy đủ (Luật, Điều, Khoản, Điểm nếu có).  
-- Nếu các điều luật chưa đủ để kết luận, hãy nêu rõ phần còn thiếu.  
-- Trong trường hợp cần thiết, bạn có thể đưa ra “gợi ý tham khảo ngoài văn bản được cung cấp” nhưng phải phân biệt rõ với phần trích dẫn chính thức.  
+Trước hết, hãy trả lời **dựa trên nội dung phân tích và kết quả truy vấn (reasoning/ retrieved reasoning)** được cung cấp dưới đây — nội dung này có thể là tóm tắt các điều luật, trích dẫn, và các phân tích trung gian do hệ thống thu thập:
+
+{reasoning_response}
+
+Yêu cầu:
+
+- Ưu tiên diễn giải và trích dẫn theo văn bản pháp luật **mới nhất, còn hiệu lực**, nếu có nhiều văn bản điều chỉnh cùng một vấn đề (ví dụ: Luật Cư trú 2020 thay thế Luật Cư trú 2006).
+- Trả lời **chính xác, súc tích, ngắn gọn**, sử dụng ngôn ngữ pháp lý chuẩn mực tiếng Việt.
+- Mỗi kết luận phải kèm trích dẫn đầy đủ (tên văn bản luật, năm ban hành, Điều, Khoản, Điểm nếu có).
+- Nếu không đầy đủ để kết luận, nêu rõ **những quy định, điều khoản hoặc văn bản cần có thêm** để có thể kết luận chính xác.
+- Khi cần thiết, bạn được phép đưa ra **gợi ý tham khảo ngoài** (ví dụ: hướng điều tra thêm, các văn bản liên quan nên kiểm tra), nhưng **phân biệt rõ** phần gợi ý này với phần trích dẫn chính thức.
+
+Lưu ý kỹ thuật: reasoning_response là **nguồn thông tin tham khảo chính** — đối xử như một bản tóm tắt đã được hệ thống biên soạn từ các văn bản pháp luật và tài liệu liên quan. Tuy nhiên, khi có thể, hãy ưu tiên trích dẫn tên văn bản và vị trí luật (nếu có) thay vì chỉ copy-tóm tắt.
+
+**TẤT CẢ câu trả lời phải viết bằng tiếng Việt.**
 
 Câu hỏi: {question}
 """
-
 
 async def _get_llm_response_with_timeout(prompt: str, timeout: int = 60) -> str:
     loop = asyncio.get_event_loop()
@@ -116,14 +60,15 @@ async def _get_llm_response_with_timeout(prompt: str, timeout: int = 60) -> str:
         response = await asyncio.wait_for(
             loop.run_in_executor(
                 None,
-                lambda: GROQ_CLIENT.chat.completions.create(
+                lambda: GROQ_CLIENT_B.chat.completions.create(
                     messages=[
                         {
                             "role": "assistant",
                             "content": prompt,
                         }
                     ],
-                    model="openai/gpt-oss-20b",
+                    model="openai/gpt-oss-120b",
+                    temperature=0.2,
                 ),
             ),
             timeout=timeout,
@@ -131,22 +76,6 @@ async def _get_llm_response_with_timeout(prompt: str, timeout: int = 60) -> str:
         return response.choices[0].message.content
     except asyncio.TimeoutError:
         return "Hệ thống đang bận, vui lòng thử lại sau."
-
-
-async def run_parallel_llm(user_input: str):
-    paraphrase_task = asyncio.to_thread(paraphrase, user_input)
-    keyword_task = asyncio.to_thread(keyword_extraction, user_input)
-
-    paraphrased, keywords = await asyncio.gather(paraphrase_task, keyword_task)
-    return paraphrased, keywords
-
-async def run_retrieve_all(keywords: list[str], paraphrased: str, k: int):
-    tasks = [asyncio.to_thread(RetrieveService.retrieve, kw, k) for kw in keywords]
-    tasks.append(asyncio.to_thread(RetrieveService.retrieve, paraphrased, k))
-
-    results = await asyncio.gather(*tasks)
-    return results
-
 
 
 class RAGService:
@@ -157,34 +86,42 @@ class RAGService:
         # --- Step 1: retrieve ---
         start_retrieve = time.perf_counter()
         
-        paraphrased, keywords = asyncio.run(run_parallel_llm(RAGRequest.user_input))
-        print("Paraphrased:", paraphrased)
-        print("Keywords:", keywords)
-        
-        keywords = [kw.strip() for kw in keywords.split(";") if kw.strip()]
-        
-        results = asyncio.run(run_retrieve_all(keywords, paraphrased, RAGRequest.k))
-
-        all_chunks = []
-        for res in results:
-            if res and res.chunks:
-                all_chunks.extend(res.chunks)
-
-        chunks = chunk_to_text(all_chunks)
         retrieve_time = time.perf_counter() - start_retrieve
 
         # --- Step 2: prompt ---
         start_prompt = time.perf_counter()
-        if not all_chunks:
-            prompt = f"Không có điều luật phù hợp với câu hỏi {RAGRequest.user_input}"
-            return RAGResponse(answer=prompt, chunks={"chunks": []})
-        else:
-            prompt = create_prompt(chunks, RAGRequest.user_input)
+        
         prompt_time = time.perf_counter() - start_prompt
 
         # --- Step 3: call LLM ---
         start_llm = time.perf_counter()
+ 
+        WEAVIATE_URL = os.getenv("WEAVIATE_URL")
+        WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")
+        GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+        configure(
+            base_model="gemini-2.0-flash-lite",
+            base_provider="gemini",
+            complex_model="gemini-2.0-flash",
+            complex_provider="gemini",
+            gemini_api_key=GEMINI_API_KEY# replace with your API key
+        )
+
+        configure(
+            wcd_url= WEAVIATE_URL, # replace with your WCD_URL
+            wcd_api_key= WEAVIATE_API_KEY, # replace with your WCD_API_KEY
+        )
+        from elysia import Tree
+        tree = Tree()
+        QUES = RAGRequest.user_input
+        resoning_response, objects = tree(QUES)
+        if isinstance(objects, list) and len(objects) == 1 and isinstance(objects[0], list):
+            objects = objects[0]
+        
+        prompt = create_prompt(resoning_response, RAGRequest.user_input)
         response = asyncio.run(_get_llm_response_with_timeout(prompt))
+
         llm_time = time.perf_counter() - start_llm
 
         total_time = time.perf_counter() - start_total
@@ -200,15 +137,20 @@ class RAGService:
 
         return RAGResponse(
             answer=response,
-            chunks={"chunks": [
-                {
-                    "chunk_id": str(idx),
-                    "text": c.text,
-                    "score": getattr(c, "score", None),
-                    "meta": getattr(c, "meta", {})
-                }
-                for idx, c in enumerate(all_chunks)
-            ]}
+            chunks = {
+                "chunks": [
+                    {
+                        "chunk_id": str(idx),
+                        "text": c.get("text", ""),
+                        "meta": {
+                            "metadata": c.get("metadata")
+                        },
+                    }
+                    for idx, c in enumerate(objects)
+                    if isinstance(c, dict)
+                ]
+            }
+
         )
 
 
