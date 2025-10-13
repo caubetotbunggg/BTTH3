@@ -25,3 +25,4 @@ typing-extensions==4.12.2
 google-auth==2.40.3
 gradio-client==1.13.0
 groq
+elysia
