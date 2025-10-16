@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class ChunkResponse(BaseModel):
     chunk_id: str
     text: str
-    #score: float
+    score: float
     meta: str
 
 

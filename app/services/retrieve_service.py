@@ -24,7 +24,7 @@ class RetrieveService:
 
         start_embedding = time.perf_counter()
 
-        client = Client("caubetotbunggg/api")
+        client = Client("caubetotbunggg/api_2")
         embedding = client.predict(
                 text=f"query: {user_input}",
                 api_name="/embed_text"

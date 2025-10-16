@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Any, Dict, List, Optional
 
 from app.models.retrieve_model import RetrieveResponse
 
@@ -20,4 +21,5 @@ class Chunk(BaseModel):
 class RAGResponse(BaseModel):
     answer: str
     chunks: Dict[str, List[Chunk]]
+    reasoning: Optional[str] = None
 
