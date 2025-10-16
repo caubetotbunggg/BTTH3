@@ -2,7 +2,7 @@
 google-auth==2.40.3
 gradio-client==1.13.0
 groq==0.32.0
-elysia==0.2.7
+elysia-ai==0.2.7
 
 # --- Vector DB ---
 weaviate-client==4.17.0
