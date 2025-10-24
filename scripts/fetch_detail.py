@@ -6,8 +6,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from bs4 import BeautifulSoup
 
-MAX_RETRY = 5   # số lần thử lại nếu lỗi
-RETRY_DELAY = 3 # delay sau khi fail
+MAX_RETRY = 5   
+RETRY_DELAY = 3 
 
 def process_url(url, headers):
     for attempt in range(1, MAX_RETRY + 1):
@@ -57,7 +57,7 @@ def process_url(url, headers):
             with open(meta_path, "w", encoding="utf-8") as f:
                 json.dump(metadata_to_save, f, ensure_ascii=False, indent=2)
 
-            return True  # thành công
+            return True
 
         except Exception as e:
             logging.error(f"Lỗi xử lý {url}: {e}")
@@ -65,7 +65,7 @@ def process_url(url, headers):
             time.sleep(RETRY_DELAY)
 
     print(f"[GIVE UP] {url} sau {MAX_RETRY} lần thử")
-    return False  # thất bại sau nhiều lần thử
+    return False
 
 
 def main():
@@ -73,7 +73,6 @@ def main():
         data = json.load(f)
         print(f"Tổng số links cần xử lý: {len(data)}")
 
-    # Filter bỏ dự thảo
     filtered_data = [url for url in data if "du-thao" not in url]
     print(f"Số links sau khi bỏ dự thảo: {len(filtered_data)}")
 
@@ -88,7 +87,7 @@ def main():
     logging.basicConfig(filename="../BTTH3/log/failed_access_links.log", level=logging.ERROR)
 
     global rate_limit_delay
-    rate_limit_delay = 1.5  # delay 1.5s giữa các request
+    rate_limit_delay = 1.5
 
     success_count, fail_count = 0, 0
 
@@ -107,7 +106,7 @@ def main():
                 print(f"[EXCEPTION] {url} - {e}")
                 fail_count += 1
 
-    print(f"\n✅ Hoàn tất: {success_count} thành công, {fail_count} thất bại")
+    print(f"\n Hoàn tất: {success_count} thành công, {fail_count} thất bại")
 
 
 if __name__ == "__main__":

@@ -4,18 +4,16 @@ import os
 from groq import Groq
 import weaviate
 from dotenv import load_dotenv
+from weaviate.classes.init import Auth
 from weaviate.classes.init import AdditionalConfig, Timeout
 load_dotenv()
 
-
-# Database configs
-from weaviate.classes.init import Auth
-from weaviate.classes.init import AdditionalConfig, Timeout
-import weaviate
-import os
-
+# Tree configs
 WEAVIATE_URL = os.getenv("WEAVIATE_URL")
 WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+BASE_MODEL = "gemini-2.5-flash-lite"
+COMPLEX_MODEL = "gemini-2.5-flash"
 
 WEAVIATE_CLIENT = weaviate.connect_to_weaviate_cloud(
     cluster_url=WEAVIATE_URL,
@@ -29,7 +27,7 @@ DOCUMENT_COLLECTION = WEAVIATE_CLIENT.collections.get("Document")
 SEARCH_CONFIG = {
     "ALPHA": 0.6,
     "LIMIT": 5,
-    "THRESHOLD": 0.6,
+    "THRESHOLD": 0.5,
 }
 
 # Groq configs

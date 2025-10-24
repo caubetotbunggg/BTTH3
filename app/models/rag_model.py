@@ -20,6 +20,6 @@ class Chunk(BaseModel):
 
 class RAGResponse(BaseModel):
     answer: str
-    chunks: Dict[str, List[Chunk]]
+    chunks: Any
     reasoning: Optional[str] = None
 
