@@ -7,7 +7,6 @@ from app.services.rag_service import RAGService
 
 logger = setup_logger("rag_controller", "../log/rag_info.log")
 
-
 router = APIRouter()
 
 

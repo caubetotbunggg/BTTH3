@@ -3,16 +3,12 @@ from prometheus_fastapi_instrumentator import Instrumentator
 import gradio as gr
 import requests
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.wsgi import WSGIMiddleware
 from gradio.routes import mount_gradio_app
 
-from app.controllers import health_controller, rag_controller, retrieve_controller, tools_controller
+from app.controllers import health_controller, rag_controller, retrieve_controller
 
 app = FastAPI()
 
-# Cho phép frontend gọi API nếu cần (tránh CORS)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -21,10 +17,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Gắn router cho các module
 app.include_router(retrieve_controller.router)
 app.include_router(rag_controller.router)
-app.include_router(tools_controller.router)
 app.include_router(health_controller.router)
 
 # Prometheus monitoring
@@ -43,7 +37,6 @@ def chat_fn(message, history):
         resp.raise_for_status()
         data = resp.json()
 
-        # Chỉ cần phần answer
         return data.get("answer", "Không có câu trả lời phù hợp.")
 
     except Exception as e:
@@ -74,5 +67,4 @@ with gr.Blocks() as demo:
         bot_response, [chatbot], [chatbot]
     )
 
-# Mount Gradio vào FastAPI (UI tại http://localhost:8000/)
 app = mount_gradio_app(app, demo, path="/")

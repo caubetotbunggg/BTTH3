@@ -1,14 +1,9 @@
 from pydantic import BaseModel
-from typing import Any, Dict, List, Optional
-
-from app.models.retrieve_model import RetrieveResponse
+from typing import Optional, Any
 
 class RAGRequest(BaseModel):
     user_input: str
     k: int = 5
-
-from pydantic import BaseModel
-from typing import List, Dict, Any
 
 class ChunkMeta(BaseModel):
     metadata: str
