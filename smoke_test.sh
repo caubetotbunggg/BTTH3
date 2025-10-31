@@ -1,9 +1,6 @@
-#!/usr/bin/env bash
-# Smoke Test cho dịch vụ FastAPI trên Render hoặc local
-
 set -euo pipefail
 
-APP_URL="${APP_URL:-https://btth3.onrender.com}"  # có thể override bằng APP_URL env var
+APP_URL="${APP_URL:-https://btth3.onrender.com}"
 
 echo "🔎 Running smoke tests on $APP_URL ..."
 

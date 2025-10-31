@@ -4,14 +4,12 @@ import re
 
 
 def chunk_text(text):
-    # Find all "chương" both in uppercase and lowercase
-    # Match "Chương X" or "chương X" or "Chương X."
     # where X can be a Roman numeral or Arabic numeral
     chapter_matches = list(re.finditer(r"(?im)^\s*chương\s+[\divxlcdm]+\.?", text))
     chunks = []
 
     if chapter_matches:
-        # If "chương": split from "Chương" -> "Điều" -> "Khoản"
+        
         for idx, match in enumerate(chapter_matches):
             chapter_title = match.group(0).strip()
             start_pos = match.end()
@@ -22,10 +20,10 @@ def chunk_text(text):
             )
             chapter_text = text[start_pos:end_pos].strip()
 
-            # Split by "Điều"
+            
             chunks.extend(chunk_by_article(chapter_text, chapter_title))
     else:
-        # Does not have "chương": only split by Article
+        
         chunks.extend(chunk_by_article(text, chapter_title=None))
 
     return chunks
@@ -64,11 +62,13 @@ def chunk_by_article(text, chapter_title=None):
 
 
 def process_failed_files():
-    input_dir = "../BTTH3/data/processed/text"
-    output_dir = "../BTTH3/data/processed/chunks"
-    failed_json_path = "../BTTH3/data/unstructured/failed_regex.json"
+    from app.config.paths import PROCESSED_DIR, DATA_DIR
 
-    os.makedirs(output_dir, exist_ok=True)
+    input_dir = PROCESSED_DIR / "text"
+    output_dir = PROCESSED_DIR / "chunks"
+    failed_json_path = DATA_DIR / "unstructured" / "failed_regex.json"
+
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     with open(failed_json_path, "r", encoding="utf-8") as f:
         failed_files = json.load(f)
@@ -77,12 +77,11 @@ def process_failed_files():
 
     for filename in failed_files:
         law_id = filename.replace(".txt", "")
-        input_path = os.path.join(input_dir, filename)
-        output_path = os.path.join(output_dir, f"{law_id}_chunks.json")
+        input_path = input_dir / filename
+        output_path = output_dir / f"{law_id}_chunks.json"
 
-        if not os.path.exists(input_path):
+        if not input_path.exists():
             continue
-
         with open(input_path, "r", encoding="utf-8") as f:
             text = f.read()
             chunks = chunk_text(text)

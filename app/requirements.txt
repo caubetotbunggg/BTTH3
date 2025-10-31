@@ -1,20 +1,24 @@
+# --- AI API ---
+google-auth==2.40.3
+gradio-client==1.13.0
+groq==0.32.0
+elysia-ai==0.2.7
+
+# --- Vector DB ---
+weaviate-client==4.17.0
+
 # --- Core Web ---
-fastapi==0.115.9
-uvicorn[standard]==0.30.6
+fastapi==0.118.2
+uvicorn==0.35.0
 python-dotenv==1.0.1
 starlette==0.45.3
 requests==2.32.3
+gradio==5.46.0
 
 # --- Monitoring ---
 prometheus-fastapi-instrumentator==7.1.0
 
-# --- Cache ---
-redis==6.4.0
-
-# --- Vector DB ---
-weaviate-client==4.16.4
-
-# --- python ---
+# --- Python Core ---
 numpy==1.26.4
 pandas==2.2.2
 
@@ -23,7 +27,6 @@ tqdm==4.66.4
 tenacity==8.5.0
 typing-extensions==4.12.2
 
-# --- AI api ---
-google-auth==2.40.3
-google-genai==1.26.0
-gradio-client==1.13.0
+# --- Build Essentials ---
+setuptools>=78.0.0
+wheel>=0.45.0
