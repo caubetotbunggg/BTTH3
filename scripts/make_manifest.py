@@ -1,6 +1,5 @@
 import csv
 import os
-from app.config.paths import RAW_DIR
 
 
 def get_ids(folder, extension):
@@ -11,16 +10,16 @@ def get_ids(folder, extension):
     return list_ids
 
 
-html_folder = RAW_DIR / "html"
-parsed_folder = RAW_DIR / "parsed"
-manifest_path = RAW_DIR / "manifest.csv"
+html_folder = "../BTTH3/data/raw/html"
+parsed_folder = "../BTTH3/data/raw/parsed"
+manifest_path = "../BTTH3/data/raw/manifest.csv"
 
 html_ids = set(get_ids(html_folder, ".html"))
 parsed_ids = set(get_ids(parsed_folder, ".json"))
 
 all_ids = html_ids.union(parsed_ids)
 
-RAW_DIR.mkdir(parents=True, exist_ok=True)
+os.makedirs(os.path.dirname(manifest_path), exist_ok=True)
 
 with open(manifest_path, "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)

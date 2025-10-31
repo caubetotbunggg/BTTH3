@@ -29,7 +29,7 @@ def make_dummy_retrieve_response():
 @patch("app.controllers.tools_controller.Generate_answer_tool.generate_answer")
 @patch("app.controllers.tools_controller.Format_citation.format_citation")
 def test_agent_happy_path(mock_format, mock_generate, mock_retrieve):
-    # Mock BaseModel
+    # Mock trả BaseModel
     dummy_retrieve = Retrieve_tool_response(chunks=make_dummy_retrieve_response())
     mock_retrieve.return_value = dummy_retrieve
 

@@ -13,26 +13,29 @@ def extract_text(html):
 
 
 if __name__ == "__main__":
-    from app.config.paths import PROCESSED_DIR, RAW_DIR, DATA_DIR
+    os.makedirs("../BTTH3/data/processed/text", exist_ok=True)
+    os.makedirs("../BTTH3/data/processed/text", exist_ok=True)
 
-    (PROCESSED_DIR / "text").mkdir(parents=True, exist_ok=True)
-
-    html_dir = RAW_DIR / "html"
+    html_dir = "../BTTH3/data/raw/html"
     file_need_debug = []
     for file in os.listdir(html_dir):
         if file.endswith(".html"):
-            with open(html_dir / file, "r", encoding="utf-8") as f:
+            with open(os.path.join(html_dir, file), "r", encoding="utf-8") as f:
                 html_content = f.read()
                 extracted = extract_text(html_content)
                 if not extracted:
                     file_need_debug.append(file)
                     continue
                 base_name = os.path.splitext(file)[0]
-                out_path = PROCESSED_DIR / "text" / f"{base_name}.txt"
+                out_path = os.path.join(
+                    "../BTTH3/data/processed/text", f"{base_name}.txt"
+                )
                 with open(out_path, "w", encoding="utf-8") as out_f:
                     out_f.write(extracted)
 
     if file_need_debug:
-        (DATA_DIR / "unstructured").mkdir(parents=True, exist_ok=True)
-        with open(DATA_DIR / "unstructured" / "file_need_debug.json", "w", encoding="utf-8") as f:
+        os.makedirs("../BTTH3/data/unstructured", exist_ok=True)
+        with open(
+            "../BTTH3/data/unstructured/file_need_debug.json", "w", encoding="utf-8"
+        ) as f:
             json.dump(file_need_debug, f, ensure_ascii=False, indent=2)

@@ -2,49 +2,55 @@ import pytest
 from unittest.mock import MagicMock
 
 from app.services.rag_service import RAGService
-from app.models.rag_model import RAGRequest
 
 
 def test_rag_pipeline_success(mocker):
-    # --- Prepare fake retrieval output ---
+    # --- Mock retrieve ---
     fake_chunk = MagicMock()
     fake_chunk.text = "Điều 1: Quy định..."
     fake_chunk.meta = {"section_title": "Điều 1"}
+    fake_chunk.dict.return_value = {"id": "1", "text": fake_chunk.text, "meta": fake_chunk.meta}
 
-    # tree1 should return (reasoning, objects). objects is a list of dicts
-    fake_objects = [{"text": fake_chunk.text, "metadata": fake_chunk.meta}]
-    mock_tree = mocker.patch("app.config.tree_config.tree1", return_value=("reasoning", fake_objects))
+    mock_retrieve = mocker.patch(
+        "app.services.rag_service.RetrieveService.retrieve",
+        return_value={"chunks": [fake_chunk]},
+    )
 
     # --- Mock LLM response ---
     mock_llm = mocker.patch(
         "app.services.rag_service._get_llm_response_with_timeout",
-        return_value="Trả lời hợp lệ [Luật A – Điều 1]",
+        return_value="Trả lời hợp lệ [Luật A – Điều 1]"
     )
 
-    # --- Run rag pipeline with correct request object ---
-    req = RAGRequest(user_input="quy định gì?", k=1)
-    result = RAGService.rag_pipeline(req)
+    # --- Run rag pipeline ---
+    result = RAGService.rag_pipeline("quy định gì?", k=1)
 
     # --- Assertions ---
-    mock_tree.assert_called_once()
+    mock_retrieve.assert_called_once_with("quy định gì?", 1)
     mock_llm.assert_called_once()
-    assert result.answer == "Trả lời hợp lệ [Luật A – Điều 1]"
-    assert isinstance(result.chunks, dict)
-    assert len(result.chunks.get("chunks", [])) == 1
+    assert "answer" in result
+    assert result["answer"] == "Trả lời hợp lệ [Luật A – Điều 1]"
+    assert len(result["used_chunks"]) == 1
 
 
 def test_rag_pipeline_timeout(mocker):
-    fake_objects = [{"text": "Điều 2: Nội dung...", "metadata": {"section_title": "Điều 2"}}]
-    mocker.patch("app.config.tree_config.tree1", return_value=("reasoning", fake_objects))
+    fake_chunk = MagicMock()
+    fake_chunk.text = "Điều 2: Nội dung..."
+    fake_chunk.meta = {"section_title": "Điều 2"}
+    fake_chunk.dict.return_value = {"id": "2", "text": fake_chunk.text, "meta": fake_chunk.meta}
 
-    # Mock LLM timeout response
     mocker.patch(
-        "app.services.rag_service._get_llm_response_with_timeout",
-        return_value="Hệ thống đang bận, vui lòng thử lại sau.",
+        "app.services.rag_service.RetrieveService.retrieve",
+        return_value={"chunks": [fake_chunk]},
     )
 
-    req = RAGRequest(user_input="câu hỏi?", k=1)
-    result = RAGService.rag_pipeline(req)
+    # Mock LLM timeout
+    mocker.patch(
+        "app.services.rag_service._get_llm_response_with_timeout",
+        return_value="Hệ thống đang bận, vui lòng thử lại sau."
+    )
 
-    assert result.answer == "Hệ thống đang bận, vui lòng thử lại sau."
-    assert len(result.chunks.get("chunks", [])) == 1
+    result = RAGService.rag_pipeline("câu hỏi?", k=1)
+
+    assert result["answer"] == "Hệ thống đang bận, vui lòng thử lại sau."
+    assert len(result["used_chunks"]) == 1
