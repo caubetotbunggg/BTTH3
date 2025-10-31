@@ -1,4 +1,4 @@
-# --- AI api ---
+# --- AI API ---
 google-auth==2.40.3
 gradio-client==1.13.0
 groq==0.32.0
@@ -18,7 +18,7 @@ gradio==5.46.0
 # --- Monitoring ---
 prometheus-fastapi-instrumentator==7.1.0
 
-# --- python ---
+# --- Python Core ---
 numpy==1.26.4
 pandas==2.2.2
 
@@ -26,3 +26,7 @@ pandas==2.2.2
 tqdm==4.66.4
 tenacity==8.5.0
 typing-extensions==4.12.2
+
+# --- Build Essentials ---
+setuptools>=78.0.0
+wheel>=0.45.0
