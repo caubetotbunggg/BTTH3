@@ -3,5 +3,7 @@ global:
 
 scrape_configs:
   - job_name: "fastapi"
+    metrics_path: /metrics
+    scheme: https
     static_configs:
-      - targets: ["app:8000"]
+      - targets: ["btth3.onrender.com"]
