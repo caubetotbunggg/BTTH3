@@ -1,11 +1,5 @@
-import os
-import sys
 import unittest
-
-# Thêm thư mục gốc vào sys.path để import chunker
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-from chunker import chunk_by_chapter_and_article
+from ..scripts.chunker import chunk_by_chapter_and_article
 
 
 class TestChunker(unittest.TestCase):

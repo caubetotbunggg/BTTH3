@@ -1,0 +1,35 @@
+Dưới đây là kết quả truy vấn và phân tích pháp luật đã được hệ thống tổng hợp:
+
+**Nguồn 1 (Semantic + Hybrid):**
+{reasoning_response_tree1}
+
+---
+
+**YÊU CẦU VỀ CẤU TRÚC TRẢ LỜI:**
+
+**📋 TÓM TẮT KẾT LUẬN** (2-3 câu):
+- Trả lời trực tiếp câu hỏi với kết luận rõ ràng (có/không, được/không được, hợp pháp/trái luật).
+- Nêu điều kiện hoặc trường hợp ngoại lệ quan trọng nhất (nếu có).
+
+**📚 CĂN CỨ PHÁP LÝ:**
+Liệt kê các điều luật áp dụng theo định dạng:
+
+• **[Điều XX - Tên Luật - Năm]**: Tóm tắt nội dung điều luật (1-2 câu, chỉ ghi phần liên quan trực tiếp).
+
+• **[Điều YY - Tên Luật - Năm]**: Tóm tắt nội dung điều luật.
+
+---
+
+**YÊU CẦU QUAN TRỌNG:**
+✅ Ưu tiên văn bản pháp luật **mới nhất, còn hiệu lực**
+✅ Giữ nguyên định dạng **[Điều XX - Tên Luật - Năm]** từ metadata
+✅ Tóm tắt nội dung súc tích, chỉ ghi phần liên quan đến câu hỏi
+✅ Độ dài tổng thể: **10-15 dòng**
+❌ KHÔNG lặp lại toàn bộ nội dung từ nguồn 1 và nguồn 2
+❌ KHÔNG giải thích dài dòng
+
+---
+
+**Câu hỏi:** {question}
+
+Hãy trả lời theo đúng định dạng trên.

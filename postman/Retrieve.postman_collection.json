@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "72686728-84a5-49e0-950b-c444b0e432ca",
+		"name": "Retrieve",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47735529",
+		"_collection_link": "https://caubetotbunggg-9323598.postman.co/workspace/Luan's-Workspace~5490b5e6-96b3-455c-8b22-c89a24b34e75/collection/47735529-72686728-84a5-49e0-950b-c444b0e432ca?action=share&source=collection_link&creator=47735529"
+	},
+	"item": [
+		{
+			"name": "happy_case",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"question\":\"giáo dục hòa nhập\" ,\r\n    \"top_k\": \"5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/retrieve?user_input=\"giáo dục hòa nhập\"&k=5",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"retrieve"
+					],
+					"query": [
+						{
+							"key": "user_input",
+							"value": "\"giáo dục hòa nhập\""
+						},
+						{
+							"key": "k",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sad_case",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"question\":\"giáo dục hòa nhập\" ,\r\n    \"top_k\": \"5\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/retrieve?user_input=5&k=\"minh\"",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"retrieve"
+					],
+					"query": [
+						{
+							"key": "user_input",
+							"value": "5"
+						},
+						{
+							"key": "k",
+							"value": "\"minh\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "below_threshold",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/retrieve?user_input=\"ca sĩ đen vâu\"&k=5",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"retrieve"
+					],
+					"query": [
+						{
+							"key": "user_input",
+							"value": "\"ca sĩ đen vâu\""
+						},
+						{
+							"key": "k",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://127.0.0.1:8000",
+			"type": "default"
+		}
+	]
+}
