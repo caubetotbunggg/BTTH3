@@ -11,19 +11,21 @@ from tqdm import tqdm
 
 load_dotenv()
 
+from app.config.paths import PROCESSED_DIR, LOG_DIR
+
 # Load model
 print("[+] Loading embedding model...")
 model = SentenceTransformer(os.getenv("EMBEDDING_MODEL"), trust_remote_code=True)
 
 # Input file
 print("[+] Loading data...")
-with open("../BTTH3/data/processed/all_chunks.json", "r", encoding="utf-8") as f:
+with open(PROCESSED_DIR / "all_chunks.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
 print(f"[+] Total chunks to process: {len(data):,}")
 
 # Checkpoint file for resume
-checkpoint_file = "../BTTH3/log/embedding_checkpoint.json"
+checkpoint_file = LOG_DIR / "embedding_checkpoint.json"
 start_idx = 0
 if os.path.exists(checkpoint_file):
     with open(checkpoint_file, "r") as f:
@@ -33,6 +35,12 @@ if os.path.exists(checkpoint_file):
 # Group embeddings by law_id
 grouped = defaultdict(list)  # law_id → list of (embedding, metadata)
 error_count = 0
+attempted_count = 0
+# Error handling thresholds (configurable via env)
+# Either set EMBEDDING_MAX_ERRORS (absolute) or EMBEDDING_ERROR_THRESHOLD (fraction 0-1)
+MAX_ERRORS = int(os.getenv("EMBEDDING_MAX_ERRORS", "0"))
+ERROR_THRESHOLD = float(os.getenv("EMBEDDING_ERROR_THRESHOLD", "0.05"))
+abort_processing = False
 
 # Process in batches with progress bar
 batch_size = 100  # Process 100 items at a time
@@ -56,6 +64,7 @@ for batch_idx in tqdm(
     batch_items = []
 
     for item in batch_data:
+        attempted_count += 1
         try:
             if item["chunk"]["khoan"] is None:
                 sentence = f"passage: {item['meta']['title']} {item['chunk']['chuong']} {item['chunk']['tieu_de']} {item['chunk']['noi_dung']}"
@@ -74,7 +83,7 @@ for batch_idx in tqdm(
         except Exception as e:
             error_count += 1
             with open(
-                "../BTTH3/log/embedding_error.log", "a", encoding="utf-8"
+                LOG_DIR / "embedding_error.log", "a", encoding="utf-8"
             ) as log_f:
                 log_f.write(f"Lỗi: {e}\n")
                 log_f.write(
@@ -83,6 +92,28 @@ for batch_idx in tqdm(
                 log_f.write(f"Item: {item}\n")
                 log_f.write(traceback.format_exc())
                 log_f.write("\n" + "=" * 80 + "\n")
+
+            # Check thresholds and abort if error rate or absolute errors exceed limits
+            if (MAX_ERRORS and error_count >= MAX_ERRORS) or (
+                attempted_count > 0 and error_count / attempted_count > ERROR_THRESHOLD
+            ):
+                with open(LOG_DIR / "embedding_error.log", "a", encoding="utf-8") as lf:
+                    lf.write(
+                        f"[FATAL] Error threshold exceeded: errors={error_count}, attempts={attempted_count}, threshold={ERROR_THRESHOLD}, max_errors={MAX_ERRORS}\n"
+                    )
+                print(f"[FATAL] Error threshold exceeded: {error_count}/{attempted_count} (>{ERROR_THRESHOLD}). Aborting.")
+                # save checkpoint so we can resume
+                try:
+                    with open(checkpoint_file, "w") as cf:
+                        json.dump({"last_processed": actual_start}, cf)
+                except Exception:
+                    pass
+                abort_processing = True
+                break
+
+    # If we flagged abort during per-item processing, stop outer loop
+    if abort_processing:
+        break
 
     # Embed whole batch if there are sentences
     if sentences:
@@ -94,9 +125,11 @@ for batch_idx in tqdm(
                 grouped[law_id].append((embedding, item["meta"]))
 
         except Exception as e:
-            error_count += 1
+            # This batch failed to embed — count failures as number of items in the batch
+            batch_failures = len(batch_items) if batch_items else 1
+            error_count += batch_failures
             with open(
-                "../BTTH3/log/embedding_error.log", "a", encoding="utf-8"
+                LOG_DIR / "embedding_error.log", "a", encoding="utf-8"
             ) as log_f:
                 log_f.write(f"Lỗi: {e}\n")
                 log_f.write(
@@ -104,6 +137,23 @@ for batch_idx in tqdm(
                 )
                 log_f.write(traceback.format_exc())
                 log_f.write("\n" + "=" * 80 + "\n")
+
+            # Check thresholds and abort if necessary
+            if (MAX_ERRORS and error_count >= MAX_ERRORS) or (
+                attempted_count > 0 and error_count / attempted_count > ERROR_THRESHOLD
+            ):
+                with open(LOG_DIR / "embedding_error.log", "a", encoding="utf-8") as lf:
+                    lf.write(
+                        f"[FATAL] Error threshold exceeded during embedding: errors={error_count}, attempts={attempted_count}, threshold={ERROR_THRESHOLD}, max_errors={MAX_ERRORS}\n"
+                    )
+                print(f"[FATAL] Error threshold exceeded during embedding: {error_count}/{attempted_count} (>{ERROR_THRESHOLD}). Aborting.")
+                try:
+                    with open(checkpoint_file, "w") as cf:
+                        json.dump({"last_processed": actual_start}, cf)
+                except Exception:
+                    pass
+                abort_processing = True
+                break
 
     # Save checkpoint for 10 batches
     if batch_idx % (10 * batch_size) == 0:
@@ -123,8 +173,12 @@ for batch_idx in tqdm(
             print(f"[Progress] ETA: {eta_minutes:.1f} minutes")
             print(f"[Progress] Errors: {error_count}")
 
-print(f"\n[+] Embedding completed! Total groups: {len(grouped)}")
-print(f"[+] Total errors: {error_count}")
+if abort_processing:
+    print(f"\n[!] Embedding aborted early due to error threshold. Total groups so far: {len(grouped)}")
+    print(f"[!] Total errors: {error_count}, attempts: {attempted_count}")
+else:
+    print(f"\n[+] Embedding completed! Total groups: {len(grouped)}")
+    print(f"[+] Total errors: {error_count}")
 
 # Save each group of embeddings to a .npy file
 print("[+] Saving embeddings ...")
@@ -134,14 +188,16 @@ for law_id, embeds_and_meta in tqdm(grouped.items(), desc="Saving files"):
         metadata = embeds_and_meta[0][1]  # Use shared metadata (VD: title, date,...)
 
         # Save embeddings
+        # ensure embeddings dir exists
+        (PROCESSED_DIR / "embeddings").mkdir(parents=True, exist_ok=True)
         np.save(
-            f"../BTTH3/data/processed/embeddings/{law_id}.npy", np.array(embeddings)
+            PROCESSED_DIR / "embeddings" / f"{law_id}.npy", np.array(embeddings)
         )
 
         print(f"[+] Saved: {law_id}.npy ({len(embeddings)} chunks)")
 
     except Exception as e:
-        with open("../BTTH3/log/embedding_error.log", "a", encoding="utf-8") as log_f:
+        with open(LOG_DIR / "embedding_error.log", "a", encoding="utf-8") as log_f:
             log_f.write(f"Lỗi: {e}\n")
             log_f.write(f"Lỗi khi lưu file cho law_id: {law_id}\n")
             log_f.write(traceback.format_exc())

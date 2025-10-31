@@ -94,7 +94,6 @@ for file in files:
         khoan_list = item.get("khoan", [])
 
         if khoan_list:
-            # Join khoan text
             khoan_text = "\n".join(
                 [f"Khoản {k['khoan']} {k['noi_dung']}" for k in khoan_list]
             )

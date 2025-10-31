@@ -5,9 +5,11 @@ from app.config.settings import GROQ_CLIENT, WEAVIATE_CLIENT
 class HealthService:
     @staticmethod
     def check_database() -> bool:
+        if not WEAVIATE_CLIENT:
+            return False
         try:
             return WEAVIATE_CLIENT.is_ready()
-        except Exception as e:
+        except Exception:
             return False
 
     @staticmethod
@@ -16,11 +18,11 @@ class HealthService:
             GROQ_CLIENT.chat.completions.create(
             messages=[
                 {
-                    "role": "assistant",
+                    "role": "user",
                     "content": "hi",
                 }
             ],
-            model="openai/gpt-oss-20b",
+            model="openai/gpt-oss-120b",
         )
             return True
         except Exception:

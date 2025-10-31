@@ -1,11 +1,20 @@
 from pydantic import BaseModel
-
-from app.models.retrieve_model import RetrieveResponse
+from typing import Optional, Any
 
 class RAGRequest(BaseModel):
     user_input: str
     k: int = 5
 
+class ChunkMeta(BaseModel):
+    metadata: str
+
+class Chunk(BaseModel):
+    chunk_id: str
+    text: str
+    meta: ChunkMeta
+
 class RAGResponse(BaseModel):
     answer: str
-    chunks: RetrieveResponse
+    chunks: Any
+    reasoning: Optional[str] = None
+

@@ -1,5 +1,3 @@
-import logging
-
 from fastapi import APIRouter, HTTPException, Query
 
 from app.config.settings import setup_logger
