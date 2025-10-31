@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-
 from app.services.health_service import HealthService
 
 router = APIRouter()

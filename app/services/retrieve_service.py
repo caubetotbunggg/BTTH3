@@ -1,7 +1,7 @@
-import time
-import asyncio
 from gradio_client import Client
+import time
 from operator import itemgetter
+
 from weaviate.classes.query import MetadataQuery
 
 from app.config.settings import (
@@ -14,15 +14,6 @@ from app.config.cache import get_cache, set_cache
 
 logger = setup_logger("retrieve", "../BTTH3/log/retrieve_info.log")
 
-async def get_embedding(user_input: str):
-    client = Client("caubetotbunggg/api_2")
-
-    embedding = await asyncio.to_thread(
-        client.predict,
-        f"query: {user_input}",
-        api_name="/embed_text"
-    )
-    return embedding
 
 class RetrieveService:
     @staticmethod
@@ -41,11 +32,15 @@ class RetrieveService:
         
 
         start_embedding = time.perf_counter()
-        embedding = get_embedding(user_input)
+
+        client = Client("caubetotbunggg/api")
+        embedding = client.predict(
+                text=f"query: {user_input}",
+                api_name="/embed_text"
+        )
         embedding_time = time.perf_counter() - start_embedding
 
         start_hybrid_query = time.perf_counter()
-
         results = DOCUMENT_COLLECTION.query.hybrid(
             query=user_input,
             vector=embedding,
@@ -53,7 +48,7 @@ class RetrieveService:
             return_metadata=MetadataQuery(score=True, explain_score=True),
             limit=k,
         )
- 
+
         query_time = time.perf_counter() - start_hybrid_query
 
         batch_pairs, texts, metas = [], [], []
@@ -92,11 +87,15 @@ class RetrieveService:
                     chunk_id=str(i),
                     text=doc,
                     score=round(score, 4),
-                    meta=meta,
+                    meta={
+                        "law_id": meta.get("law_id", "unknown"),
+                        "section_title": meta.get("title", "unknown"),
+                        "date": meta.get("date", "unknown"),
+                    },
                 )
             )
-            print(f"Result {i}: score={score}, law_id={meta}")
-            logger.info(f"Result {i}: score={score}, " f"law_id={meta}")
+            print(f"Result {i}: score={score}, law_id={meta.get('law_id')}.")
+            logger.info(f"Result {i}: score={score}, " f"law_id={meta.get('law_id')}.")
         if not response_chunks:
             return RetrieveResponse(chunks=[])
 

@@ -94,6 +94,7 @@ for file in files:
         khoan_list = item.get("khoan", [])
 
         if khoan_list:
+            # Join khoan text
             khoan_text = "\n".join(
                 [f"Khoản {k['khoan']} {k['noi_dung']}" for k in khoan_list]
             )
@@ -114,7 +115,7 @@ for file in files:
             [
                 DataObject(
                     uuid=generate_uuid5(f"{file_id}_{i}"),
-                    properties={"text": text, "metadata": metadata["title"]},
+                    properties={"text": text, "metadata": metadata},
                     vector=vector,
                 )
                 for i, (text, vector, metadata) in enumerate(
