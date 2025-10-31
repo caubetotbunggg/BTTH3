@@ -6,7 +6,6 @@ import weaviate
 import weaviate.classes.config as wvcc
 from weaviate.classes.config import DataType, Property
 from weaviate.classes.data import DataObject
-from weaviate.classes.init import AdditionalConfig, Timeout
 from weaviate.util import generate_uuid5
 
 import weaviate

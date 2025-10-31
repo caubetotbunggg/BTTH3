@@ -1,10 +1,17 @@
 import weaviate
 from weaviate.classes.query import Filter
-from app.config.settings import WEAVIATE_CLIENT
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
+WEAVIATE_URL = os.getenv("WEAVIATE_URL")
+WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")
+client = weaviate.connect_to_weaviate_cloud(
+    cluster_url=WEAVIATE_URL,
+    auth_credentials=weaviate.auth.AuthApiKey(WEAVIATE_API_KEY),
+)
 
 try:
-    collection = WEAVIATE_CLIENT.collections.get("Document")
+    collection = client.collections.get("Document")
     
     law_names_to_delete = [
         "Bộ Luật Lao động sửa đổi, bổ sung năm 2002",
@@ -45,7 +52,8 @@ try:
         "Luật Ngân sách Nhà nước năm 2002",
         "Luật Nhà ở năm 2005",
         "Luật Thuế Sử dụng Đất Nông nghiệp - 1993",
-        "Luật Bảo hiểm xã hội - 2006"
+        "Luật Bảo hiểm xã hội - 2006",
+        "Luật Bảo hiểm xã hội - 2014"
 
     ]
     
@@ -60,4 +68,4 @@ try:
         print(f"  ❌ Lỗi: {result.failed}\n")
     
 finally:
-    WEAVIATE_CLIENT.close()
+    client.close()
