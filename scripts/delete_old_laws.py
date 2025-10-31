@@ -1,4 +1,3 @@
-import weaviate
 from weaviate.classes.query import Filter
 from app.config.settings import WEAVIATE_CLIENT
 
@@ -45,7 +44,8 @@ try:
         "Luật Ngân sách Nhà nước năm 2002",
         "Luật Nhà ở năm 2005",
         "Luật Thuế Sử dụng Đất Nông nghiệp - 1993",
-        "Luật Bảo hiểm xã hội - 2006"
+        "Luật Bảo hiểm xã hội - 2006",
+        "Nghị định 136/2020/ND‑CP"
 
     ]
     

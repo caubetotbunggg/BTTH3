@@ -13,7 +13,10 @@ router = APIRouter()
 @router.post("/rag", response_model=RAGResponse)
 def rag_endpoint(user_input: str, k: int = 4):
     if not user_input.strip():
-        return "Câu hỏi không được để trống"
+        raise HTTPException(
+            status_code=HTTP_STATUS.BAD_REQUEST,
+            detail="Câu hỏi không được để trống"
+        )
 
     try:
         return RAGService.rag_pipeline(RAGRequest(user_input=user_input, k=k))

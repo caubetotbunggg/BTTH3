@@ -5,6 +5,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from bs4 import BeautifulSoup
+from app.config.paths import RAW_DIR, LOG_DIR
 
 MAX_RETRY = 5   
 RETRY_DELAY = 3 
@@ -24,7 +25,7 @@ def process_url(url, headers):
             html = response.text
             soup = BeautifulSoup(html, "html.parser")
 
-            # Extract metadata từ application/ld+json
+            # Extract metadata from application/ld+json
             metadata_raw = soup.find("script", type="application/ld+json")
             if metadata_raw is None:
                 logging.error(f"Không tìm thấy metadata: {url}")
@@ -47,12 +48,12 @@ def process_url(url, headers):
             title = metadata_json.get("name", "")
             date = metadata_json.get("legislationDate", "")
 
-            os.makedirs("../BTTH3/data/raw/html", exist_ok=True)
-            html_path = f"../BTTH3/data/raw/html/{law_id}.html"
+            (RAW_DIR / "html").mkdir(parents=True, exist_ok=True)
+            html_path = RAW_DIR / "html" / f"{law_id}.html"
             with open(html_path, "w", encoding="utf-8") as f:
                 f.write(html)
 
-            meta_path = f"../BTTH3/data/raw/html/{law_id}_meta.json"
+            meta_path = RAW_DIR / "html" / f"{law_id}_meta.json"
             metadata_to_save = {"law_id": law_id, "title": title, "date": date}
             with open(meta_path, "w", encoding="utf-8") as f:
                 json.dump(metadata_to_save, f, ensure_ascii=False, indent=2)
@@ -69,7 +70,9 @@ def process_url(url, headers):
 
 
 def main():
-    with open("../BTTH3/data/raw/law_links.json", "r", encoding="utf-8") as f:
+    from app.config.paths import RAW_DIR
+
+    with open(RAW_DIR / "law_links.json", "r", encoding="utf-8") as f:
         data = json.load(f)
         print(f"Tổng số links cần xử lý: {len(data)}")
 
@@ -84,7 +87,7 @@ def main():
         "Cookie": "MUID=...",
     }
 
-    logging.basicConfig(filename="../BTTH3/log/failed_access_links.log", level=logging.ERROR)
+    logging.basicConfig(filename=LOG_DIR / "failed_access_links.log", level=logging.ERROR)
 
     global rate_limit_delay
     rate_limit_delay = 1.5

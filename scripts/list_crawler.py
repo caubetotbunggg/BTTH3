@@ -6,6 +6,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
 from bs4 import BeautifulSoup
+from app.config.paths import RAW_DIR, LOG_DIR
 
 
 def fetch_page(page_index):
@@ -43,7 +44,7 @@ def main():
         "Cookie": "MUID=...",
     }
 
-    logging.basicConfig(filename="../BTTH3/log/failed_links.log", level=logging.ERROR)
+    logging.basicConfig(filename=LOG_DIR / "failed_links.log", level=logging.ERROR)
 
     base_url = "https://luatvietnam.vn"
     search_url_template = (
@@ -105,8 +106,8 @@ def main():
 
     # Save to JSON file
     all_urls_list = list(all_urls)
-    os.makedirs("../BTTH3/data/raw", exist_ok=True)
-    with open("../BTTH3/data/raw/law_links.json", "w", encoding="utf-8") as f:
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
+    with open(RAW_DIR / "law_links.json", "w", encoding="utf-8") as f:
         json.dump(all_urls_list, f, ensure_ascii=False, indent=2)
 
     print(f"Tổng thu được: {total}, Sau khi bỏ trùng: {len(all_urls)}")
