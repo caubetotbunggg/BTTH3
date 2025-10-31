@@ -10,6 +10,7 @@ from app.config.settings import (
     setup_logger,
 )
 from app.models.retrieve_model import ChunkResponse, RetrieveResponse
+from app.config.cache import get_cache, set_cache
 
 logger = setup_logger("retrieve", "../BTTH3/log/retrieve_info.log")
 
@@ -26,9 +27,18 @@ async def get_embedding(user_input: str):
 class RetrieveService:
     @staticmethod
     def retrieve(user_input: str, k: int):
-        logger.info(f"Starting retrieval for question='{user_input}' with top_k={k}")
-
         start_retrieve = time.perf_counter()
+        logger.info(f"Starting retrieval for question='{user_input}' with top_k={k}")
+        
+        cache_key = f"retrieve:{user_input}:{k}"
+        cached_response = get_cache(cache_key)
+        if cached_response:
+            logger.info("Cache hit. Returning cached response.")
+            cache_time = time.perf_counter() - start_retrieve
+            logger.info(f"Cache retrieval time={cache_time:.2f} seconds")
+            return RetrieveResponse(**cached_response)
+        
+        
 
         start_embedding = time.perf_counter()
         embedding = get_embedding(user_input)
@@ -90,4 +100,5 @@ class RetrieveService:
         if not response_chunks:
             return RetrieveResponse(chunks=[])
 
+        set_cache(cache_key, RetrieveResponse(chunks=response_chunks).model_dump())
         return RetrieveResponse(chunks=response_chunks)
