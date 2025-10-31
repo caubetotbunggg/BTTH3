@@ -1,5 +1,13 @@
+import os
+import sys
+
+# Thêm thư mục gốc vào sys.path để import cleaner
+sys.path.append(os.path.abspath("../BTTH3"))
+
 import unittest
-from ..scripts.cleaner import extract_text
+
+from cleaner import extract_text
+
 
 class TestExtractText(unittest.TestCase):
 

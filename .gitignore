@@ -1,9 +1,0 @@
-data/
-__pycache__/
-chroma_db/
-.env
-__init__.py
-.coverage
-log/
-FlagEmbedding/
-.vscode
