@@ -7,3 +7,4 @@ scrape_configs:
     scheme: https
     static_configs:
       - targets: ["btth3.onrender.com"]
+      
