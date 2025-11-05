@@ -14,7 +14,7 @@ PROMPT_DIR = Path(__file__).parent.parent / "prompts"
 def load_prompt(name: str) -> str:
     path = PROMPT_DIR / f"{name}.txt"
     if not path.exists():
-        raise FileNotFoundError(f"Prompt '{name}' không tồn tại tại {path}")
+        raise FileNotFoundError(f"Prompt '{name}' not found at {path}")
     return path.read_text(encoding="utf-8")
 
 
@@ -50,7 +50,33 @@ async def _get_llm_response_with_timeout(prompt: str, timeout: int = 60) -> str:
             ),
             timeout=timeout,
         )
-        return response.choices[0].message.content
+        # Normalize response: handle several possible SDK return shapes
+        # If the SDK returns a string (already an error/short message), pass it through
+        if isinstance(response, str):
+            return response
+
+        # If the response contains a `choices` list, try to extract a message
+        if hasattr(response, "choices"):
+            try:
+                if len(response.choices) == 0:
+                    logger.error("LLM returned empty choices list")
+                    return "Đã xảy ra lỗi khi xử lý yêu cầu. Vui lòng thử lại."
+
+                choice = response.choices[0]
+                # Newer SDKs may put text under `message.content` or under `text`
+                if hasattr(choice, "message") and hasattr(choice.message, "content"):
+                    return choice.message.content
+                if hasattr(choice, "text"):
+                    return choice.text
+
+                # Fallback: stringify
+                return str(choice)
+            except Exception as e:
+                logger.error(f"Unexpected LLM response structure: {e}", exc_info=True)
+                return "Đã xảy ra lỗi khi xử lý yêu cầu. Vui lòng thử lại."
+
+        # Fallback for unknown response types
+        return str(response)
 
     except asyncio.TimeoutError:
         logger.error("LLM request timeout")
@@ -65,8 +91,7 @@ class RAGService:
     def rag_pipeline(rag_request: RAGRequest) -> RAGResponse:
         try:
             start_total = time.perf_counter()
-
-            print("\n=== TREE 1: Tìm kiếm Semantic + Hybrid ===")
+            print("\n=== TREE 1: Semantic + Hybrid search ===")
             tree1_start = time.perf_counter()
             reasoning_response_tree1, objects_tree1 = tree1(
                 build_reasoning_prompt_tree1(rag_request.user_input)
@@ -81,13 +106,17 @@ class RAGService:
             llm_time = time.perf_counter() - llm_start
             print(f"Final LLM response time: {llm_time:.2f} seconds")
 
-            # Flatten nested list if needed
-            if (
-                isinstance(objects_tree1, list)
-                and len(objects_tree1) == 1
-                and isinstance(objects_tree1[0], list)
-            ):
+            # Validate and normalize objects_tree1
+            if objects_tree1 is None:
+                logger.warning("tree1 returned None for objects")
+                return RAGResponse(answer="No results from retrieval.", chunks={"chunks": []})
+
+            if isinstance(objects_tree1, list) and len(objects_tree1) == 1 and isinstance(objects_tree1[0], list):
                 objects_tree1 = objects_tree1[0]
+
+            if not isinstance(objects_tree1, list) or len(objects_tree1) == 0:
+                logger.warning(f"tree1 returned unexpected objects: {type(objects_tree1)} -> {objects_tree1}")
+                return RAGResponse(answer="No relevant documents found.", chunks={"chunks": []})
 
             total_time = time.perf_counter() - start_total
             print(f"\nTổng thời gian: {total_time:.2f}s")

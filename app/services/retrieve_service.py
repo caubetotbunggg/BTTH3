@@ -1,5 +1,4 @@
 import time
-import asyncio
 from gradio_client import Client
 from operator import itemgetter
 from weaviate.classes.query import MetadataQuery
@@ -13,14 +12,11 @@ from app.models.retrieve_model import ChunkResponse, RetrieveResponse
 
 logger = setup_logger("retrieve", "../BTTH3/log/retrieve_info.log")
 
-async def get_embedding(user_input: str):
+def get_embedding(user_input: str):
+    """Synchronous embedding call to Gradio endpoint."""
     client = Client("caubetotbunggg/api_2")
-
-    embedding = await asyncio.to_thread(
-        client.predict,
-        f"query: {user_input}",
-        api_name="/embed_text"
-    )
+    # Client.predict is a blocking call; call it directly to obtain the vector synchronously
+    embedding = client.predict(f"query: {user_input}", api_name="/embed_text")
     return embedding
 
 class RetrieveService:
