@@ -44,8 +44,11 @@ try:
         "Luật Ngân sách Nhà nước năm 2002",
         "Luật Nhà ở năm 2005",
         "Luật Thuế Sử dụng Đất Nông nghiệp - 1993",
-        "Luật Bảo hiểm xã hội - 2006",
-        "Nghị định 136/2020/ND‑CP"
+        "Luật Bảo hiểm xã hội 2006",
+        "Nghị định 136/2020/ND‑CP",
+        "Luật Bảo hiểm xã hội 2014",
+        "Luật Bảo vệ, chăm sóc và giáo dục trẻ em - 2004]",
+        "Luật Bảo hiểm y tế sửa đổi 2014, số 46/2014/QH13"
 
     ]
     
