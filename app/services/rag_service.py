@@ -36,54 +36,87 @@ def build_reasoning_prompt_tree1(user_question: str) -> str:
     return format_prompt(template, user_question=user_question)
 
 
-async def _get_llm_response_with_timeout(prompt: str, timeout: int = 60) -> str:
+async def _get_llm_response_with_timeout(prompt: str, timeout: int = 60, max_attempts: int = 3) -> str:
+    """Call the LLM with a timeout and retry on transient failures.
+
+    This function will attempt up to `max_attempts` times with exponential backoff
+    between attempts. It defensively handles empty or missing `choices` lists and
+    logs helpful debug information for triage.
+    """
     loop = asyncio.get_event_loop()
-    try:
-        response = await asyncio.wait_for(
-            loop.run_in_executor(
-                None,
-                lambda: GROQ_CLIENT_B.chat.completions.create(
-                    messages=[{"role": "assistant", "content": prompt}],
-                    model=LLM_MODEL,
-                    temperature=0.0,
+
+    for attempt in range(1, max_attempts + 1):
+        try:
+            logger.debug(f"LLM attempt {attempt}/{max_attempts}")
+            response = await asyncio.wait_for(
+                loop.run_in_executor(
+                    None,
+                    lambda: GROQ_CLIENT_B.chat.completions.create(
+                        messages=[{"role": "assistant", "content": prompt}],
+                        model=LLM_MODEL,
+                        temperature=0.0,
+                    ),
                 ),
-            ),
-            timeout=timeout,
-        )
-        # Normalize response: handle several possible SDK return shapes
-        # If the SDK returns a string (already an error/short message), pass it through
-        if isinstance(response, str):
-            return response
+                timeout=timeout,
+            )
 
-        # If the response contains a `choices` list, try to extract a message
-        if hasattr(response, "choices"):
-            try:
-                if len(response.choices) == 0:
-                    logger.error("LLM returned empty choices list")
-                    return "Đã xảy ra lỗi khi xử lý yêu cầu. Vui lòng thử lại."
+            # Debug raw response shape for easier triage
+            logger.debug(
+                "Raw LLM response type: %s | choices: %s",
+                type(response),
+                getattr(response, "choices", None),
+            )
 
-                choice = response.choices[0]
-                # Newer SDKs may put text under `message.content` or under `text`
-                if hasattr(choice, "message") and hasattr(choice.message, "content"):
-                    return choice.message.content
-                if hasattr(choice, "text"):
-                    return choice.text
+            # If the SDK returns a string already (some wrappers do), pass it through
+            if isinstance(response, str):
+                return response
 
-                # Fallback: stringify
-                return str(choice)
-            except Exception as e:
-                logger.error(f"Unexpected LLM response structure: {e}", exc_info=True)
-                return "Đã xảy ra lỗi khi xử lý yêu cầu. Vui lòng thử lại."
+            # If the response contains a `choices` attribute, validate it
+            if hasattr(response, "choices"):
+                try:
+                    if not response.choices:
+                        logger.warning(
+                            "LLM returned empty or None choices list on attempt %s", attempt
+                        )
+                        raise ValueError("empty_choices")
 
-        # Fallback for unknown response types
-        return str(response)
+                    choice = response.choices[0]
+                    # SDKs may put content under different attributes
+                    if hasattr(choice, "message") and hasattr(choice.message, "content"):
+                        return choice.message.content
+                    if hasattr(choice, "text"):
+                        return choice.text
 
-    except asyncio.TimeoutError:
-        logger.error("LLM request timeout")
-        return "Hệ thống đang bận, vui lòng thử lại sau."
-    except Exception as e:
-        logger.error(f"Error in _get_llm_response_with_timeout: {str(e)}")
-        return "Đã xảy ra lỗi khi xử lý yêu cầu. Vui lòng thử lại."
+                    # Fallback: stringify the choice object
+                    return str(choice)
+
+                except Exception as e:
+                    logger.exception("Unexpected LLM response structure on attempt %s: %s", attempt, e)
+                    # let outer exception handling decide whether to retry
+                    raise
+
+            # As a last resort, stringify unknown response objects
+            return str(response)
+
+        except asyncio.TimeoutError:
+            logger.warning("LLM request timeout on attempt %s/%s", attempt, max_attempts)
+            if attempt < max_attempts:
+                backoff = 2 ** (attempt - 1)
+                logger.debug("Retrying after %s seconds (timeout)", backoff)
+                await asyncio.sleep(backoff)
+                continue
+            return "Hệ thống đang bận, vui lòng thử lại sau."
+
+        except Exception as e:
+            # For any other exception, log and retry up to max_attempts
+            logger.warning("LLM call failed on attempt %s/%s: %s", attempt, max_attempts, e)
+            if attempt < max_attempts:
+                backoff = 2 ** (attempt - 1)
+                logger.debug("Retrying after %s seconds (exception)", backoff)
+                await asyncio.sleep(backoff)
+                continue
+            logger.error("LLM call failed after %s attempts: %s", max_attempts, e, exc_info=True)
+            return "Đã xảy ra lỗi khi xử lý yêu cầu. Vui lòng thử lại."
 
 
 class RAGService:
