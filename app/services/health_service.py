@@ -1,22 +1,29 @@
 import httpx
-from app.config.settings import GEMINI_CLIENT, RAG_CONFIG, WEAVIATE_CLIENT
+from app.config.settings import GROQ_CLIENT, WEAVIATE_CLIENT
 
 
 class HealthService:
     @staticmethod
     def check_database() -> bool:
+        if not WEAVIATE_CLIENT:
+            return False
         try:
             return WEAVIATE_CLIENT.is_ready()
-        except Exception as e:
+        except Exception:
             return False
 
     @staticmethod
     def check_llm() -> bool:
         try:
-            GEMINI_CLIENT.models.generate_content(
-                    model=RAG_CONFIG["MODEL_NAME"],
-                    contents="hello",
-                )
+            GROQ_CLIENT.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": "hi",
+                }
+            ],
+            model="openai/gpt-oss-120b",
+        )
             return True
         except Exception:
             return False

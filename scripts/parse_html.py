@@ -2,6 +2,7 @@ import json
 import os
 
 from bs4 import BeautifulSoup
+from app.config.paths import RAW_DIR
 
 
 def extract_loai_van_ban_va_linh_vuc(soup):
@@ -90,21 +91,21 @@ def parse_luat_html(soup):
 
 def main():
     # Data paths
-    html_dir = "../BTTH3/data/raw/html"
+    html_dir = RAW_DIR / "html"
     meta_dir = html_dir  # Metadata files are in the same directory
 
     # Create parsed directory if not exists
-    parsed_dir = "../BTTH3/data/raw/parsed"
-    os.makedirs(parsed_dir, exist_ok=True)
+    parsed_dir = RAW_DIR / "parsed"
+    parsed_dir.mkdir(parents=True, exist_ok=True)
 
     # Loop through each HTML file in the directory
     for filename in os.listdir(html_dir):
         if filename.endswith(".html"):
             law_id = filename.replace(".html", "")
 
-            html_path = os.path.join(html_dir, f"{law_id}.html")
-            meta_path = os.path.join(meta_dir, f"{law_id}_meta.json")
-            output_path = os.path.join(parsed_dir, f"{law_id}.json")
+            html_path = html_dir / f"{law_id}.html"
+            meta_path = meta_dir / f"{law_id}_meta.json"
+            output_path = parsed_dir / f"{law_id}.json"
 
             if not os.path.exists(meta_path):
                 print(f"Không tìm thấy metadata cho {law_id}")

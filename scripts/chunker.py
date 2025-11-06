@@ -5,8 +5,6 @@ from email.mime import text
 
 
 def chunk_by_chapter_and_article(text):
-    # Find all "chương" both in uppercase and lowercase
-    # Match "Chương X" or "chương X" or "Chương X."
     # where X can be a Roman numeral or Arabic numeral
     chapter_matches = list(re.finditer(r"(?im)^\s*chương\s+[\divxlcdm]+\.?", text))
     chunks = []
@@ -21,7 +19,6 @@ def chunk_by_chapter_and_article(text):
         )
         chapter_text = text[start_pos:end_pos].strip()
 
-        # Split by "Điều" in the chapter (with or without a period)
         raw_chunks = re.split(r"(?=Điều\s+\d+\.)", chapter_text)
         for chunk in raw_chunks:
             match_dieu = re.match(r"(Điều\s+\d+\..*)", chunk.strip())
@@ -30,7 +27,7 @@ def chunk_by_chapter_and_article(text):
             tieu_de = match_dieu.group(1)
             noi_dung = chunk.strip()[len(tieu_de) :].strip()
 
-            # Split by "khoản": 1. or 1- or 1)
+            
             khoan_list = []
             khoan_chunks = re.split(r"(?m)^\s*(\d+[\.\-\)])", noi_dung)
             for j in range(1, len(khoan_chunks), 2):
@@ -56,15 +53,17 @@ def chunk_by_chapter_and_article(text):
 
 
 def process_all_files():
-    input_dir = "../BTTH3/data/processed/text"
-    output_dir = "../BTTH3/data/processed/chunks"
-    os.makedirs(output_dir, exist_ok=True)
+    from app.config.paths import PROCESSED_DIR, DATA_DIR
+
+    input_dir = PROCESSED_DIR / "text"
+    output_dir = PROCESSED_DIR / "chunks"
+    output_dir.mkdir(parents=True, exist_ok=True)
     failed_files = []
     for filename in os.listdir(input_dir):
         if filename.endswith(".txt"):
             law_id = filename.replace(".txt", "")
-            input_path = os.path.join(input_dir, filename)
-            output_path = os.path.join(output_dir, f"{law_id}_chunks.json")
+            input_path = input_dir / filename
+            output_path = output_dir / f"{law_id}_chunks.json"
             with open(input_path, "r", encoding="utf-8") as f:
                 text = f.read()
                 chunks = chunk_by_chapter_and_article(text)
@@ -75,9 +74,9 @@ def process_all_files():
                 json.dump(chunks, f, ensure_ascii=False, indent=2)
     if failed_files:
         # Save list of failed files to JSON
-        unstructured_dir = "../BTTH3/data/unstructured"
-        os.makedirs(unstructured_dir, exist_ok=True)
-        failed_path = os.path.join(unstructured_dir, "failed_regex.json")
+        unstructured_dir = DATA_DIR / "unstructured"
+        unstructured_dir.mkdir(parents=True, exist_ok=True)
+        failed_path = unstructured_dir / "failed_regex.json"
         with open(failed_path, "w", encoding="utf-8") as f:
             json.dump(failed_files, f, ensure_ascii=False, indent=2)
 
