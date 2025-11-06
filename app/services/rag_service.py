@@ -106,35 +106,13 @@ class RAGService:
             llm_time = time.perf_counter() - llm_start
             print(f"Final LLM response time: {llm_time:.2f} seconds")
 
-            # Validate and normalize objects_tree1
-            if objects_tree1 is None:
-                logger.warning("tree1 returned None for objects")
-                return RAGResponse(answer="No results from retrieval.", chunks={"chunks": []})
-
-            if isinstance(objects_tree1, list) and len(objects_tree1) == 1 and isinstance(objects_tree1[0], list):
-                objects_tree1 = objects_tree1[0]
-
-            if not isinstance(objects_tree1, list) or len(objects_tree1) == 0:
-                logger.warning(f"tree1 returned unexpected objects: {type(objects_tree1)} -> {objects_tree1}")
-                return RAGResponse(answer="No relevant documents found.", chunks={"chunks": []})
-
             total_time = time.perf_counter() - start_total
             print(f"\nTổng thời gian: {total_time:.2f}s")
             logger.info(
                 f"total={total_time:.2f}, tree1={tree1_time:.2f}, llm={llm_time:.2f}"
             )
 
-            chunks_list = [
-                {
-                    "chunk_id": str(idx),
-                    "text": c.get("text", ""),
-                    "meta": {"metadata": c.get("metadata")},
-                }
-                for idx, c in enumerate(objects_tree1)
-                if isinstance(c, dict)
-            ]
-
-            return RAGResponse(answer=response, chunks={"chunks": chunks_list})
+            return RAGResponse(answer=response, reasoning=reasoning_response_tree1)
 
         except Exception as e:
             error_msg = f"Lỗi trong RAG pipeline: {str(e)}"

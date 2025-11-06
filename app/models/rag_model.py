@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, Any
+from typing import Optional
 
 class RAGRequest(BaseModel):
     user_input: str
@@ -15,6 +15,5 @@ class Chunk(BaseModel):
 
 class RAGResponse(BaseModel):
     answer: str
-    chunks: Any
     reasoning: Optional[str] = None
 
