@@ -101,7 +101,7 @@ configure(
 # ===== TREE 1: Semantic + Hybrid Search =====
 tree1 = Tree()
 tree1.add_tool(retrieve_legal_documents)
-
+tree1.remove_tool('cited_summarize')
 tree1.change_agent_description(
     """
 Bạn là một **trích xuất viên dữ liệu pháp luật** (Legal Data Extractor).
