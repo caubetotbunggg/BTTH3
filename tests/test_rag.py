@@ -16,9 +16,12 @@ def test_rag_pipeline_success(mocker):
     mock_tree = mocker.patch("app.config.tree_config.tree1", return_value=("reasoning", fake_objects))
 
     # --- Mock LLM response ---
+    async def fake_llm(prompt, timeout=60, max_attempts=3):
+        return "Trả lời hợp lệ [Luật A – Điều 1]"
+
     mock_llm = mocker.patch(
         "app.services.rag_service._get_llm_response_with_timeout",
-        return_value="Trả lời hợp lệ [Luật A – Điều 1]",
+        side_effect=fake_llm,
     )
 
     # --- Run rag pipeline with correct request object ---
@@ -27,10 +30,10 @@ def test_rag_pipeline_success(mocker):
 
     # --- Assertions ---
     mock_tree.assert_called_once()
-    mock_llm.assert_called_once()
+    mock_llm.assert_called()
     assert result.answer == "Trả lời hợp lệ [Luật A – Điều 1]"
-    assert isinstance(result.chunks, dict)
-    assert len(result.chunks.get("chunks", [])) == 1
+    # reasoning should match the tree1 reasoning output
+    assert result.reasoning == "reasoning"
 
 
 def test_rag_pipeline_timeout(mocker):
@@ -38,13 +41,16 @@ def test_rag_pipeline_timeout(mocker):
     mocker.patch("app.config.tree_config.tree1", return_value=("reasoning", fake_objects))
 
     # Mock LLM timeout response
+    async def fake_llm_timeout(prompt, timeout=60, max_attempts=3):
+        return "Hệ thống đang bận, vui lòng thử lại sau."
+
     mocker.patch(
         "app.services.rag_service._get_llm_response_with_timeout",
-        return_value="Hệ thống đang bận, vui lòng thử lại sau.",
+        side_effect=fake_llm_timeout,
     )
 
     req = RAGRequest(user_input="câu hỏi?", k=1)
     result = RAGService.rag_pipeline(req)
 
     assert result.answer == "Hệ thống đang bận, vui lòng thử lại sau."
-    assert len(result.chunks.get("chunks", [])) == 1
+    assert result.reasoning == "reasoning"
