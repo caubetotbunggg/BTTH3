@@ -49,7 +49,7 @@ WEAVIATE_URL = os.getenv("WEAVIATE_URL")
 WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 BASE_MODEL = "gemini-2.5-flash-lite"
-COMPLEX_MODEL = "gemini-2.5-flash"
+COMPLEX_MODEL = "gemini-2.0-flash"
 
 # Search configs
 SEARCH_CONFIG = {
