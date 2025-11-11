@@ -20,7 +20,7 @@ jobs:
           environment-file: environment.yml
           auto-activate-base: false
           activate-environment: testing 
-          python-version: 3.13
+          python-version: 3.10
           use-mamba: true
 
       - name: Run pre-commit checks

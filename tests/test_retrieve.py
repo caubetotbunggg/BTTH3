@@ -4,11 +4,11 @@ from fastapi.testclient import TestClient
 from unittest.mock import MagicMock
 from app.main import app
 
-client = TestClient(app)
+client = TestClient(app, raise_server_exceptions=True)
 
 
 @pytest.fixture
-def mock_weaviate_query(mocker):
+def mock_weaviate_query(monkeypatch):
     """Fixture mock query.hybrid để trả về 1 kết quả giả định"""
     mock_results = MagicMock()
     mock_obj = MagicMock()
@@ -24,14 +24,19 @@ def mock_weaviate_query(mocker):
     mock_obj.metadata.explain_score = "Score explained here"
     mock_results.objects = [mock_obj]
 
-    mocker.patch("app.services.retrieve_service.DOCUMENT_COLLECTION.query.hybrid", return_value=mock_results)
+    # patch the DOCUMENT_COLLECTION.query.hybrid to return our mock_results
+    import app.services.retrieve_service as retrieve_service
+
+    monkeypatch.setattr(retrieve_service.DOCUMENT_COLLECTION.query, "hybrid", lambda *a, **k: mock_results)
     return mock_results
 
 
 @pytest.fixture
-def mock_models(mocker):
+def mock_models(monkeypatch):
     """Mock get_embedding to avoid calling external service"""
-    mocker.patch("app.services.retrieve_service.get_embedding", return_value=np.array([0.9] * 384))
+    import app.services.retrieve_service as retrieve_service
+
+    monkeypatch.setattr(retrieve_service, "get_embedding", lambda *a, **k: np.array([0.9] * 384))
 
 
 def test_retrieve_happy_path(mock_weaviate_query, mock_models):
@@ -48,11 +53,13 @@ def test_retrieve_invalid_input():
     assert response.status_code == 422
 
 
-def test_retrieve_no_results(mocker):
-    mocker.patch("app.services.retrieve_service.get_embedding", return_value=np.array([0.1] * 384))
+def test_retrieve_no_results(monkeypatch):
+    import app.services.retrieve_service as retrieve_service
+
+    monkeypatch.setattr(retrieve_service, "get_embedding", lambda *a, **k: np.array([0.1] * 384))
     mock_results = MagicMock()
     mock_results.objects = []
-    mocker.patch("app.services.retrieve_service.DOCUMENT_COLLECTION.query.hybrid", return_value=mock_results)
+    monkeypatch.setattr(retrieve_service.DOCUMENT_COLLECTION.query, "hybrid", lambda *a, **k: mock_results)
 
     response = client.post("/retrieve", params={"user_input": "xyzabc"})
     assert response.status_code == 200
@@ -60,8 +67,10 @@ def test_retrieve_no_results(mocker):
     assert data.get("chunks") == []
 
 
-def test_retrieve_score_below_threshold(mocker):
-    mocker.patch("app.services.retrieve_service.get_embedding", return_value=np.array([0.1] * 384))
+def test_retrieve_score_below_threshold(monkeypatch):
+    import app.services.retrieve_service as retrieve_service
+
+    monkeypatch.setattr(retrieve_service, "get_embedding", lambda *a, **k: np.array([0.1] * 384))
     mock_obj = MagicMock()
     mock_obj.properties = {
         "text": "irrelevant",
@@ -76,16 +85,20 @@ def test_retrieve_score_below_threshold(mocker):
 
     mock_results = MagicMock()
     mock_results.objects = [mock_obj]
-    mocker.patch("app.services.retrieve_service.DOCUMENT_COLLECTION.query.hybrid", return_value=mock_results)
+    monkeypatch.setattr(retrieve_service.DOCUMENT_COLLECTION.query, "hybrid", lambda *a, **k: mock_results)
 
     response = client.post("/retrieve", params={"user_input": "something"})
     assert response.status_code == 200
     assert response.json().get("chunks") == []
 
 
-def test_retrieve_exception_handling(mocker):
-    mocker.patch("app.services.retrieve_service.get_embedding", return_value=np.array([0.1] * 384))
-    mocker.patch("app.services.retrieve_service.DOCUMENT_COLLECTION.query.hybrid", side_effect=Exception("DB failure"))
+def test_retrieve_exception_handling(monkeypatch):
+    import app.services.retrieve_service as retrieve_service
+
+    monkeypatch.setattr(retrieve_service, "get_embedding", lambda *a, **k: np.array([0.1] * 384))
+    def raise_exc(*a, **k):
+        raise Exception("DB failure")
+    monkeypatch.setattr(retrieve_service.DOCUMENT_COLLECTION.query, "hybrid", raise_exc)
 
     response = client.post("/retrieve", params={"user_input": "hợp đồng"})
     assert response.status_code == 500
