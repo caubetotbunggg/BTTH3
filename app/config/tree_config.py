@@ -24,31 +24,36 @@ logger = setup_logger("rag", "../log/rag_info.log")
 
 
 @tool
-async def retrieve_legal_documents(
-    user_question: str,
-    paraphrased_questions: List[str] = [],
-    query: str = "",
-):
+async def retrieve_legal_documents(query: str):
     """
     🔍 Truy xuất tài liệu pháp luật từ cơ sở dữ liệu Weaviate.
 
     Mục đích:
     - Tìm các văn bản luật liên quan đến câu hỏi đầu vào.
-    - Hỗ trợ tìm kiếm cả khi câu hỏi được diễn đạt lại bằng nhiều cách (paraphrases).
-
+    - Trước khi truy vấn, hãy chuyển câu hỏi người dùng từ ngôn ngữ đời thường sang **ngôn ngữ pháp luật**.
+      Ví dụ:
+        • "nhân viên không tắt đèn" → "người lao động vi phạm nội quy lao động"
+        • "bị phạt đi làm muộn" → "xử lý kỷ luật người lao động vi phạm giờ làm việc"
+        • "công ty xả rác bừa bãi" → "vi phạm hành chính trong lĩnh vực bảo vệ môi trường"
+    - Sử dụng các cụm từ thường gặp trong văn bản pháp luật để tăng độ chính xác:
+        “xử lý kỷ luật”, “người lao động”, “người sử dụng lao động”, “vi phạm nội quy lao động”,
+        “theo quy định pháp luật”, “trách nhiệm pháp lý”.
+    - Sau khi chuyển đổi, chỉ dùng **một câu truy vấn pháp lý duy nhất** (`query`) để tạo embedding và tìm kiếm trong Weaviate.
+    
     Hướng dẫn cho reasoning model:
-    - Nếu có nhiều câu paraphrased trong `paraphrased_questions`, hãy đánh giá mức độ
-      tương đồng ngữ nghĩa giữa từng câu và `user_question`.
-    - Chọn những câu paraphrased thể hiện rõ nhất ý định pháp lý của người dùng
-      để thực hiện truy vấn embedding.
-    - `query` là câu cuối cùng được chọn để gửi đến module embedding.
+    1. Nhận dạng hành vi pháp lý từ câu hỏi đời thường.
+    2. Khái quát hành vi thành dạng hợp pháp lý (tập trung vào nguyên tắc, quyền và nghĩa vụ).
+    3. Sử dụng cụm từ pháp luật chuẩn.
+    4. Trả về câu truy vấn pháp lý duy nhất để gửi vào embedding.
 
     Tham số:
-    - `user_question`: Câu hỏi gốc người dùng nhập.
-    - `paraphrased_questions`: Danh sách các cách diễn đạt lại cùng một ý
-      (có thể rỗng hoặc chứa nhiều phần tử).
-    - `query`: Câu dùng để tạo embedding cuối cùng (thường là câu paraphrase tốt nhất hoặc câu gốc).
+    - `query`: Câu hỏi đã được chuyển đổi sang **ngôn ngữ pháp luật**, dùng để tạo embedding và tìm tài liệu.
+
+    Ví dụ:
+    - Input user question: "Liệu doanh nghiệp có quyền kỷ luật nhân viên không tắt thiết bị điện sau khi dùng không?"
+    - Query pháp lý: "Quy định về quyền và trình tự xử lý kỷ luật người lao động vi phạm nội quy lao động theo Bộ luật Lao động 2019."
     """
+
     try:
         if "PATH" not in os.environ:
             os.environ["PATH"] = "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
@@ -143,6 +148,7 @@ tree1.change_style(
 )
 
 tree1.change_end_goal(
+    "Đầy đủ các điều luật để kết luận pháp lý chính xác."
     "Một danh sách đơn giản các điều luật với format [Điều - Tên Luật - Năm] "
     "và nội dung trích xuất. KHÔNG có phân tích hay kết luận."
 )

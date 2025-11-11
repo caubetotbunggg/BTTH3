@@ -48,7 +48,9 @@ try:
         "Nghị định 136/2020/ND‑CP",
         "Luật Bảo hiểm xã hội 2014",
         "Luật Bảo vệ, chăm sóc và giáo dục trẻ em - 2004]",
-        "Luật Bảo hiểm y tế sửa đổi 2014, số 46/2014/QH13"
+        "Luật Bảo hiểm y tế sửa đổi 2014, số 46/2014/QH13",
+        "Luật hình sự 1985 - Luật số 17-LCT/HĐNN7",
+        "Bộ luật Hình sự năm 1999"
 
     ]
     
