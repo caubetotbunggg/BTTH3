@@ -1,35 +1,30 @@
-Dưới đây là kết quả truy vấn và phân tích pháp luật đã được hệ thống tổng hợp:
+Dưới đây là kết quả truy vấn và phân tích pháp luật được trích xuất trực tiếp từ dữ liệu có thật trong hệ thống.
+Bạn chỉ được sử dụng nội dung trong phần “Nguồn 1 (Semantic + Hybrid)” để lập luận và trích dẫn.
+Không được tự thêm, suy diễn hoặc viện dẫn bất kỳ điều luật, nghị định, thông tư nào không xuất hiện trong nguồn.
 
-**Nguồn 1 (Semantic + Hybrid):**
+Nguồn 1 (Semantic + Hybrid):
 {reasoning_response_tree1}
 
----
+YÊU CẦU VỀ CẤU TRÚC TRẢ LỜI:
 
-**YÊU CẦU VỀ CẤU TRÚC TRẢ LỜI:**
+📋 TÓM TẮT KẾT LUẬN (2–3 câu):
 
-**📋 TÓM TẮT KẾT LUẬN** (2-3 câu):
-- Trả lời trực tiếp câu hỏi với kết luận rõ ràng (có/không, được/không được, hợp pháp/trái luật).
-- Nêu điều kiện hoặc trường hợp ngoại lệ quan trọng nhất (nếu có).
+Trả lời trực tiếp câu hỏi với kết luận rõ ràng (có/không, được/không được, hợp pháp/trái luật).
 
-**📚 CĂN CỨ PHÁP LÝ:**
-Liệt kê các điều luật áp dụng theo định dạng:
+Nêu điều kiện hoặc trường hợp ngoại lệ quan trọng nhất (nếu có).
 
-• **[Điều XX - Tên Luật - Năm]**: Tóm tắt nội dung điều luật (1-2 câu, chỉ ghi phần liên quan trực tiếp).
+📚 CĂN CỨ PHÁP LÝ:
+Liệt kê chính xác các điều luật có trong nguồn theo định dạng:
+• [Điều XX - Tên Luật - Năm]: Tóm tắt nội dung (1–2 câu, chỉ phần liên quan trực tiếp).
 
-• **[Điều YY - Tên Luật - Năm]**: Tóm tắt nội dung điều luật.
+YÊU CẦU QUAN TRỌNG:
+✅ Chỉ trích dẫn và diễn giải điều luật có trong “Nguồn 1”
+✅ Ưu tiên văn bản mới nhất, còn hiệu lực (nếu trong nguồn có nhiều phiên bản)
+✅ Giữ nguyên định dạng [Điều XX - Tên Luật - Năm] từ metadata
+✅ Tóm tắt súc tích, đúng trọng tâm
+✅ Độ dài tổng thể: 10–15 dòng
+❌ Không tự thêm luật hoặc nội dung ngoài “Nguồn 1”
+❌ Không lặp lại nguyên văn toàn bộ nội dung nguồn
+❌ Không giải thích lan man hoặc thêm nhận xét cá nhân
 
----
-
-**YÊU CẦU QUAN TRỌNG:**
-✅ Ưu tiên văn bản pháp luật **mới nhất, còn hiệu lực**
-✅ Giữ nguyên định dạng **[Điều XX - Tên Luật - Năm]** từ metadata
-✅ Tóm tắt nội dung súc tích, chỉ ghi phần liên quan đến câu hỏi
-✅ Độ dài tổng thể: **10-15 dòng**
-❌ KHÔNG lặp lại toàn bộ nội dung từ nguồn 1 và nguồn 2
-❌ KHÔNG giải thích dài dòng
-
----
-
-**Câu hỏi:** {question}
-
-Hãy trả lời theo đúng định dạng trên.
+Câu hỏi: {question}
