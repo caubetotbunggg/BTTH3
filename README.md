@@ -24,28 +24,31 @@ Key directories: `app/services/retrieve_service.py` (Weaviate/embedding interact
 - Gradio — (optional) demo UI if mounted in `main.py`.
 
 Supporting tools: pytest for testing. `app/requirements.txt` lists all dependencies.
+Here’s the English version of your directory structure and notes:
 
-## Cấu trúc thư mục
+---
 
-Dưới đây là cấu trúc thư mục chính của repository (tập trung vào `app/`):
+## Directory Structure
+
+Below is the main directory structure of the repository (focus on `app/`):
 
 ```
 .
 ├── app/                       # API service (FastAPI)
-│   ├── main.py                # entry point: tạo app, register routers, lifespan
+│   ├── main.py                # entry point: create app, register routers, lifespan
 │   ├── Dockerfile             # optional: container image for the service
-│   ├── requirements.txt       # runtime dependencies cho service
-│   ├── config/                # cấu hình (settings, paths, tree_config)
+│   ├── requirements.txt       # runtime dependencies for the service
+│   ├── config/                # configuration (settings, paths, tree_config)
 │   │   ├── settings.py        # API keys, client setup, timeouts
-│   │   ├── paths.py           # tập trung các đường dẫn dữ liệu
-│   │   └── tree_config.py     # cấu hình luồng retrieval / tools
+│   │   ├── paths.py           # centralized data paths
+│   │   └── tree_config.py     # configuration for retrieval/tool flow
 │   
-│   ├── controllers/           # layer HTTP (routes)
+│   ├── controllers/           # HTTP layer (routes)
 │   │   ├── health_controller.py
 │   │   ├── retrieve_controller.py
 │   │   └── rag_controller.py
 │   │
-│   ├── services/              # business logic: retrieval, rag orchestration
+│   ├── services/              # business logic: retrieval, RAG orchestration
 │   │   ├── retrieve_service.py
 │   │   ├── rag_service.py
 │   │   └── health_service.py
@@ -55,14 +58,14 @@ Dưới đây là cấu trúc thư mục chính của repository (tập trung v�
 │   │   └── retrieve_model.py
 │   │
 │   ├── prompts/               # prompt templates (llm_prompt.txt, tree_prompt.txt)
-│   └── constants/             # small constants (http status, etc.)
-│ 
+│   └── constants/             # small constants (HTTP status, etc.)
 ```
 
-Ghi chú:
-- `app/services/retrieve_service.py` tương tác trực tiếp với Weaviate/embedding.
-- `app/services/rag_service.py` chứa logic tạo prompt + gọi LLM và kết hợp kết quả retrieval.
-- `app/config/tree_config.py` định nghĩa cách chọn công cụ/chuỗi thao tác (tool sequence) để lấy chunks.
+**Notes:**
+
+* `app/services/retrieve_service.py` interacts directly with Weaviate/embedding.
+* `app/services/rag_service.py` contains logic to create prompts, call the LLM, and combine retrieval results.
+* `app/config/tree_config.py` defines how to select tools/tool sequences for chunk retrieval.
 
 
 ## 3) Main Logic Flow (RAG flow) — Step-by-step
